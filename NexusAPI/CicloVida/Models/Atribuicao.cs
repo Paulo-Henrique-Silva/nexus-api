@@ -1,11 +1,12 @@
-﻿using NexusAPI.CicloVida.Enums;
+﻿using NexusAPI.Administracao.Models;
+using NexusAPI.CicloVida.Enums;
 using NexusAPI.Compartilhado;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NexusAPI.CicloVida.Models
 {
-    [Table("ATRIBUICAO")]
+    [Table("ATRIBUICOES")]
     public class Atribuicao : ObjetoNexus
     {
         [Column("USUARIOUID")]
@@ -13,10 +14,14 @@ namespace NexusAPI.CicloVida.Models
         [Required]
         public string UsuarioUID { get; set; }
 
+        public Usuario? Usuario { get; set; }
+
         [Column("CICLOVIDAPASSOUID")]
         [ForeignKey("CicloVidaPasso")]
         [Required]
         public string CicloVidaPassoUID { get; set; }
+
+        public CicloVidaPasso? CicloVidaPasso { get; set; }
 
         [Column("TIPO")]
         [Required]

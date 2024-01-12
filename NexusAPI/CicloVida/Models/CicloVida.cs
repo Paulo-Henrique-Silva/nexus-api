@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NexusAPI.CicloVida.Models
 {
-    [Table("CICLOVIDAPASSO")]
+    [Table("CICLOSVIDA")]
     public class CicloVida : ObjetoNexus
     {
         [Column("OBJETOUID")]

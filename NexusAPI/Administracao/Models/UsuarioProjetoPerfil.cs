@@ -12,15 +12,21 @@ namespace NexusAPI.Administracao.Models
         [Required]
         public string UsuarioUID { get; set; }
 
+        public Usuario? Usuario { get; set; }
+
         [Column("PROJETOUID")]
         [ForeignKey("Projeto")]
         [Required]
         public string ProjetoUID { get; set; }
 
+        public Projeto? Projeto { get; set; }
+
         [Column("PERFILUID")]
         [ForeignKey("Perfil")]
         [Required]
         public string PerfilUID { get; set; }
+
+        public Perfil? Perfil { get; set; }
 
         [Column("ATIVADO")]
         [Required]

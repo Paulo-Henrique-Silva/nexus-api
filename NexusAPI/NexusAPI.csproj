@@ -28,7 +28,7 @@
     <Folder Include="CicloVida\Repositories\" />
     <Folder Include="CicloVida\Services\" />
     <Folder Include="Dados\Controllers\" />
-    <Folder Include="Dados\Models\" />
+    <Folder Include="Dados\Interfaces\" />
     <Folder Include="Dados\Repositories\" />
     <Folder Include="Dados\Services\" />
   </ItemGroup>
