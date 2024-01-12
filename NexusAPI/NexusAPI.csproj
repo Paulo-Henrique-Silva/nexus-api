@@ -24,7 +24,6 @@
   <ItemGroup>
     <Folder Include="Administracao\Services\" />
     <Folder Include="Administracao\Repositories\" />
-    <Folder Include="CicloVida\Models\" />
     <Folder Include="CicloVida\Controllers\" />
     <Folder Include="CicloVida\Repositories\" />
     <Folder Include="CicloVida\Services\" />
