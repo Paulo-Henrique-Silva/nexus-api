@@ -14,7 +14,7 @@ namespace NexusAPI.Compartilhado
         public async Task<T?> ObterPorId(string UID)
         {
             return await DataContext.Set<T>()
-                .FirstAsync(obj => obj.UID == UID && obj.DataFinalizacao == null);
+                .FirstAsync(obj => obj.UID.Equals(UID) && obj.DataFinalizacao == null);
         }
 
         public async Task<List<T>> ObterTudo()

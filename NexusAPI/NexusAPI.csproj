@@ -23,13 +23,10 @@
 
   <ItemGroup>
     <Folder Include="Administracao\Services\" />
-    <Folder Include="Administracao\Repositories\" />
     <Folder Include="CicloVida\Controllers\" />
-    <Folder Include="CicloVida\Repositories\" />
     <Folder Include="CicloVida\Services\" />
     <Folder Include="Dados\Controllers\" />
     <Folder Include="Dados\Interfaces\" />
-    <Folder Include="Dados\Repositories\" />
     <Folder Include="Dados\Services\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
