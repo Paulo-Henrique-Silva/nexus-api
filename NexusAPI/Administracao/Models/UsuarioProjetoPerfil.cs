@@ -1,11 +1,11 @@
-﻿using NexusAPI.Compartilhado;
+﻿using NexusAPI.Compartilhado.EntidadesBase;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NexusAPI.Administracao.Models
 {
     [Table("USUARIOPROJETOPERFIL")]
-    public class UsuarioProjetoPerfil : RelacionamentoNexus
+    public class UsuarioProjetoPerfil : BaseRelacionamento
     {
         [Column("USUARIOUID")]
         [ForeignKey("Usuario")]

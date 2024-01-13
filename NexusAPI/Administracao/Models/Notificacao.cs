@@ -1,11 +1,11 @@
-﻿using NexusAPI.Compartilhado;
+﻿using NexusAPI.Compartilhado.EntidadesBase;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NexusAPI.Administracao.Models
 {
     [Table("NOTIFICACOES")]
-    public class Notificacao : ObjetoNexus
+    public class Notificacao : BaseObjeto
     {
 
         [ForeignKey("Usuario")]

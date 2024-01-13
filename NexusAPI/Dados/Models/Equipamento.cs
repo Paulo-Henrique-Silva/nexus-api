@@ -1,12 +1,12 @@
-﻿using NexusAPI.Compartilhado;
-using NexusAPI.Dados.Enums;
+﻿using NexusAPI.Dados.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using NexusAPI.Compartilhado.EntidadesBase;
 
 namespace NexusAPI.Dados.Models
 {
     [Table("EQUIPAMENTOS")]
-    public class Equipamento : ObjetoNexus
+    public class Equipamento : BaseObjeto
     {
         [Column("NUMEROSERIE")]
         [Required]

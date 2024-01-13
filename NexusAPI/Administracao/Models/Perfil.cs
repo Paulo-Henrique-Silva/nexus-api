@@ -1,10 +1,10 @@
-﻿using NexusAPI.Compartilhado;
+﻿using NexusAPI.Compartilhado.EntidadesBase;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NexusAPI.Administracao.Models
 {
     [Table("PERFIS")]
-    public class Perfil : ObjetoNexus
+    public class Perfil : BaseObjeto
     {
         protected Perfil() : base() { }
 

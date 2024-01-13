@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using NexusAPI.Compartilhado;
+using NexusAPI.Compartilhado.EntidadesBase;
 
 namespace NexusAPI.Dados.Models
 {
     [Table("SOFTWARES")]
-    public class Software : ObjetoNexus
+    public class Software : BaseObjeto
     {
         [Column("LOCALIZACAOUID")]
         [ForeignKey("Localizacao")]

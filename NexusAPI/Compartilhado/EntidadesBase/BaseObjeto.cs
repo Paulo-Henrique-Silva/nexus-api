@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace NexusAPI.Compartilhado
+namespace NexusAPI.Compartilhado.EntidadesBase
 {
-    public abstract class ObjetoNexus
+    public abstract class BaseObjeto
     {
         [Key]
         [Column("UID")]
@@ -46,11 +46,11 @@ namespace NexusAPI.Compartilhado
         [Column("DATAFINALIZACAO")]
         public DateTime? DataFinalizacao { get; set; }
 
-        protected ObjetoNexus() { }
+        protected BaseObjeto() { }
 
-        protected ObjetoNexus
+        protected BaseObjeto
         (
-            string nome, 
+            string nome,
             string usuarioCriador
         )
         {

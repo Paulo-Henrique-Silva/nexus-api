@@ -1,5 +1,6 @@
 ﻿using NexusAPI.CicloVida.Models;
-using NexusAPI.Compartilhado;
+using NexusAPI.Compartilhado.Data;
+using NexusAPI.Compartilhado.EntidadesBase;
 using NexusAPI.Dados.Models;
 
 namespace NexusAPI.Dados.Repositories

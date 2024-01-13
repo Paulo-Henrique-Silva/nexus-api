@@ -1,5 +1,5 @@
 ﻿using NexusAPI.CicloVida.Models;
-using NexusAPI.Compartilhado;
+using NexusAPI.Compartilhado.EntidadesBase;
 using NexusAPI.Dados.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace NexusAPI.Administracao.Models
 {
     [Table("USUARIOS")]
-    public class Usuario : ObjetoNexus
+    public class Usuario : BaseObjeto
     {
         [Column("NOMEACESSO")]
         [Required]
@@ -16,17 +16,6 @@ namespace NexusAPI.Administracao.Models
         [Column("SENHA")]
         [Required]
         public string Senha { get; set; }
-
-        //propriedades de navegação
-        //public List<Notificacao>? Notificacoes {  get; set; }
-
-        //public List<UsuarioProjetoPerfil>? UsuarioProjetoPerfil {  get; set; }
-
-        //public List<Atribuicao>? Atribuicoes { get; set; }
-
-        //public List<Manutencao>? Manutencoes { get; set; }
-
-        //public List<Requisicao>? Requisicoes { get; set; }
 
         protected Usuario() : base() { }
 

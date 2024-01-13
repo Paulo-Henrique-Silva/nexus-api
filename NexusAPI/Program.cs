@@ -1,6 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
-using NexusAPI.Compartilhado;
+using NexusAPI.Compartilhado.Data;
 
 namespace NexusAPI
 {

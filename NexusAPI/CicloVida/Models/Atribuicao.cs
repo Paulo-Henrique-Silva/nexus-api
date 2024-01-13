@@ -1,13 +1,13 @@
 ﻿using NexusAPI.Administracao.Models;
 using NexusAPI.CicloVida.Enums;
-using NexusAPI.Compartilhado;
+using NexusAPI.Compartilhado.EntidadesBase;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NexusAPI.CicloVida.Models
 {
     [Table("ATRIBUICOES")]
-    public class Atribuicao : ObjetoNexus
+    public class Atribuicao : BaseObjeto
     {
         [Column("USUARIOUID")]
         [ForeignKey("USUARIOFK")]

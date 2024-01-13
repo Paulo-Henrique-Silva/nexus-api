@@ -1,12 +1,12 @@
-﻿using NexusAPI.Compartilhado;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using NexusAPI.Administracao.Models;
+using NexusAPI.Compartilhado.EntidadesBase;
 
 namespace NexusAPI.Dados.Models
 {
     [Table("REQUISICOES")]
-    public class Requisicao : ObjetoNexus
+    public class Requisicao : BaseObjeto
     {
         [Column("COORDENADORUID")]
         [ForeignKey("Coordenador")]

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NexusAPI.Administracao.Models;
-using NexusAPI.Compartilhado;
+using NexusAPI.Compartilhado.Data;
 
 namespace NexusAPI.Administracao.Repositories
 {

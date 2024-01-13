@@ -4,7 +4,7 @@ using NexusAPI.Administracao.Models;
 using NexusAPI.CicloVida.Models;
 using NexusAPI.Dados.Models;
 
-namespace NexusAPI.Compartilhado
+namespace NexusAPI.Compartilhado.Data
 {
     public class DataContext : DbContext
     {
@@ -24,7 +24,7 @@ namespace NexusAPI.Compartilhado
 
         public DbSet<CicloVidaPasso> CicloVidaPassos { get; set; }
 
-        public DbSet<Componente> Componentes {  get; set; }
+        public DbSet<Componente> Componentes { get; set; }
 
         public DbSet<Equipamento> Equipamentos { get; set; }
 

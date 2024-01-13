@@ -1,5 +1,6 @@
 ﻿using NexusAPI.Administracao.Models;
-using NexusAPI.Compartilhado;
+using NexusAPI.Compartilhado.Data;
+using NexusAPI.Compartilhado.EntidadesBase;
 
 namespace NexusAPI.Administracao.Repositories
 {

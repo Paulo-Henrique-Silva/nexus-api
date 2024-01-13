@@ -1,13 +1,13 @@
-﻿using NexusAPI.Compartilhado;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using NexusAPI.Dados.Enums;
 using NexusAPI.Administracao.Models;
+using NexusAPI.Compartilhado.EntidadesBase;
 
 namespace NexusAPI.Dados.Models
 {
     [Table("COMPONENTES")]
-    public class Componente : ObjetoNexus
+    public class Componente : BaseObjeto
     {
         [Column("NUMEROSERIE")]
         [Required]

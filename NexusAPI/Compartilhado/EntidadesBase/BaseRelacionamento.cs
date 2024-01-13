@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace NexusAPI.Compartilhado
+namespace NexusAPI.Compartilhado.EntidadesBase
 {
-    public abstract class RelacionamentoNexus
+    public abstract class BaseRelacionamento
     {
         [Column("ATUALIZADOPOR")]
         public string? AtualizadorPor { get; set; }
@@ -22,11 +22,11 @@ namespace NexusAPI.Compartilhado
         [Column("DATAFINALIZACAO")]
         public DateTime? DataFinalizacao { get; set; }
 
-        protected RelacionamentoNexus()
+        protected BaseRelacionamento()
         {
         }
 
-        protected RelacionamentoNexus
+        protected BaseRelacionamento
         (
             string usuarioCriador
         )

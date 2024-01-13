@@ -1,13 +1,13 @@
-﻿using NexusAPI.Compartilhado;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using NexusAPI.CicloVida.Enums;
 using NexusAPI.Administracao.Models;
+using NexusAPI.Compartilhado.EntidadesBase;
 
 namespace NexusAPI.CicloVida.Models
 {
     [Table("CICLOVIDAPASSOS")]
-    public class CicloVidaPasso : ObjetoNexus
+    public class CicloVidaPasso : BaseObjeto
     {
         [Column("CICLOVIDAUID")]
         [ForeignKey("CicloVida")]
