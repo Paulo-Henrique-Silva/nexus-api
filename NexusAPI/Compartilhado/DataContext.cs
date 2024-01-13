@@ -8,7 +8,7 @@ namespace NexusAPI.Compartilhado
 {
     public class DataContext : DbContext
     {
-        public DbSet<Notificacao> Notificacoes {  get; set; }
+        public DbSet<Notificacao> Notificacoes { get; set; }
 
         public DbSet<Perfil> Perfis { get; set; }
 
@@ -39,6 +39,8 @@ namespace NexusAPI.Compartilhado
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

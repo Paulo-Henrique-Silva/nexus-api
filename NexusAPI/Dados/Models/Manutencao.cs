@@ -31,6 +31,8 @@ namespace NexusAPI.Dados.Models
         [Column("SOLUCAO")]
         public string? Solucao { get; set; }
 
+        protected Manutencao() : base() { }
+
         public Manutencao
         (
             string nome,

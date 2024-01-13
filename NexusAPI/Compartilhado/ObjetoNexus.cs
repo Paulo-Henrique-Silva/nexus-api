@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using NexusAPI.Administracao.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NexusAPI.Compartilhado
@@ -16,28 +17,36 @@ namespace NexusAPI.Compartilhado
         [Column("DESCRICAO")]
         public string? Descricao { get; set; }
 
-        [Column("ATUALIZADOPOR")]
-        //[ForeignKey("Usuario")]
-        public string? AtualizadorPor { get; set; }
+        [Column("ATUALIZADOPORUID")]
+        [ForeignKey("AtualizadoPor")]
+        public string? AtualizadoPorUID { get; set; }
+
+        public Usuario? AtualizadoPor { get; set; }
 
         [Column("DATAULTIMAATUALIZACAO")]
         public DateTime? DataUltimaAtualizacao { get; set; }
 
-        [Column("USUARIOCRIADOR")]
+        [Column("USUARIOCRIADORUID")]
         [Required]
-        //[ForeignKey("Usuario")]
-        public string UsuarioCriador { get; set; }
+        [ForeignKey("UsuarioCriador")]
+        public string UsuarioCriadorUID { get; set; }
+
+        public Usuario? UsuarioCriador { get; set; }
 
         [Column("DATACRIACAO")]
         [Required]
         public DateTime DataCriacao { get; set; }
 
-        [Column("FINALIZADOPOR")]
-        //[ForeignKey("Usuario")]
-        public string? FinalizadoPor { get; set; }
+        [Column("FINALIZADOPORUID")]
+        [ForeignKey("FinalizadoPor")]
+        public string? FinalizadoPorUID { get; set; }
+
+        public Usuario? FinalizadoPor { get; set; }
 
         [Column("DATAFINALIZACAO")]
         public DateTime? DataFinalizacao { get; set; }
+
+        protected ObjetoNexus() { }
 
         protected ObjetoNexus
         (
@@ -47,7 +56,7 @@ namespace NexusAPI.Compartilhado
         {
             UID = Guid.NewGuid().ToString();
             Nome = nome;
-            UsuarioCriador = usuarioCriador;
+            UsuarioCriadorUID = usuarioCriador;
             DataCriacao = DateTime.Now;
         }
     }

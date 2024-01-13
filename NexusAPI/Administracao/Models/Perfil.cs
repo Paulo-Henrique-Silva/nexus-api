@@ -6,6 +6,8 @@ namespace NexusAPI.Administracao.Models
     [Table("PERFIS")]
     public class Perfil : ObjetoNexus
     {
+        protected Perfil() : base() { }
+
         public Perfil
         (
             string nome, 

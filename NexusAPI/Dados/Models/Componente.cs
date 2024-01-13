@@ -40,6 +40,8 @@ namespace NexusAPI.Dados.Models
         [Required]
         public DateTime DataAquisicao { get; set; }
 
+        protected Componente() : base() { }
+
         public Componente
         (
             string nome, 

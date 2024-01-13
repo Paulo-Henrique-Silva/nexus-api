@@ -22,6 +22,10 @@ namespace NexusAPI.Compartilhado
         [Column("DATAFINALIZACAO")]
         public DateTime? DataFinalizacao { get; set; }
 
+        protected RelacionamentoNexus()
+        {
+        }
+
         protected RelacionamentoNexus
         (
             string usuarioCriador

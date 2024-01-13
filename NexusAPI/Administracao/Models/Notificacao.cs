@@ -7,19 +7,17 @@ namespace NexusAPI.Administracao.Models
     [Table("NOTIFICACOES")]
     public class Notificacao : ObjetoNexus
     {
-        [Column("USUARIOUID")]
+
         [ForeignKey("Usuario")]
+        [Column("USUARIOUID")]
         [Required]
         public string UsuarioUID { get; set; }
 
         public Usuario? Usuario { get; set; }
 
-        public Notificacao
-        (
-            string nome, 
-            string usuarioCriador, 
-            string usuarioUID
-        ) 
+        protected Notificacao() : base() { }
+
+        public Notificacao(string nome, string usuarioCriador, string usuarioUID)
         : base(nome, usuarioCriador)
         {
             UsuarioUID = usuarioUID;

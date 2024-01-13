@@ -28,6 +28,8 @@ namespace NexusAPI.Dados.Models
         [Column("DATAVENCIMENTO")]
         public DateTime? DataVencimento { get; set; }
 
+        protected Software() : base() { }
+
         public Software
         (
             string localizacaoUID, 

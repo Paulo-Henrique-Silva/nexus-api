@@ -32,6 +32,8 @@ namespace NexusAPI.Administracao.Models
         [Required]
         public bool Ativado { get; set; }
 
+        protected UsuarioProjetoPerfil() : base() { }
+
         public UsuarioProjetoPerfil
         (
             string usuarioUID,

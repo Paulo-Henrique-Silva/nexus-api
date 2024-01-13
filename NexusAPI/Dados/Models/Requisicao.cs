@@ -15,6 +15,8 @@ namespace NexusAPI.Dados.Models
 
         public Usuario? Coordenador { get; set; }
 
+        protected Requisicao() : base() { }
+
         public Requisicao(string coordenadorUID, string nome, string usuarioCriador) : base(nome, usuarioCriador)
         {
             CoordenadorUID = coordenadorUID;

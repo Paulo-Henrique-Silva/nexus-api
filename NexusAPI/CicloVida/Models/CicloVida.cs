@@ -11,6 +11,8 @@ namespace NexusAPI.CicloVida.Models
         [Required]
         public string ObjetoUID { get; set; }
 
+        protected CicloVida() : base() { }
+
         public CicloVida
         (
             string nome,

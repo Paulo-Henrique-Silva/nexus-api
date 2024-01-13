@@ -27,6 +27,8 @@ namespace NexusAPI.CicloVida.Models
         [Required]
         public TipoAtribuicao Tipo { get; set; }
 
+        protected Atribuicao() : base() { }
+
         public Atribuicao
         (
             string nome, 
