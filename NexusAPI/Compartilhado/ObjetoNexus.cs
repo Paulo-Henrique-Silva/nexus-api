@@ -27,9 +27,9 @@ namespace NexusAPI.Compartilhado
         public DateTime? DataUltimaAtualizacao { get; set; }
 
         [Column("USUARIOCRIADORUID")]
-        [Required]
+        //Não é requerido porque alguns usuários serão padrão do sistema e não possuem criador.
         [ForeignKey("UsuarioCriador")]
-        public string UsuarioCriadorUID { get; set; }
+        public string? UsuarioCriadorUID { get; set; }
 
         public Usuario? UsuarioCriador { get; set; }
 

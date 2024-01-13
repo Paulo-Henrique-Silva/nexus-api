@@ -12,8 +12,8 @@ using NexusAPI.Compartilhado;
 namespace NexusAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240113133506_M2")]
-    partial class M2
+    [Migration("20240113143758_M1")]
+    partial class M1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,7 +61,6 @@ namespace NexusAPI.Migrations
                         .HasColumnName("NOME");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("USUARIOCRIADORUID");
 
@@ -119,7 +118,6 @@ namespace NexusAPI.Migrations
                         .HasColumnName("NOME");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("USUARIOCRIADORUID");
 
@@ -170,7 +168,6 @@ namespace NexusAPI.Migrations
                         .HasColumnName("NOME");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("USUARIOCRIADORUID");
 
@@ -231,7 +228,6 @@ namespace NexusAPI.Migrations
                         .HasColumnName("SENHA");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("USUARIOCRIADORUID");
 
@@ -343,7 +339,6 @@ namespace NexusAPI.Migrations
                         .HasColumnName("TIPO");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("USUARIOCRIADORUID");
 
@@ -408,7 +403,6 @@ namespace NexusAPI.Migrations
                         .HasColumnName("OBJETOUID");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("USUARIOCRIADORUID");
 
@@ -478,7 +472,6 @@ namespace NexusAPI.Migrations
                         .HasColumnName("TIPO");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("USUARIOCRIADORUID");
 
@@ -567,7 +560,6 @@ namespace NexusAPI.Migrations
                         .HasColumnName("TIPO");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("USUARIOCRIADORUID");
 
@@ -653,7 +645,6 @@ namespace NexusAPI.Migrations
                         .HasColumnName("TIPO");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("USUARIOCRIADORUID");
 
@@ -708,7 +699,6 @@ namespace NexusAPI.Migrations
                         .HasColumnName("NOME");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("USUARIOCRIADORUID");
 
@@ -781,7 +771,6 @@ namespace NexusAPI.Migrations
                         .HasColumnName("SOLUCAO");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("USUARIOCRIADORUID");
 
@@ -841,7 +830,6 @@ namespace NexusAPI.Migrations
                         .HasColumnName("NOME");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("USUARIOCRIADORUID");
 
@@ -913,7 +901,6 @@ namespace NexusAPI.Migrations
                         .HasColumnName("NOME");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("USUARIOCRIADORUID");
 
@@ -944,9 +931,7 @@ namespace NexusAPI.Migrations
 
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "UsuarioCriador")
                         .WithMany()
-                        .HasForeignKey("UsuarioCriadorUID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioCriadorUID");
 
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "Usuario")
                         .WithMany()
@@ -975,9 +960,7 @@ namespace NexusAPI.Migrations
 
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "UsuarioCriador")
                         .WithMany()
-                        .HasForeignKey("UsuarioCriadorUID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioCriadorUID");
 
                     b.Navigation("AtualizadoPor");
 
@@ -998,9 +981,7 @@ namespace NexusAPI.Migrations
 
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "UsuarioCriador")
                         .WithMany()
-                        .HasForeignKey("UsuarioCriadorUID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioCriadorUID");
 
                     b.Navigation("AtualizadoPor");
 
@@ -1021,9 +1002,7 @@ namespace NexusAPI.Migrations
 
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "UsuarioCriador")
                         .WithMany()
-                        .HasForeignKey("UsuarioCriadorUID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioCriadorUID");
 
                     b.Navigation("AtualizadoPor");
 
@@ -1077,9 +1056,7 @@ namespace NexusAPI.Migrations
 
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "UsuarioCriador")
                         .WithMany()
-                        .HasForeignKey("UsuarioCriadorUID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioCriadorUID");
 
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "Usuario")
                         .WithMany()
@@ -1110,9 +1087,7 @@ namespace NexusAPI.Migrations
 
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "UsuarioCriador")
                         .WithMany()
-                        .HasForeignKey("UsuarioCriadorUID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioCriadorUID");
 
                     b.Navigation("AtualizadoPor");
 
@@ -1151,9 +1126,7 @@ namespace NexusAPI.Migrations
 
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "UsuarioCriador")
                         .WithMany()
-                        .HasForeignKey("UsuarioCriadorUID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioCriadorUID");
 
                     b.Navigation("AtualizadoPor");
 
@@ -1186,9 +1159,7 @@ namespace NexusAPI.Migrations
 
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "UsuarioCriador")
                         .WithMany()
-                        .HasForeignKey("UsuarioCriadorUID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioCriadorUID");
 
                     b.Navigation("AtualizadoPor");
 
@@ -1223,9 +1194,7 @@ namespace NexusAPI.Migrations
 
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "UsuarioCriador")
                         .WithMany()
-                        .HasForeignKey("UsuarioCriadorUID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioCriadorUID");
 
                     b.Navigation("AtualizadoPor");
 
@@ -1250,9 +1219,7 @@ namespace NexusAPI.Migrations
 
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "UsuarioCriador")
                         .WithMany()
-                        .HasForeignKey("UsuarioCriadorUID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioCriadorUID");
 
                     b.Navigation("AtualizadoPor");
 
@@ -1285,9 +1252,7 @@ namespace NexusAPI.Migrations
 
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "UsuarioCriador")
                         .WithMany()
-                        .HasForeignKey("UsuarioCriadorUID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioCriadorUID");
 
                     b.Navigation("AtualizadoPor");
 
@@ -1318,9 +1283,7 @@ namespace NexusAPI.Migrations
 
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "UsuarioCriador")
                         .WithMany()
-                        .HasForeignKey("UsuarioCriadorUID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioCriadorUID");
 
                     b.Navigation("AtualizadoPor");
 
@@ -1355,9 +1318,7 @@ namespace NexusAPI.Migrations
 
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "UsuarioCriador")
                         .WithMany()
-                        .HasForeignKey("UsuarioCriadorUID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioCriadorUID");
 
                     b.Navigation("AtualizadoPor");
 

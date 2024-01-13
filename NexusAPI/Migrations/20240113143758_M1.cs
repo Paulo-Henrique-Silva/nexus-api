@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace NexusAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class M2 : Migration
+    public partial class M1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,7 +22,7 @@ namespace NexusAPI.Migrations
                     DESCRICAO = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAULTIMAATUALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATACRIACAO = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FINALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAFINALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -44,8 +44,7 @@ namespace NexusAPI.Migrations
                         name: "FK_USUARIOS_USUARIOS_USUARIOCRIADORUID",
                         column: x => x.USUARIOCRIADORUID,
                         principalTable: "USUARIOS",
-                        principalColumn: "UID",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "UID");
                 });
 
             migrationBuilder.CreateTable(
@@ -58,7 +57,7 @@ namespace NexusAPI.Migrations
                     DESCRICAO = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAULTIMAATUALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATACRIACAO = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FINALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAFINALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -80,8 +79,7 @@ namespace NexusAPI.Migrations
                         name: "FK_CICLOSVIDA_USUARIOS_USUARIOCRIADORUID",
                         column: x => x.USUARIOCRIADORUID,
                         principalTable: "USUARIOS",
-                        principalColumn: "UID",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "UID");
                 });
 
             migrationBuilder.CreateTable(
@@ -93,7 +91,7 @@ namespace NexusAPI.Migrations
                     DESCRICAO = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAULTIMAATUALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATACRIACAO = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FINALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAFINALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -115,8 +113,7 @@ namespace NexusAPI.Migrations
                         name: "FK_LOCALIZACOES_USUARIOS_USUARIOCRIADORUID",
                         column: x => x.USUARIOCRIADORUID,
                         principalTable: "USUARIOS",
-                        principalColumn: "UID",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "UID");
                 });
 
             migrationBuilder.CreateTable(
@@ -129,7 +126,7 @@ namespace NexusAPI.Migrations
                     DESCRICAO = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAULTIMAATUALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATACRIACAO = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FINALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAFINALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -151,8 +148,7 @@ namespace NexusAPI.Migrations
                         name: "FK_NOTIFICACOES_USUARIOS_USUARIOCRIADORUID",
                         column: x => x.USUARIOCRIADORUID,
                         principalTable: "USUARIOS",
-                        principalColumn: "UID",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "UID");
                     table.ForeignKey(
                         name: "FK_NOTIFICACOES_USUARIOS_USUARIOUID",
                         column: x => x.USUARIOUID,
@@ -170,7 +166,7 @@ namespace NexusAPI.Migrations
                     DESCRICAO = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAULTIMAATUALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATACRIACAO = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FINALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAFINALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -192,8 +188,7 @@ namespace NexusAPI.Migrations
                         name: "FK_PERFIS_USUARIOS_USUARIOCRIADORUID",
                         column: x => x.USUARIOCRIADORUID,
                         principalTable: "USUARIOS",
-                        principalColumn: "UID",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "UID");
                 });
 
             migrationBuilder.CreateTable(
@@ -205,7 +200,7 @@ namespace NexusAPI.Migrations
                     DESCRICAO = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAULTIMAATUALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATACRIACAO = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FINALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAFINALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -227,8 +222,7 @@ namespace NexusAPI.Migrations
                         name: "FK_PROJETOS_USUARIOS_USUARIOCRIADORUID",
                         column: x => x.USUARIOCRIADORUID,
                         principalTable: "USUARIOS",
-                        principalColumn: "UID",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "UID");
                 });
 
             migrationBuilder.CreateTable(
@@ -241,7 +235,7 @@ namespace NexusAPI.Migrations
                     DESCRICAO = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAULTIMAATUALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATACRIACAO = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FINALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAFINALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -269,8 +263,7 @@ namespace NexusAPI.Migrations
                         name: "FK_REQUISICOES_USUARIOS_USUARIOCRIADORUID",
                         column: x => x.USUARIOCRIADORUID,
                         principalTable: "USUARIOS",
-                        principalColumn: "UID",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "UID");
                 });
 
             migrationBuilder.CreateTable(
@@ -286,7 +279,7 @@ namespace NexusAPI.Migrations
                     DESCRICAO = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAULTIMAATUALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATACRIACAO = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FINALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAFINALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -326,8 +319,7 @@ namespace NexusAPI.Migrations
                         name: "FK_CICLOVIDAPASSOS_USUARIOS_USUARIOCRIADORUID",
                         column: x => x.USUARIOCRIADORUID,
                         principalTable: "USUARIOS",
-                        principalColumn: "UID",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "UID");
                 });
 
             migrationBuilder.CreateTable(
@@ -346,7 +338,7 @@ namespace NexusAPI.Migrations
                     DESCRICAO = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAULTIMAATUALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATACRIACAO = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FINALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAFINALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -374,8 +366,7 @@ namespace NexusAPI.Migrations
                         name: "FK_COMPONENTES_USUARIOS_USUARIOCRIADORUID",
                         column: x => x.USUARIOCRIADORUID,
                         principalTable: "USUARIOS",
-                        principalColumn: "UID",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "UID");
                 });
 
             migrationBuilder.CreateTable(
@@ -428,7 +419,7 @@ namespace NexusAPI.Migrations
                     DESCRICAO = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAULTIMAATUALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATACRIACAO = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FINALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAFINALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -456,8 +447,7 @@ namespace NexusAPI.Migrations
                         name: "FK_ATRIBUICOES_USUARIOS_USUARIOCRIADORUID",
                         column: x => x.USUARIOCRIADORUID,
                         principalTable: "USUARIOS",
-                        principalColumn: "UID",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "UID");
                     table.ForeignKey(
                         name: "FK_ATRIBUICOES_USUARIOS_USUARIOUID",
                         column: x => x.USUARIOUID,
@@ -482,7 +472,7 @@ namespace NexusAPI.Migrations
                     DESCRICAO = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAULTIMAATUALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATACRIACAO = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FINALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAFINALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -516,8 +506,7 @@ namespace NexusAPI.Migrations
                         name: "FK_EQUIPAMENTOS_USUARIOS_USUARIOCRIADORUID",
                         column: x => x.USUARIOCRIADORUID,
                         principalTable: "USUARIOS",
-                        principalColumn: "UID",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "UID");
                 });
 
             migrationBuilder.CreateTable(
@@ -534,7 +523,7 @@ namespace NexusAPI.Migrations
                     DESCRICAO = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAULTIMAATUALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATACRIACAO = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FINALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAFINALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -568,8 +557,7 @@ namespace NexusAPI.Migrations
                         name: "FK_MANUTENCOES_USUARIOS_USUARIOCRIADORUID",
                         column: x => x.USUARIOCRIADORUID,
                         principalTable: "USUARIOS",
-                        principalColumn: "UID",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "UID");
                 });
 
             migrationBuilder.CreateTable(
@@ -585,7 +573,7 @@ namespace NexusAPI.Migrations
                     DESCRICAO = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAULTIMAATUALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATACRIACAO = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FINALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAFINALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -619,8 +607,7 @@ namespace NexusAPI.Migrations
                         name: "FK_SOFTWARES_USUARIOS_USUARIOCRIADORUID",
                         column: x => x.USUARIOCRIADORUID,
                         principalTable: "USUARIOS",
-                        principalColumn: "UID",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "UID");
                 });
 
             migrationBuilder.CreateIndex(

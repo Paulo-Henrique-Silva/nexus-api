@@ -28,7 +28,6 @@
     <Folder Include="Dados\Controllers\" />
     <Folder Include="Dados\Interfaces\" />
     <Folder Include="Dados\Services\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

@@ -26,7 +26,7 @@ namespace NexusAPI.Administracao.Models
         [Required]
         public string PerfilUID { get; set; }
 
-        public PerfilRepository? Perfil { get; set; }
+        public Perfil? Perfil { get; set; }
 
         [Column("ATIVADO")]
         [Required]

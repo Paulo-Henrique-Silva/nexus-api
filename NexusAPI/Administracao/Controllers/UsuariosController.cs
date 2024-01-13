@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NexusAPI.Administracao.Models;
 
 namespace NexusAPI.Administracao.Controllers
 {
@@ -9,7 +10,7 @@ namespace NexusAPI.Administracao.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok("Hello World!");
+            return Ok(new Usuario("Paulo Silva", "paulo.silva", "123", Guid.NewGuid().ToString()));
         }
     }
 }

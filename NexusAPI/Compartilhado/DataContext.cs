@@ -10,7 +10,7 @@ namespace NexusAPI.Compartilhado
     {
         public DbSet<Notificacao> Notificacoes { get; set; }
 
-        public DbSet<PerfilRepository> Perfis { get; set; }
+        public DbSet<Perfil> Perfis { get; set; }
 
         public DbSet<Projeto> Projetos { get; set; }
 
