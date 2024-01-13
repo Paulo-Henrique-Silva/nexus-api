@@ -1,10 +1,11 @@
-﻿using NexusAPI.Administracao.Models;
+﻿using NexusAPI.Administracao.DTOs;
+using NexusAPI.Administracao.Models;
 using NexusAPI.Administracao.Repositories;
 using NexusAPI.Compartilhado.EntidadesBase;
 
 namespace NexusAPI.Administracao.Services
 {
-    public class UsuariosService : IBaseService<Usuario>
+    public class UsuariosService : IBaseService<UsuarioEnvioDTO, UsuarioRespostaDTO>
     {
         private readonly UsuarioRepository usuarioRepository;
 
@@ -13,17 +14,17 @@ namespace NexusAPI.Administracao.Services
             this.usuarioRepository = usuarioRepository;
         }
 
-        public Task<Usuario> Adicionar(Usuario obj)
+        public Task<UsuarioRespostaDTO> Adicionar(UsuarioEnvioDTO obj)
         {
             throw new NotImplementedException();
         }
 
-        public Task Deletar(Usuario obj)
+        public Task Deletar(UsuarioEnvioDTO obj)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Usuario> Editar(Usuario obj)
+        public Task<UsuarioRespostaDTO> Editar(UsuarioEnvioDTO obj)
         {
             throw new NotImplementedException();
         }
@@ -33,12 +34,12 @@ namespace NexusAPI.Administracao.Services
             throw new NotImplementedException();
         }
 
-        public Task<Usuario> ObterPorIdAsync(string UID)
+        public Task<UsuarioRespostaDTO> ObterPorIdAsync(string UID)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<Usuario>> ObterTudoAsync()
+        public Task<List<UsuarioRespostaDTO>> ObterTudoAsync()
         {
             throw new NotImplementedException();
         }

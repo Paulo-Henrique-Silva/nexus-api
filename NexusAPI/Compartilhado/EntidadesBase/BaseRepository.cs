@@ -38,6 +38,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
 
         public async Task<T> EditarAsync(T obj)
         {
+            obj.DataUltimaAtualizacao = DateTime.Now;
             dataContext.Set<T>().Update(obj);
             await dataContext.SaveChangesAsync();
 
