@@ -37,9 +37,9 @@ namespace NexusAPI
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = builder.Configuration["Auth:issuer"],
-                    ValidAudience = builder.Configuration["Auth:audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Auth:chave"])),
+                    ValidIssuer = builder.Configuration["issuer"],
+                    ValidAudience = builder.Configuration["audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("FyuO45D@#AlkS76E!%CqwU32Z&*AmbO")),
                     ClockSkew = TimeSpan.Zero
                 };
             });
@@ -56,7 +56,7 @@ namespace NexusAPI
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
+            app.UseAuthentication();
 
             app.MapControllers();
 

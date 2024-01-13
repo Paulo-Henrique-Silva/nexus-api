@@ -10,7 +10,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
     /// <typeparam name="T">Model da aplicação.</typeparam>
     public abstract class BaseRepository<T> where T : BaseObjeto
     {
-        private readonly DataContext dataContext;
+        protected readonly DataContext dataContext;
 
         public BaseRepository(DataContext dataContext)
         {

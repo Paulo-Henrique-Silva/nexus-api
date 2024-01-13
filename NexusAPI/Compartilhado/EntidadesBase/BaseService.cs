@@ -12,7 +12,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
     /// <typeparam name="O">Classe base</typeparam>
     public abstract class BaseService<T, U, O> where O : BaseObjeto
     {
-        private readonly BaseRepository<O> repository;
+        protected readonly BaseRepository<O> repository;
 
         public BaseService(BaseRepository<O> repository)
         {
@@ -30,9 +30,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
             var objs = await repository.ObterTudoAsync(numeroPagina);
             var objsResposta = new List<U>();
                 
-            objs.ForEach(async o => {
-                objsResposta.Add(await ConverterParaDTOResposta(o));
-            });
+            objs.ForEach(async o => objsResposta.Add(await ConverterParaDTOResposta(o)));
 
             return objsResposta;
         }

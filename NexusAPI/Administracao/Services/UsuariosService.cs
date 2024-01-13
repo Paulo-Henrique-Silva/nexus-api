@@ -47,5 +47,15 @@ namespace NexusAPI.Administracao.Services
 
             return resposta;
         }
+
+        public async Task<bool> AutenticarUsuario(UsuarioEnvioDTO usuarioEnvio)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarToken()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
