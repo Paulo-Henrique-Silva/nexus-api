@@ -10,7 +10,10 @@ namespace NexusAPI.Administracao.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(new Usuario("Paulo Silva", "paulo.silva", "123", Guid.NewGuid().ToString()));
+            return Ok(new Usuario()
+            {
+                Nome = "Paulo Silva"
+            });
         }
     }
 }

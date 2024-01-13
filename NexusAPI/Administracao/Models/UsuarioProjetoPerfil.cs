@@ -10,21 +10,21 @@ namespace NexusAPI.Administracao.Models
         [Column("USUARIOUID")]
         [ForeignKey("Usuario")]
         [Required]
-        public string UsuarioUID { get; set; }
+        public string UsuarioUID { get; set; } = "";
 
         public Usuario? Usuario { get; set; }
 
         [Column("PROJETOUID")]
         [ForeignKey("Projeto")]
         [Required]
-        public string ProjetoUID { get; set; }
+        public string ProjetoUID { get; set; } = "";
 
         public Projeto? Projeto { get; set; }
 
         [Column("PERFILUID")]
         [ForeignKey("Perfil")]
         [Required]
-        public string PerfilUID { get; set; }
+        public string PerfilUID { get; set; } = "";
 
         public Perfil? Perfil { get; set; }
 
@@ -32,22 +32,6 @@ namespace NexusAPI.Administracao.Models
         [Required]
         public bool Ativado { get; set; }
 
-        protected UsuarioProjetoPerfil() : base() { }
-
-        public UsuarioProjetoPerfil
-        (
-            string usuarioUID,
-            string projetoUID,
-            string perfilUID,
-            bool ativado,
-            string usuarioCriador
-        ) 
-        : base(usuarioCriador)
-        {
-            UsuarioUID = usuarioUID;
-            ProjetoUID = projetoUID;
-            PerfilUID = perfilUID;
-            Ativado = ativado;
-        }
+        public UsuarioProjetoPerfil() : base() { }
     }
 }

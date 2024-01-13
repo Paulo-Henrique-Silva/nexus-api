@@ -12,14 +12,14 @@ namespace NexusAPI.CicloVida.Models
         [Column("USUARIOUID")]
         [ForeignKey("USUARIOFK")]
         [Required]
-        public string UsuarioUID { get; set; }
+        public string UsuarioUID { get; set; } = "";
 
         public Usuario? Usuario { get; set; }
 
         [Column("CICLOVIDAPASSOUID")]
         [ForeignKey("CicloVidaPasso")]
         [Required]
-        public string CicloVidaPassoUID { get; set; }
+        public string CicloVidaPassoUID { get; set; } = "";
 
         public CicloVidaPasso? CicloVidaPasso { get; set; }
 
@@ -28,20 +28,5 @@ namespace NexusAPI.CicloVida.Models
         public TipoAtribuicao Tipo { get; set; }
 
         protected Atribuicao() : base() { }
-
-        public Atribuicao
-        (
-            string nome, 
-            string usuarioCriador, 
-            string usuarioUID, 
-            string cicloVidaPassoUID, 
-            TipoAtribuicao tipo
-        ) 
-        : base(nome, usuarioCriador)
-        {
-            UsuarioUID = usuarioUID;
-            CicloVidaPassoUID = cicloVidaPassoUID;
-            Tipo = tipo;
-        }
     }
 }

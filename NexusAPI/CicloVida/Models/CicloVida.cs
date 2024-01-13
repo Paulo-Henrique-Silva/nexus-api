@@ -9,19 +9,8 @@ namespace NexusAPI.CicloVida.Models
     {
         [Column("OBJETOUID")]
         [Required]
-        public string ObjetoUID { get; set; }
+        public string ObjetoUID { get; set; } = "";
 
-        protected CicloVida() : base() { }
-
-        public CicloVida
-        (
-            string nome,
-            string usuarioCriador,
-            string objetoUID
-        )
-        : base(nome, usuarioCriador)
-        {
-            ObjetoUID = objetoUID;
-        }
+        public CicloVida() : base() { }
     }
 }

@@ -11,15 +11,10 @@ namespace NexusAPI.Dados.Models
         [Column("COORDENADORUID")]
         [ForeignKey("Coordenador")]
         [Required]
-        public string CoordenadorUID { get; set; }
+        public string CoordenadorUID { get; set; } = "";
 
         public Usuario? Coordenador { get; set; }
 
-        protected Requisicao() : base() { }
-
-        public Requisicao(string coordenadorUID, string nome, string usuarioCriador) : base(nome, usuarioCriador)
-        {
-            CoordenadorUID = coordenadorUID;
-        }
+        public Requisicao() : base() { }
     }
 }

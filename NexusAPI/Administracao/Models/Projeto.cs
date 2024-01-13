@@ -6,16 +6,6 @@ namespace NexusAPI.Administracao.Models
     [Table("PROJETOS")]
     public class Projeto : BaseObjeto
     {
-        protected Projeto() : base() { }
-
-        public Projeto
-        (
-            string nome,
-            string usuarioCriador
-        )
-        : base(nome, usuarioCriador)
-        {
-
-        }
+        public Projeto() : base() { }
     }
 }

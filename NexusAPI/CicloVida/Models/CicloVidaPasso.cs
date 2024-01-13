@@ -12,21 +12,21 @@ namespace NexusAPI.CicloVida.Models
         [Column("CICLOVIDAUID")]
         [ForeignKey("CicloVida")]
         [Required]
-        public string CicloVidaUID { get; set; }
+        public string CicloVidaUID { get; set; } = "";
 
         public CicloVida? CicloVida { get; set; }
 
         [Column("PASSOFALHAUID")]
         [ForeignKey("PassoFalha")]
         [Required]
-        public string PassoFalhaUID { get; set; }
+        public string PassoFalhaUID { get; set; } = "";
 
         public CicloVidaPasso? PassoFalha { get; set; }
 
         [Column("PASSOSUCESSOUID")]
         [ForeignKey("PassoSucesso")]
         [Required]
-        public string PassoSucessoUID { get; set; }
+        public string PassoSucessoUID { get; set; } = "";
 
         public CicloVidaPasso? PassoSucesso { get; set; }
 
@@ -34,22 +34,6 @@ namespace NexusAPI.CicloVida.Models
         [Required]
         public TipoCicloVidaPasso Tipo { get; set; }
 
-        protected CicloVidaPasso() : base() { }
-
-        public CicloVidaPasso
-        (
-            string nome,
-            string cicloVidaUID,
-            string passoFalhaUID,
-            string passoSucessoUID,
-            TipoCicloVidaPasso tipo,
-            string usuarioCriador
-        ) : base(nome, usuarioCriador)
-        {
-            CicloVidaUID = cicloVidaUID;
-            PassoFalhaUID = passoFalhaUID;
-            PassoSucessoUID = passoSucessoUID;
-            Tipo = tipo;
-        }
+        public CicloVidaPasso() : base() { }
     }
 }

@@ -11,7 +11,7 @@ namespace NexusAPI.Dados.Models
         [Column("COMPONENTEUID")]
         [ForeignKey("Componente")]
         [Required]
-        public string ComponenteUID { get; set; }
+        public string ComponenteUID { get; set; } = "";
 
         public Componente? Componente { get; set; }
 
@@ -24,26 +24,13 @@ namespace NexusAPI.Dados.Models
         [Column("RESPONSAVELUID")]
         [ForeignKey("Responsavel")]
         [Required]
-        public string ResponsavelUID { get; set; }
+        public string ResponsavelUID { get; set; } = "";
 
         public Usuario? Responsavel { get; set; }
 
         [Column("SOLUCAO")]
         public string? Solucao { get; set; }
 
-        protected Manutencao() : base() { }
-
-        public Manutencao
-        (
-            string nome,
-            string usuarioCriador,
-            string componenteUID,
-            string responsavelUID
-        )
-        : base(nome, usuarioCriador)
-        {
-            ComponenteUID = componenteUID;
-            ResponsavelUID = responsavelUID;
-        }
+        public Manutencao() : base() { }
     }
 }

@@ -11,7 +11,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
         public DateTime? DataUltimaAtualizacao { get; set; }
 
         [Column("USUARIOCRIADOR")]
-        public string UsuarioCriador { get; set; }
+        public string? UsuarioCriador { get; set; }
 
         [Column("DATACRIACAO")]
         public DateTime DataCriacao { get; set; }
@@ -24,15 +24,6 @@ namespace NexusAPI.Compartilhado.EntidadesBase
 
         protected BaseRelacionamento()
         {
-        }
-
-        protected BaseRelacionamento
-        (
-            string usuarioCriador
-        )
-        {
-            UsuarioCriador = usuarioCriador;
-            DataCriacao = DateTime.Now;
         }
     }
 }

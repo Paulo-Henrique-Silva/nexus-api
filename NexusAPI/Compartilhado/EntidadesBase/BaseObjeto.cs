@@ -8,11 +8,11 @@ namespace NexusAPI.Compartilhado.EntidadesBase
     {
         [Key]
         [Column("UID")]
-        public string UID { get; set; }
+        public string UID { get; set; } = "";
 
         [Column("NOME")]
         [Required]
-        public string Nome { get; set; }
+        public string Nome { get; set; } = "";
 
         [Column("DESCRICAO")]
         public string? Descricao { get; set; }
@@ -46,18 +46,6 @@ namespace NexusAPI.Compartilhado.EntidadesBase
         [Column("DATAFINALIZACAO")]
         public DateTime? DataFinalizacao { get; set; }
 
-        protected BaseObjeto() { }
-
-        protected BaseObjeto
-        (
-            string nome,
-            string usuarioCriador
-        )
-        {
-            UID = Guid.NewGuid().ToString();
-            Nome = nome;
-            UsuarioCriadorUID = usuarioCriador;
-            DataCriacao = DateTime.Now;
-        }
+        public BaseObjeto() { }
     }
 }

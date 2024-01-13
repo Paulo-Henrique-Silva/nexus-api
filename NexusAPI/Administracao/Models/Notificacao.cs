@@ -11,16 +11,10 @@ namespace NexusAPI.Administracao.Models
         [ForeignKey("Usuario")]
         [Column("USUARIOUID")]
         [Required]
-        public string UsuarioUID { get; set; }
+        public string UsuarioUID { get; set; } = "";
 
         public Usuario? Usuario { get; set; }
 
-        protected Notificacao() : base() { }
-
-        public Notificacao(string nome, string usuarioCriador, string usuarioUID)
-        : base(nome, usuarioCriador)
-        {
-            UsuarioUID = usuarioUID;
-        }
+        public Notificacao() : base() { }
     }
 }
