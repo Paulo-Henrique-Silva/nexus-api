@@ -6,7 +6,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
     /// <summary>
     /// CRUD básico para as tabelas da aplicação.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">Model da aplicação.</typeparam>
     public abstract class BaseRepository<T> where T : BaseObjeto
     {
         private readonly DataContext dataContext;
@@ -16,27 +16,28 @@ namespace NexusAPI.Compartilhado.EntidadesBase
             this.dataContext = dataContext;
         }
 
-        public async Task<T?> ObterPorIdAsync(string UID)
+        public virtual async Task<T?> ObterPorIdAsync(string UID)
         {
             return await dataContext.Set<T>()
                 .FirstAsync(obj => obj.UID.Equals(UID) && obj.DataFinalizacao == null);
         }
 
-        public async Task<List<T>> ObterTudoAsync()
+        public virtual async Task<List<T>> ObterTudoAsync()
         {
             return await dataContext.Set<T>()
                 .Where(obj => obj.DataFinalizacao == null).ToListAsync();
         }
 
-        public async Task<T> AdicionarAsync(T obj)
+        public virtual async Task<T> AdicionarAsync(T obj)
         {
+            obj.DataCriacao = DateTime.Now;
             await dataContext.Set<T>().AddAsync(obj);
             await dataContext.SaveChangesAsync();
 
             return obj;
         }
 
-        public async Task<T> EditarAsync(T obj)
+        public virtual async Task<T> EditarAsync(T obj)
         {
             obj.DataUltimaAtualizacao = DateTime.Now;
             dataContext.Set<T>().Update(obj);
@@ -45,7 +46,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
             return obj;
         }
 
-        public async Task DeletarAsync(T obj)
+        public virtual async Task DeletarAsync(T obj)
         {
             obj.DataFinalizacao = DateTime.Now;
             dataContext.Set<T>().Update(obj);
