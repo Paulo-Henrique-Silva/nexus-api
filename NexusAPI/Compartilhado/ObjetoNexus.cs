@@ -17,7 +17,7 @@ namespace NexusAPI.Compartilhado
         public string? Descricao { get; set; }
 
         [Column("ATUALIZADOPOR")]
-        [ForeignKey("Usuario")]
+        //[ForeignKey("Usuario")]
         public string? AtualizadorPor { get; set; }
 
         [Column("DATAULTIMAATUALIZACAO")]
@@ -25,7 +25,7 @@ namespace NexusAPI.Compartilhado
 
         [Column("USUARIOCRIADOR")]
         [Required]
-        [ForeignKey("Usuario")]
+        //[ForeignKey("Usuario")]
         public string UsuarioCriador { get; set; }
 
         [Column("DATACRIACAO")]
@@ -33,7 +33,7 @@ namespace NexusAPI.Compartilhado
         public DateTime DataCriacao { get; set; }
 
         [Column("FINALIZADOPOR")]
-        [ForeignKey("Usuario")]
+        //[ForeignKey("Usuario")]
         public string? FinalizadoPor { get; set; }
 
         [Column("DATAFINALIZACAO")]

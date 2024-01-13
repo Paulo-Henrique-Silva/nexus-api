@@ -17,8 +17,9 @@ namespace NexusAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddDbContext<DataContext>(obj => obj.UseMySql(builder.Configuration.GetConnectionString("conexaoMySQL"), 
-                ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("conexaoMySQL"))));
+            string conexao = "Server=(localdb)\\MSSQLLocalDB;Database=BDNEXUS;Trusted_Connection=True;MultipleActiveResultSets=True";
+
+            builder.Services.AddDbContext<DataContext>(obj => obj.UseSqlServer(conexao));
 
             var app = builder.Build();
 

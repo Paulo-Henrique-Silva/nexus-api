@@ -10,7 +10,7 @@ namespace NexusAPI.CicloVida.Models
     public class Atribuicao : ObjetoNexus
     {
         [Column("USUARIOUID")]
-        [ForeignKey("Usuario")]
+        [ForeignKey("USUARIOFK")]
         [Required]
         public string UsuarioUID { get; set; }
 

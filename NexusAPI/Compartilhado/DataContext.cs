@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using NexusAPI.Administracao.Models;
 using NexusAPI.CicloVida.Models;
 using NexusAPI.Dados.Models;
@@ -35,13 +36,14 @@ namespace NexusAPI.Compartilhado
 
         public DbSet<Software> Softwares { get; set; }
 
-        public DataContext(DbContextOptions options) : base(options)
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<UsuarioProjetoPerfil>()
+                .HasKey(e => new { e.ProjetoUID, e.UsuarioUID, e.PerfilUID });
         }
     }
 }
