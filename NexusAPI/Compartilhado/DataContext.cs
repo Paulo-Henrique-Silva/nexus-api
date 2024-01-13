@@ -40,8 +40,6 @@ namespace NexusAPI.Compartilhado
         {
         }
 
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UsuarioProjetoPerfil>()
