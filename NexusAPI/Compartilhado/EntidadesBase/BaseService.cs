@@ -1,4 +1,5 @@
-﻿using NexusAPI.Administracao.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using NexusAPI.Administracao.Repositories;
 using NexusAPI.Compartilhado.Exceptions;
 
 namespace NexusAPI.Compartilhado.EntidadesBase
@@ -24,32 +25,43 @@ namespace NexusAPI.Compartilhado.EntidadesBase
             return obj == null ? throw new ObjetoNaoEncontrado(UID) : await ConverterParaDTOResposta(obj);
         }
 
-        public abstract Task<List<U>> ObterTudoAsync();
+        public virtual async Task<List<U>> ObterTudoAsync(int numeroPagina)
+        {
+            var objs = await repository.ObterTudoAsync(numeroPagina);
+            var objsResposta = new List<U>();
+                
+            objs.ForEach(async o => {
+                objsResposta.Add(await ConverterParaDTOResposta(o));
+            });
+
+            return objsResposta;
+        }
 
         public virtual async Task<U> Adicionar(T obj)
         {
-            var objRetornado = await repository.AdicionarAsync(await ConverterParaClasse(obj));
-            objRetornado.UsuarioCriadorUID = "";
-            return await ConverterParaDTOResposta(objRetornado);
+            var objClasse = ConverterParaClasse(obj);
+            objClasse.UID = Guid.NewGuid().ToString();
+            objClasse.UsuarioCriadorUID = "";
+
+            return await ConverterParaDTOResposta(await repository.AdicionarAsync(objClasse));
         }
 
         public virtual async Task<U> Editar(T obj)
         {
-            var objRetornado = await repository.EditarAsync(await ConverterParaClasse(obj));
-            objRetornado.AtualizadoPorUID = "";
-            return await ConverterParaDTOResposta(objRetornado);
+            var objClasse = ConverterParaClasse(obj);
+            objClasse.AtualizadoPorUID = "";
+
+            return await ConverterParaDTOResposta(await repository.EditarAsync(objClasse));
         }
 
         public virtual async Task Deletar(T obj)
         {
-            var objRetornado = await ConverterParaClasse(obj);
-            objRetornado.FinalizadoPorUID = "";
-            await repository.DeletarAsync(await ConverterParaClasse(obj));
+            var objClasse = ConverterParaClasse(obj);
+            objClasse.FinalizadoPorUID = "";
+
+            await repository.DeletarAsync(objClasse);
         }
 
-        public abstract Task<U> ConverterParaDTOResposta(O obj);
-
-        public abstract Task<O> ConverterParaClasse(T obj);
 
         public virtual async Task<bool> ExistePorUID(string UID)
         {
@@ -62,5 +74,9 @@ namespace NexusAPI.Compartilhado.EntidadesBase
             var obj = await repository.ObterPorIdAsync(UID);
             return obj == null ? throw new ObjetoNaoEncontrado(UID) : obj.Nome;
         }
+
+        public abstract Task<U> ConverterParaDTOResposta(O obj);
+
+        public abstract O ConverterParaClasse(T obj);
     }
 }

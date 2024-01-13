@@ -8,7 +8,24 @@ namespace NexusAPI.Administracao.Services
 {
     public class UsuariosService : BaseService<UsuarioEnvioDTO, UsuarioRespostaDTO, Usuario>
     {
-        public async Task<UsuarioRespostaDTO> ConverterParaDTOResposta(Usuario obj)
+        public UsuariosService(UsuarioRepository repository) : base(repository)
+        {
+
+        }
+
+        public override Usuario ConverterParaClasse(UsuarioEnvioDTO obj)
+        {
+            var resposta = new Usuario()
+            {
+                NomeAcesso = obj.NomeAcesso,
+                UID = obj.UID,
+                Senha = obj.Senha
+            };
+
+            return resposta;
+        }
+
+        public override async Task<UsuarioRespostaDTO> ConverterParaDTOResposta(Usuario obj)
         {
             var resposta = new UsuarioRespostaDTO()
             {

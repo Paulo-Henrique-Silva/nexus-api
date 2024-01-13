@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NexusAPI.Compartilhado.Data;
+using NexusAPI.Compartilhado.Interfaces;
 
 namespace NexusAPI.Compartilhado.EntidadesBase
 {
@@ -21,11 +22,21 @@ namespace NexusAPI.Compartilhado.EntidadesBase
             return await dataContext.Set<T>()
                 .FirstAsync(obj => obj.UID.Equals(UID) && obj.DataFinalizacao == null);
         }
-
-        public virtual async Task<List<T>> ObterTudoAsync()
+        
+        /// <summary>
+        /// Obtém apenas os registros não finalizados, ordenados por dataCriacao mais recente e
+        /// apenas um determinado numero de itens por página.
+        /// </summary>
+        /// <param name="numeroPagina"></param>
+        /// <returns></returns>
+        public virtual async Task<List<T>> ObterTudoAsync(int numeroPagina)
         {
             return await dataContext.Set<T>()
-                .Where(obj => obj.DataFinalizacao == null).ToListAsync();
+                .Where(obj => obj.DataFinalizacao == null)
+                .OrderBy(obj => obj.DataCriacao)
+                .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
+                .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
+                .ToListAsync();
         }
 
         public virtual async Task<T> AdicionarAsync(T obj)
