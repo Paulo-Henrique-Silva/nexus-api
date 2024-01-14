@@ -31,8 +31,9 @@ namespace NexusAPI
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
-                    Description = "Please enter JWT with Bearer into field",
+                    Description = "Insira o token JWT.",
                     Name = "Authorization",
+                    BearerFormat = "JWT",
                     Type = SecuritySchemeType.ApiKey
                 });
 
@@ -94,8 +95,8 @@ namespace NexusAPI
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication(); //Deve vir primeiro.
             app.UseAuthorization();
-            app.UseAuthentication();
 
             app.MapControllers();
 

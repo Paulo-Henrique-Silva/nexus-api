@@ -11,7 +11,6 @@ using System.Net;
 namespace NexusAPI.Administracao.Controllers
 {
     //TODO: Criar classe BaseController para reutilizar endpoints comuns.
-    //Colocar exceções de "objeto nao encontrado" em BaseService editar e excluir.
 
     [Controller]
     [Route("api/[controller]")]
