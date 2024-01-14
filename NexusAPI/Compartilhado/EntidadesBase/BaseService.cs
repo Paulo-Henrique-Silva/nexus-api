@@ -69,14 +69,13 @@ namespace NexusAPI.Compartilhado.EntidadesBase
             return await ConverterParaDTORespostaAsync(objAposSerAtualizado);
         }
 
-        public virtual async Task DeletarAsync(string UID, T obj)
+        public virtual async Task DeletarAsync(string UID)
         {
-            var objClasse = ConverterParaClasse(obj);
-            objClasse.UID = UID;
+            var objClasse = await repository.ObterPorUIDAsync(UID);
 
-            if (!await ExistePorUIDAsync(objClasse.UID))
+            if (objClasse == null)
             {
-                throw new ObjetoNaoEncontrado(objClasse.UID);
+                throw new ObjetoNaoEncontrado(UID);
             }
 
             objClasse.FinalizadoPorUID = null;

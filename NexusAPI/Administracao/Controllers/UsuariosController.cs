@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NexusAPI.Administracao.DTOs;
 using NexusAPI.Administracao.Exceptions;
 using NexusAPI.Administracao.Models;
@@ -24,6 +25,7 @@ namespace NexusAPI.Administracao.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Get([FromQuery] int pagina = 1)
         {
             try
@@ -38,6 +40,7 @@ namespace NexusAPI.Administracao.Controllers
         }
 
         [HttpGet("{UID}")]
+        [Authorize]
         public async Task<IActionResult> Get([FromRoute] string UID)
         {
             try
@@ -74,6 +77,7 @@ namespace NexusAPI.Administracao.Controllers
         }
 
         [HttpPut("{UID}")]
+        [Authorize]
         public async Task<IActionResult> Put([FromRoute] string UID, 
             [FromBody] UsuarioEnvioDTO usuarioEnvioDTO)
         {
@@ -93,12 +97,12 @@ namespace NexusAPI.Administracao.Controllers
         }
 
         [HttpDelete("{UID}")]
-        public async Task<IActionResult> Delete([FromRoute] string UID,
-            [FromBody] UsuarioEnvioDTO usuarioEnvioDTO)
+        [Authorize]
+        public async Task<IActionResult> Delete([FromRoute] string UID)
         {
             try
             {
-                await usuariosService.DeletarAsync(UID, usuarioEnvioDTO);
+                await usuariosService.DeletarAsync(UID);
                 return Ok();
             }
             catch (ObjetoNaoEncontrado ex)
