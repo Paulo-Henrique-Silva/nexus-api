@@ -25,10 +25,10 @@ namespace NexusAPI.Administracao.Services
         {
             var resposta = new Usuario()
             {
-                NomeAcesso = obj.NomeAcesso,
-                Nome = obj.Nome,
-                Descricao = obj.Descricao,
-                Senha = obj.Senha
+                NomeAcesso = obj.NomeAcesso ?? "",
+                Nome = obj.Nome ?? "",
+                Descricao = obj.Descricao ?? "",
+                Senha = obj.Senha ?? ""
             };
 
             return resposta;

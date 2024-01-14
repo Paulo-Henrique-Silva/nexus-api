@@ -18,7 +18,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
             this.dataContext = dataContext;
         }
 
-        public virtual async Task<T?> ObterPorIdAsync(string UID)
+        public virtual async Task<T?> ObterPorUIDAsync(string UID)
         {
             return await dataContext.Set<T>()
                 .FirstOrDefaultAsync(obj => obj.UID.Equals(UID) && obj.DataFinalizacao == null);
@@ -82,14 +82,22 @@ namespace NexusAPI.Compartilhado.EntidadesBase
 
         protected virtual void EditarApenasCamposDiferentes(T objExistente, T objAtualizado)
         {
-            var properties = typeof(Usuario).GetProperties();
+            var properties = typeof(T).GetProperties();
 
             foreach (var property in properties)
             {
                 var valorAtualizado = property.GetValue(objAtualizado);
+
+                //Transforma strings vazias e datas mínimas em null.
+                if ((valorAtualizado is string && valorAtualizado.Equals(string.Empty)) ||
+                    (valorAtualizado is DateTime && valorAtualizado.Equals(DateTime.MinValue)))
+                {
+                    valorAtualizado = null;
+                }
+
                 var valorExistente = property.GetValue(objExistente);
 
-                // Verificar explicitamente para tratar nulos e cadeias de caracteres vazias
+                // Verificar e tratar nulos e cadeias de caracteres vazias
                 if (valorAtualizado != null && !valorAtualizado.Equals(valorExistente))
                 {
                     property.SetValue(objExistente, valorAtualizado);
