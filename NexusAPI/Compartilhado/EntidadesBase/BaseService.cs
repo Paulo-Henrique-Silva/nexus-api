@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NexusAPI.Administracao.Models;
 using NexusAPI.Administracao.Repositories;
 using NexusAPI.Compartilhado.Exceptions;
 
@@ -44,17 +45,31 @@ namespace NexusAPI.Compartilhado.EntidadesBase
             return await ConverterParaDTORespostaAsync(await repository.AdicionarAsync(objClasse));
         }
 
-        public virtual async Task<U> EditarAsync(T obj)
+        public virtual async Task<U> EditarAsync(string UID, T obj)
         {
             var objClasse = ConverterParaClasse(obj);
+            objClasse.UID = UID;
+
+            if (!await ExistePorUIDAsync(objClasse.UID))
+            {
+                throw new ObjetoNaoEncontrado(objClasse.UID);
+            }
+
             objClasse.AtualizadoPorUID = null;
 
             return await ConverterParaDTORespostaAsync(await repository.EditarAsync(objClasse));
         }
 
-        public virtual async Task DeletarAsync(T obj)
+        public virtual async Task DeletarAsync(string UID, T obj)
         {
             var objClasse = ConverterParaClasse(obj);
+            objClasse.UID = UID;
+
+            if (!await ExistePorUIDAsync(objClasse.UID))
+            {
+                throw new ObjetoNaoEncontrado(objClasse.UID);
+            }
+
             objClasse.FinalizadoPorUID = null;
 
             await repository.DeletarAsync(objClasse);
@@ -72,6 +87,8 @@ namespace NexusAPI.Compartilhado.EntidadesBase
             var obj = await repository.ObterPorIdAsync(UID);
             return obj == null ? throw new ObjetoNaoEncontrado(UID) : obj.Nome;
         }
+
+
 
         public abstract Task<U> ConverterParaDTORespostaAsync(O obj);
 

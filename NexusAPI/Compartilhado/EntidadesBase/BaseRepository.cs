@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NexusAPI.Administracao.Models;
 using NexusAPI.Compartilhado.Data;
 using NexusAPI.Compartilhado.Interfaces;
 
@@ -50,18 +51,51 @@ namespace NexusAPI.Compartilhado.EntidadesBase
 
         public virtual async Task<T> EditarAsync(T obj)
         {
-            obj.DataUltimaAtualizacao = DateTime.Now;
-            dataContext.Set<T>().Update(obj);
-            await dataContext.SaveChangesAsync();
+            var objExistente = dataContext.Set<T>().Find(obj.UID);
+
+            if (objExistente != null)
+            {
+                EditarApenasCamposDiferentes(objExistente, obj);
+
+                objExistente.DataUltimaAtualizacao = DateTime.Now;
+                dataContext.Set<T>().Update(objExistente);
+                await dataContext.SaveChangesAsync();
+
+                return objExistente;
+            }
 
             return obj;
         }
 
         public virtual async Task DeletarAsync(T obj)
         {
-            obj.DataFinalizacao = DateTime.Now;
-            dataContext.Set<T>().Update(obj);
-            await dataContext.SaveChangesAsync();
+            var objRastreado = dataContext.Set<T>().Find(obj.UID);
+
+            if (objRastreado != null)
+            {
+                objRastreado.DataFinalizacao = DateTime.Now;
+
+                dataContext.Set<T>().Update(objRastreado);
+                await dataContext.SaveChangesAsync();
+            }
         }
+
+        protected virtual void EditarApenasCamposDiferentes(T objExistente, T objAtualizado)
+        {
+            var properties = typeof(Usuario).GetProperties();
+
+            foreach (var property in properties)
+            {
+                var valorAtualizado = property.GetValue(objAtualizado);
+                var valorExistente = property.GetValue(objExistente);
+
+                // Verificar explicitamente para tratar nulos e cadeias de caracteres vazias
+                if (valorAtualizado != null && !valorAtualizado.Equals(valorExistente))
+                {
+                    property.SetValue(objExistente, valorAtualizado);
+                }
+            }
+        }
+
     }
 }

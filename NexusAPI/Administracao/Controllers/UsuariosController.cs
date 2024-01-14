@@ -79,7 +79,7 @@ namespace NexusAPI.Administracao.Controllers
         {
             try
             {
-                var usuario = await usuariosService.EditarAsync(usuarioEnvioDTO);
+                var usuario = await usuariosService.EditarAsync(UID, usuarioEnvioDTO);
                 return Ok(usuario);
             }
             catch (ObjetoNaoEncontrado ex)
@@ -98,8 +98,7 @@ namespace NexusAPI.Administracao.Controllers
         {
             try
             {
-                usuarioEnvioDTO.UID = UID;
-                await usuariosService.DeletarAsync(usuarioEnvioDTO);
+                await usuariosService.DeletarAsync(UID, usuarioEnvioDTO);
                 return Ok();
             }
             catch (ObjetoNaoEncontrado ex)

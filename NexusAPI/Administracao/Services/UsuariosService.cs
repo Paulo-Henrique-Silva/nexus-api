@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.Identity.Client.Extensibility;
+using Microsoft.IdentityModel.Tokens;
 using NexusAPI.Administracao.DTOs;
 using NexusAPI.Administracao.Exceptions;
 using NexusAPI.Administracao.Models;
@@ -25,7 +26,8 @@ namespace NexusAPI.Administracao.Services
             var resposta = new Usuario()
             {
                 NomeAcesso = obj.NomeAcesso,
-                UID = obj.UID,
+                Nome = obj.Nome,
+                Descricao = obj.Descricao,
                 Senha = obj.Senha
             };
 
@@ -40,18 +42,19 @@ namespace NexusAPI.Administracao.Services
                 UID = obj.UID,
                 Nome = obj.Nome,
                 Descricao = obj.Descricao,
-                AtualizadoPor = new BaseNomeObjeto() 
-                { 
-                    UID = obj.AtualizadoPorUID, 
-                    Nome = obj.AtualizadoPorUID != null ? 
-                        await ObterNomePorUIDAsync(obj.AtualizadoPorUID) : null 
+                AtualizadoPor = new BaseNomeObjeto()
+                {
+                    UID = obj.AtualizadoPorUID,
+                    Nome = obj.AtualizadoPorUID != null ?
+                        await ObterNomePorUIDAsync(obj.AtualizadoPorUID) : null
                 },
                 UsuarioCriador = new BaseNomeObjeto()
                 {
                     UID = obj.UsuarioCriadorUID,
-                    Nome = obj.UsuarioCriadorUID != null ? 
+                    Nome = obj.UsuarioCriadorUID != null ?
                         await ObterNomePorUIDAsync(obj.UsuarioCriadorUID) : null
-                }
+                },
+                DataCriacao = obj.DataCriacao
             };
 
             return resposta;
@@ -116,6 +119,7 @@ namespace NexusAPI.Administracao.Services
 
         public string GerarToken(string usuarioUID, string nomeAcesso)
         {
+            //Cria as claims conforme UID e nomeAcesso do usuário.
             var claims = new[]
             {
                 new Claim("UID", usuarioUID),
@@ -129,6 +133,7 @@ namespace NexusAPI.Administracao.Services
             var credenciais = new SigningCredentials(chaveSecreta, SecurityAlgorithms.HmacSha256);
             var expiracao = DateTime.Now.AddMinutes(30);
 
+            //Cria token que irá se expirar em 30 minutos.
             var token = new JwtSecurityToken(
                 issuer: configuration["Logging:Auth:issuer"],
                 audience: configuration["Logging:Auth:audience"],
