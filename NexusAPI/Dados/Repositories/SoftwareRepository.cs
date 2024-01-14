@@ -4,7 +4,7 @@ using NexusAPI.Dados.Models;
 
 namespace NexusAPI.Dados.Repositories
 {
-    public class SoftwareRepository : BaseRepository<Software>
+    public class SoftwareRepository : NexusRepository<Software>
     {
         public SoftwareRepository(DataContext dataContext) : base(dataContext)
         {

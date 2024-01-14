@@ -6,7 +6,7 @@ using NexusAPI.Compartilhado.EntidadesBase;
 namespace NexusAPI.Dados.Models
 {
     [Table("MANUTENCOES")]
-    public class Manutencao : BaseObjeto
+    public class Manutencao : NexusObjeto
     {
         [Column("COMPONENTEUID")]
         [ForeignKey("Componente")]

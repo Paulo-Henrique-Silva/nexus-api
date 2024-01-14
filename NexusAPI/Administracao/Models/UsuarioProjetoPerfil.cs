@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace NexusAPI.Administracao.Models
 {
     [Table("USUARIOPROJETOPERFIL")]
-    public class UsuarioProjetoPerfil : BaseRelacionamento
+    public class UsuarioProjetoPerfil : NexusRelacionamento
     {
         [Column("USUARIOUID")]
         [ForeignKey("Usuario")]

@@ -6,7 +6,7 @@ using NexusAPI.Compartilhado.EntidadesBase;
 namespace NexusAPI.Dados.Models
 {
     [Table("EQUIPAMENTOS")]
-    public class Equipamento : BaseObjeto
+    public class Equipamento : NexusObjeto
     {
         [Column("NUMEROSERIE")]
         [Required]

@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace NexusAPI.CicloVida.Models
 {
     [Table("ATRIBUICOES")]
-    public class Atribuicao : BaseObjeto
+    public class Atribuicao : NexusObjeto
     {
         [Column("USUARIOUID")]
         [ForeignKey("USUARIOFK")]

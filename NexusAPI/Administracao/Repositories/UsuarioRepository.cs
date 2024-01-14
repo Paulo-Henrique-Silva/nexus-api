@@ -6,7 +6,7 @@ using NexusAPI.Compartilhado.Interfaces;
 
 namespace NexusAPI.Administracao.Repositories
 {
-    public class UsuarioRepository : BaseRepository<Usuario>
+    public class UsuarioRepository : NexusRepository<Usuario>
     {
         public UsuarioRepository(DataContext dataContext) : base(dataContext)
         {

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace NexusAPI.Dados.Models
 {
     [Table("LOCALIZACOES")]
-    public class Localizacao : BaseObjeto
+    public class Localizacao : NexusObjeto
     {
         public Localizacao() : base() { }
     }

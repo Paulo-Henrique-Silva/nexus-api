@@ -4,7 +4,7 @@ using NexusAPI.Dados.Models;
 
 namespace NexusAPI.Dados.Repositories
 {
-    public class RequisicaoRepository : BaseRepository<Requisicao>
+    public class RequisicaoRepository : NexusRepository<Requisicao>
     {
         public RequisicaoRepository(DataContext dataContext) : base(dataContext)
         {

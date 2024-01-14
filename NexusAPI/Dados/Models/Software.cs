@@ -5,7 +5,7 @@ using NexusAPI.Compartilhado.EntidadesBase;
 namespace NexusAPI.Dados.Models
 {
     [Table("SOFTWARES")]
-    public class Software : BaseObjeto
+    public class Software : NexusObjeto
     {
         [Column("LOCALIZACAOUID")]
         [ForeignKey("Localizacao")]

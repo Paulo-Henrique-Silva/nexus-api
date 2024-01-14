@@ -2,7 +2,7 @@
 
 namespace NexusAPI.Compartilhado.EntidadesBase
 {
-    public abstract class BaseRelacionamento
+    public abstract class NexusRelacionamento
     {
         [Column("ATUALIZADOPOR")]
         public string? AtualizadorPor { get; set; }
@@ -22,7 +22,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
         [Column("DATAFINALIZACAO")]
         public DateTime? DataFinalizacao { get; set; }
 
-        protected BaseRelacionamento()
+        protected NexusRelacionamento()
         {
         }
     }

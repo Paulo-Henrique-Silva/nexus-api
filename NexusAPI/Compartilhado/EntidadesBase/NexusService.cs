@@ -11,11 +11,11 @@ namespace NexusAPI.Compartilhado.EntidadesBase
     /// <typeparam name="T">DTO de Envio</typeparam>
     /// <typeparam name="U">DTO de resposta</typeparam>
     /// <typeparam name="O">Classe base</typeparam>
-    public abstract class BaseService<T, U, O> where O : BaseObjeto
+    public abstract class NexusService<T, U, O> where O : NexusObjeto
     {
-        protected readonly BaseRepository<O> repository;
+        protected readonly NexusRepository<O> repository;
 
-        public BaseService(BaseRepository<O> repository)
+        public NexusService(NexusRepository<O> repository)
         {
             this.repository = repository;
         }

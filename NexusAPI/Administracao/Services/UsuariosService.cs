@@ -11,7 +11,7 @@ using System.Text;
 
 namespace NexusAPI.Administracao.Services
 {
-    public class UsuariosService : BaseService<UsuarioEnvioDTO, UsuarioRespostaDTO, Usuario>
+    public class UsuariosService : NexusService<UsuarioEnvioDTO, UsuarioRespostaDTO, Usuario>
     {
         private readonly IConfiguration configuration;
 
@@ -42,13 +42,13 @@ namespace NexusAPI.Administracao.Services
                 UID = obj.UID,
                 Nome = obj.Nome,
                 Descricao = obj.Descricao,
-                AtualizadoPor = new BaseNomeObjeto()
+                AtualizadoPor = new NexusNomeObjeto()
                 {
                     UID = obj.AtualizadoPorUID,
                     Nome = obj.AtualizadoPorUID != null ?
                         await ObterNomePorUIDAsync(obj.AtualizadoPorUID) : null
                 },
-                UsuarioCriador = new BaseNomeObjeto()
+                UsuarioCriador = new NexusNomeObjeto()
                 {
                     UID = obj.UsuarioCriadorUID,
                     Nome = obj.UsuarioCriadorUID != null ?

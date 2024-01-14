@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace NexusAPI.Administracao.Models
 {
     [Table("USUARIOS")]
-    public class Usuario : BaseObjeto
+    public class Usuario : NexusObjeto
     {
         [Column("NOMEACESSO")]
         [Required]

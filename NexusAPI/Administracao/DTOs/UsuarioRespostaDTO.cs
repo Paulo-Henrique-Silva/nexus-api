@@ -2,7 +2,7 @@
 
 namespace NexusAPI.Administracao.DTOs
 {
-    public class UsuarioRespostaDTO : BaseObjetoRespostaDTO
+    public class UsuarioRespostaDTO : NexusObjetoRespostaDTO
     {
         public string NomeAcesso { get; set; } = "";
 

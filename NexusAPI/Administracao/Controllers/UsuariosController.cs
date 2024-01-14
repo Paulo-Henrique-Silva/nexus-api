@@ -4,32 +4,26 @@ using NexusAPI.Administracao.DTOs;
 using NexusAPI.Administracao.Exceptions;
 using NexusAPI.Administracao.Models;
 using NexusAPI.Administracao.Services;
+using NexusAPI.Compartilhado.EntidadesBase;
 using NexusAPI.Compartilhado.Exceptions;
 using NexusAPI.Compartilhado.RespostasAPI;
 using System.Net;
 
 namespace NexusAPI.Administracao.Controllers
 {
-    //TODO: Criar classe BaseController para reutilizar endpoints comuns.
-
     [Controller]
     [Route("api/[controller]")]
-    public class UsuariosController : ControllerBase
+    public class UsuariosController : NexusController<UsuarioEnvioDTO, UsuarioRespostaDTO, Usuario>
     {
-        private readonly UsuariosService usuariosService;
-
-        public UsuariosController(UsuariosService usuariosService)
-        {
-            this.usuariosService = usuariosService;
-        }
+        public UsuariosController(UsuariosService service) : base(service) { }
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Get([FromQuery] int pagina = 1)
+        public override async Task<IActionResult> Get([FromQuery] int pagina = 1)
         {
             try
             {
-                var usuarios = await usuariosService.ObterTudoAsync(pagina);
+                var usuarios = await service.ObterTudoAsync(pagina);
                 return Ok(usuarios);
             }
             catch (Exception)
@@ -40,11 +34,11 @@ namespace NexusAPI.Administracao.Controllers
 
         [HttpGet("{UID}")]
         [Authorize]
-        public async Task<IActionResult> Get([FromRoute] string UID)
+        public override async Task<IActionResult> Get([FromRoute] string UID)
         {
             try
             {
-                var usuario = await usuariosService.ObterPorUIDAsync(UID);
+                var usuario = await service.ObterPorUIDAsync(UID);
                 return Ok(usuario);
             }
             catch (ObjetoNaoEncontrado ex)
@@ -58,11 +52,11 @@ namespace NexusAPI.Administracao.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] UsuarioEnvioDTO usuarioEnvioDTO)
+        public override async Task<IActionResult> Post([FromBody] UsuarioEnvioDTO usuarioEnvioDTO)
         {
             try
             {
-                var usuario = await usuariosService.AdicionarAsync(usuarioEnvioDTO);
+                var usuario = await service.AdicionarAsync(usuarioEnvioDTO);
                 return Created("", usuario);
             }
             catch (NomeAcessoJaCadastrado ex)
@@ -77,12 +71,12 @@ namespace NexusAPI.Administracao.Controllers
 
         [HttpPut("{UID}")]
         [Authorize]
-        public async Task<IActionResult> Put([FromRoute] string UID, 
+        public override async Task<IActionResult> Put([FromRoute] string UID, 
             [FromBody] UsuarioEnvioDTO usuarioEnvioDTO)
         {
             try
             {
-                var usuario = await usuariosService.EditarAsync(UID, usuarioEnvioDTO);
+                var usuario = await service.EditarAsync(UID, usuarioEnvioDTO);
                 return Ok(usuario);
             }
             catch (ObjetoNaoEncontrado ex)
@@ -97,11 +91,11 @@ namespace NexusAPI.Administracao.Controllers
 
         [HttpDelete("{UID}")]
         [Authorize]
-        public async Task<IActionResult> Delete([FromRoute] string UID)
+        public override async Task<IActionResult> Delete([FromRoute] string UID)
         {
             try
             {
-                await usuariosService.DeletarAsync(UID);
+                await service.DeletarAsync(UID);
                 return Ok();
             }
             catch (ObjetoNaoEncontrado ex)
@@ -119,7 +113,14 @@ namespace NexusAPI.Administracao.Controllers
         {
             try
             {
-                var token = await usuariosService.AutenticarUsuario(usuarioEnvioDTO);
+                var usuarioService = service as UsuariosService;
+
+                if (usuarioService == null)
+                {
+                    throw new Exception("Instância incorreta da classe.");
+                }
+
+                var token = await usuarioService.AutenticarUsuario(usuarioEnvioDTO);
                 return Ok(token);
             }
             catch (CredenciaisIncorretas ex)

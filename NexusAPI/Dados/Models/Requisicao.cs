@@ -6,7 +6,7 @@ using NexusAPI.Compartilhado.EntidadesBase;
 namespace NexusAPI.Dados.Models
 {
     [Table("REQUISICOES")]
-    public class Requisicao : BaseObjeto
+    public class Requisicao : NexusObjeto
     {
         [Column("COORDENADORUID")]
         [ForeignKey("Coordenador")]

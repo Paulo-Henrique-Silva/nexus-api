@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NexusAPI.Compartilhado.EntidadesBase
 {
-    public abstract class BaseObjeto
+    public abstract class NexusObjeto
     {
         [Key]
         [Column("UID")]
@@ -46,6 +46,6 @@ namespace NexusAPI.Compartilhado.EntidadesBase
         [Column("DATAFINALIZACAO")]
         public DateTime? DataFinalizacao { get; set; }
 
-        public BaseObjeto() { }
+        public NexusObjeto() { }
     }
 }

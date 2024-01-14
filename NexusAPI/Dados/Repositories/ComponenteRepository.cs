@@ -5,7 +5,7 @@ using NexusAPI.Dados.Models;
 
 namespace NexusAPI.Dados.Repositories
 {
-    public class ComponenteRepository : BaseRepository<Componente>
+    public class ComponenteRepository : NexusRepository<Componente>
     {
         public ComponenteRepository(DataContext dataContext) : base(dataContext)
         {

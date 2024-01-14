@@ -4,7 +4,7 @@ using NexusAPI.Compartilhado.EntidadesBase;
 
 namespace NexusAPI.Administracao.Repositories
 {
-    public class ProjetoRepository : BaseRepository<Projeto>
+    public class ProjetoRepository : NexusRepository<Projeto>
     {
         public ProjetoRepository(DataContext dataContext) : base(dataContext)
         {

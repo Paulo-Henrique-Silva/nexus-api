@@ -5,7 +5,7 @@ using NexusAPI.Compartilhado.EntidadesBase;
 
 namespace NexusAPI.CicloVida.Repositories
 {
-    public class AtribuicaoRepository : BaseRepository<Atribuicao>
+    public class AtribuicaoRepository : NexusRepository<Atribuicao>
     {
         public AtribuicaoRepository(DataContext dataContext) : base(dataContext)
         {

@@ -7,7 +7,7 @@ using NexusAPI.Compartilhado.EntidadesBase;
 namespace NexusAPI.CicloVida.Models
 {
     [Table("CICLOVIDAPASSOS")]
-    public class CicloVidaPasso : BaseObjeto
+    public class CicloVidaPasso : NexusObjeto
     {
         [Column("CICLOVIDAUID")]
         [ForeignKey("CicloVida")]

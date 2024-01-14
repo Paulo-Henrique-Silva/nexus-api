@@ -9,11 +9,11 @@ namespace NexusAPI.Compartilhado.EntidadesBase
     /// CRUD básico para as tabelas da aplicação.
     /// </summary>
     /// <typeparam name="T">Model da aplicação.</typeparam>
-    public abstract class BaseRepository<T> where T : BaseObjeto
+    public abstract class NexusRepository<T> where T : NexusObjeto
     {
         protected readonly DataContext dataContext;
 
-        public BaseRepository(DataContext dataContext)
+        public NexusRepository(DataContext dataContext)
         {
             this.dataContext = dataContext;
         }

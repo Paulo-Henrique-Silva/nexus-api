@@ -4,7 +4,7 @@ using NexusAPI.Compartilhado.EntidadesBase;
 
 namespace NexusAPI.Administracao.Repositories
 {
-    public class PerfilRepository : BaseRepository<Perfil>
+    public class PerfilRepository : NexusRepository<Perfil>
     {
         public PerfilRepository(DataContext dataContext) : base(dataContext)
         {

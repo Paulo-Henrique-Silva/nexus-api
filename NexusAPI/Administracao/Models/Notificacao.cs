@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace NexusAPI.Administracao.Models
 {
     [Table("NOTIFICACOES")]
-    public class Notificacao : BaseObjeto
+    public class Notificacao : NexusObjeto
     {
 
         [ForeignKey("Usuario")]

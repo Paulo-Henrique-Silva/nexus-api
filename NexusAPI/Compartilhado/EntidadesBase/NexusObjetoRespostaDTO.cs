@@ -1,6 +1,6 @@
 ﻿namespace NexusAPI.Compartilhado.EntidadesBase
 {
-    public class BaseObjetoRespostaDTO
+    public class NexusObjetoRespostaDTO
     {
         public string UID { get; set; } = "";
 
@@ -10,9 +10,9 @@
 
         public DateTime? DataUltimaAtualizacao { get; set; }
 
-        public BaseNomeObjeto? AtualizadoPor { get; set; }
+        public NexusNomeObjeto? AtualizadoPor { get; set; }
 
-        public BaseNomeObjeto? UsuarioCriador { get; set; }
+        public NexusNomeObjeto? UsuarioCriador { get; set; }
 
         public DateTime DataCriacao { get; set; }
     }
