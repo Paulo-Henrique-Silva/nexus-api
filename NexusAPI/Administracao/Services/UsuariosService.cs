@@ -1,5 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using NexusAPI.Administracao.DTOs;
+using NexusAPI.Administracao.DTOs.Usuario;
 using NexusAPI.Administracao.Exceptions;
 using NexusAPI.Administracao.Models;
 using NexusAPI.Administracao.Repositories;
@@ -83,7 +83,7 @@ namespace NexusAPI.Administracao.Services
             usuario.UsuarioCriadorUID = null;
 
             var dtoResposta = await ConverterParaDTORespostaAsync(await repository.AdicionarAsync(usuario));
-            dtoResposta.Token = new TokenDTO(GerarToken(dtoResposta.UID, dtoResposta.NomeAcesso));
+            dtoResposta.Token = new TokenDTO() { Token = GerarToken(dtoResposta.UID, dtoResposta.NomeAcesso) };
 
             return dtoResposta;
         }
@@ -113,7 +113,7 @@ namespace NexusAPI.Administracao.Services
                 throw new CredenciaisIncorretas();
             }
 
-            return new TokenDTO(GerarToken(usuario.UID, usuario.NomeAcesso));
+            return new TokenDTO() { Token = GerarToken(usuario.UID, usuario.NomeAcesso) };
         }
 
         public string GerarToken(string usuarioUID, string nomeAcesso)

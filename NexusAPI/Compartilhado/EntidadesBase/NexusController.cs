@@ -11,6 +11,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
     /// <typeparam name="T">DTO de Envio</typeparam>
     /// <typeparam name="U">DTO de resposta</typeparam>
     /// <typeparam name="O">Classe Base</typeparam>
+    [Route("api/[controller]")]
     public class NexusController<T, U, O> : ControllerBase where O : NexusObjeto
     {
         protected readonly NexusService<T, U, O> service;

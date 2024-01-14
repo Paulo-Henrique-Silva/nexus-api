@@ -1,6 +1,6 @@
 ﻿namespace NexusAPI.Compartilhado.EntidadesBase
 {
-    public class NexusObjetoRespostaDTO
+    public class NexusRespostaDTO
     {
         public string UID { get; set; } = "";
 

@@ -1,8 +1,8 @@
 ﻿using NexusAPI.Compartilhado.EntidadesBase;
 
-namespace NexusAPI.Administracao.DTOs
+namespace NexusAPI.Administracao.DTOs.Usuario
 {
-    public class UsuarioRespostaDTO : NexusObjetoRespostaDTO
+    public class UsuarioRespostaDTO : NexusRespostaDTO
     {
         public string NomeAcesso { get; set; } = "";
 
