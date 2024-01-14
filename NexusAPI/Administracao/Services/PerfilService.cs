@@ -9,8 +9,9 @@ namespace NexusAPI.Administracao.Services
 {
     public class PerfilService : NexusService<PerfilEnvioDTO, PerfilRespostaDTO, Perfil>
     {
-        public PerfilService(PerfilRepository repository, TokenService tokenService)
-        : base(repository, tokenService) { }
+        public PerfilService
+            (PerfilRepository repository, TokenService tokenService, UsuariosService usuarioService)
+        : base(repository, tokenService, usuarioService) { }
 
         public override Perfil ConverterParaClasse(PerfilEnvioDTO obj)
         {
@@ -25,6 +26,11 @@ namespace NexusAPI.Administracao.Services
 
         public async override Task<PerfilRespostaDTO> ConverterParaDTORespostaAsync(Perfil obj)
         {
+            if (usuarioService == null)
+            {
+                throw new Exception("A instância da classe de serviço não pode ser nula.");
+            }
+
             var resposta = new PerfilRespostaDTO()
             {
                 UID = obj.UID,
@@ -36,14 +42,14 @@ namespace NexusAPI.Administracao.Services
                 {
                     UID = obj.AtualizadoPorUID,
                     Nome = obj.AtualizadoPorUID != null ?
-                        await ObterNomePorUIDAsync(obj.AtualizadoPorUID) : null
+                        await usuarioService.ObterNomePorUIDAsync(obj.AtualizadoPorUID) : null
                 },
 
                 UsuarioCriador = new NexusNomeObjeto()
                 {
                     UID = obj.UsuarioCriadorUID,
                     Nome = obj.UsuarioCriadorUID != null ?
-                        await ObterNomePorUIDAsync(obj.UsuarioCriadorUID) : null
+                        await usuarioService.ObterNomePorUIDAsync(obj.UsuarioCriadorUID) : null
                 },
                 DataCriacao = obj.DataCriacao
             };

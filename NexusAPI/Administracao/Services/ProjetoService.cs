@@ -9,8 +9,9 @@ namespace NexusAPI.Administracao.Services
 {
     public class ProjetoService : NexusService<ProjetoEnvioDTO, ProjetoRespostaDTO, Projeto>
     {
-        public ProjetoService(ProjetoRepository repository, TokenService tokenService) 
-        : base(repository, tokenService) { }
+        public ProjetoService(
+            ProjetoRepository repository, TokenService tokenService, UsuariosService usuarioService) 
+        : base(repository, tokenService, usuarioService) { }
 
         public override Projeto ConverterParaClasse(ProjetoEnvioDTO obj)
         {
@@ -25,6 +26,11 @@ namespace NexusAPI.Administracao.Services
 
         public async override Task<ProjetoRespostaDTO> ConverterParaDTORespostaAsync(Projeto obj)
         {
+            if (usuarioService == null)
+            {
+                throw new Exception("A instância da classe de serviço não pode ser nula.");
+            }
+
             var resposta = new ProjetoRespostaDTO()
             {
                 UID = obj.UID,
@@ -36,14 +42,14 @@ namespace NexusAPI.Administracao.Services
                 {
                     UID = obj.AtualizadoPorUID,
                     Nome = obj.AtualizadoPorUID != null ?
-                        await ObterNomePorUIDAsync(obj.AtualizadoPorUID) : null
+                        await usuarioService.ObterNomePorUIDAsync(obj.AtualizadoPorUID) : null
                 },
 
                 UsuarioCriador = new NexusNomeObjeto()
                 {
                     UID = obj.UsuarioCriadorUID,
                     Nome = obj.UsuarioCriadorUID != null ?
-                        await ObterNomePorUIDAsync(obj.UsuarioCriadorUID) : null
+                        await usuarioService.ObterNomePorUIDAsync(obj.UsuarioCriadorUID) : null
                 },
                 DataCriacao = obj.DataCriacao
             };

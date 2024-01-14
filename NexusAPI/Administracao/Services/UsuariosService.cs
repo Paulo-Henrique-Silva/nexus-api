@@ -4,6 +4,7 @@ using NexusAPI.Administracao.Exceptions;
 using NexusAPI.Administracao.Models;
 using NexusAPI.Administracao.Repositories;
 using NexusAPI.Compartilhado.EntidadesBase;
+using NexusAPI.Compartilhado.Exceptions;
 using NexusAPI.Compartilhado.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -14,7 +15,7 @@ namespace NexusAPI.Administracao.Services
     public class UsuariosService : NexusService<UsuarioEnvioDTO, UsuarioRespostaDTO, Usuario>
     {
         public UsuariosService(UsuarioRepository repository, TokenService tokenService) 
-        : base(repository, tokenService) { }
+        : base(repository, tokenService, null) { }
 
         public override Usuario ConverterParaClasse(UsuarioEnvioDTO obj)
         {
@@ -125,6 +126,12 @@ namespace NexusAPI.Administracao.Services
             { 
                 Token = tokenService.GerarToken(usuario.UID, usuario.NomeAcesso) 
             };
+        }
+
+        public async Task<string> ObterNomePorUIDAsync(string UID)
+        {
+            var obj = await repository.ObterPorUIDAsync(UID);
+            return obj == null ? throw new ObjetoNaoEncontrado(UID) : obj.Nome;
         }
     }
 }

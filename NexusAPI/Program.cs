@@ -60,10 +60,12 @@ namespace NexusAPI
 
             //Serviços
             builder.Services.AddScoped<UsuariosService, UsuariosService>();
+            builder.Services.AddScoped<NotificacaoService, NotificacaoService>();
             builder.Services.AddScoped<TokenService, TokenService>();
 
             //Repositories
             builder.Services.AddScoped<UsuarioRepository, UsuarioRepository>();
+            builder.Services.AddScoped<NotificacaoRepository, NotificacaoRepository>();
 
             #endregion
 

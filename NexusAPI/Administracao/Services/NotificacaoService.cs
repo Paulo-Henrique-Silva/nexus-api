@@ -7,10 +7,12 @@ using NexusAPI.Compartilhado.Services;
 
 namespace NexusAPI.Administracao.Services
 {
-    public class NotificacaoService : NexusService<NotificacaoEnvioDTO, NotificacaoRespostaDTO, Notificacao>
+    public class NotificacaoService 
+    : NexusService<NotificacaoEnvioDTO, NotificacaoRespostaDTO, Notificacao>
     {
-        public NotificacaoService(NotificacaoRepository repository, TokenService tokenService) 
-        : base(repository, tokenService) { }
+        public NotificacaoService(
+            NotificacaoRepository repository, TokenService tokenService, UsuariosService usuariosService) 
+        : base(repository, tokenService, usuariosService) { }
 
         public override Notificacao ConverterParaClasse(NotificacaoEnvioDTO obj)
         {
@@ -26,6 +28,11 @@ namespace NexusAPI.Administracao.Services
 
         public async override Task<NotificacaoRespostaDTO> ConverterParaDTORespostaAsync(Notificacao obj)
         {
+            if (usuarioService == null)
+            {
+                throw new Exception("A instância da classe de serviço não pode ser nula.");
+            }
+
             var resposta = new NotificacaoRespostaDTO()
             {
                 UID = obj.UID,
@@ -35,13 +42,13 @@ namespace NexusAPI.Administracao.Services
                 {
                     UID = obj.AtualizadoPorUID,
                     Nome = obj.AtualizadoPorUID != null ?
-                        await ObterNomePorUIDAsync(obj.AtualizadoPorUID) : null
+                        await usuarioService.ObterNomePorUIDAsync(obj.AtualizadoPorUID) : null
                 },
                 UsuarioCriador = new NexusNomeObjeto()
                 {
                     UID = obj.UsuarioCriadorUID,
                     Nome = obj.UsuarioCriadorUID != null ?
-                        await ObterNomePorUIDAsync(obj.UsuarioCriadorUID) : null
+                        await usuarioService.ObterNomePorUIDAsync(obj.UsuarioCriadorUID) : null
                 },
                 DataCriacao = obj.DataCriacao
             };

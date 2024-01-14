@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NexusAPI.Administracao.Models;
 using NexusAPI.Administracao.Repositories;
+using NexusAPI.Administracao.Services;
 using NexusAPI.Compartilhado.Exceptions;
 using NexusAPI.Compartilhado.Services;
 using System.Security.Claims;
@@ -19,10 +20,14 @@ namespace NexusAPI.Compartilhado.EntidadesBase
 
         protected readonly TokenService tokenService;
 
-        public NexusService(NexusRepository<O> repository, TokenService tokenService)
+        protected readonly UsuariosService? usuarioService;
+
+        public NexusService(NexusRepository<O> repository, TokenService tokenService, 
+            UsuariosService? usuarioService)
         {
             this.repository = repository;
             this.tokenService = tokenService;
+            this.usuarioService = usuarioService;
         }
 
         public virtual async Task<U> ObterPorUIDAsync(string UID)
@@ -93,12 +98,6 @@ namespace NexusAPI.Compartilhado.EntidadesBase
         {
             var obj = await repository.ObterPorUIDAsync(UID);
             return obj != null;
-        }
-
-        public virtual async Task<string> ObterNomePorUIDAsync(string UID)
-        {
-            var obj = await repository.ObterPorUIDAsync(UID);
-            return obj == null ? throw new ObjetoNaoEncontrado(UID) : obj.Nome;
         }
 
         public abstract Task<U> ConverterParaDTORespostaAsync(O obj);

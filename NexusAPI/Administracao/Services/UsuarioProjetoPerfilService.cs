@@ -15,11 +15,14 @@ namespace NexusAPI.Administracao.Services
 
         private readonly TokenService tokenService;
 
+        private readonly UsuariosService usuarioService;
+
         public UsuarioProjetoPerfilService(UsuarioProjetoPerfilRepository repository, 
-            TokenService tokenService) 
+            TokenService tokenService, UsuariosService usuarioService) 
         {
             this.repository = repository;
             this.tokenService = tokenService;
+            this.usuarioService = usuarioService;
         }
 
         public virtual async Task<UsuarioProjetoPerfilRespostaDTO> ObterPorUIDAsync(string usuarioUID,
@@ -105,15 +108,6 @@ namespace NexusAPI.Administracao.Services
             return obj != null;
         }
 
-        //public virtual async Task<string> ObterNomePorUIDAsync(string usuarioUID,
-        //    string projetoUID, string perfilUID)
-        //{
-        //    var obj = await repository.ObterPorUIDAsync(usuarioUID, projetoUID, perfilUID);
-        //    return obj == null ? 
-        //        throw new ObjetoNaoEncontrado(UID) : 
-        //        obj;
-        //}
-
         public async Task<UsuarioProjetoPerfilRespostaDTO> ConverterParaDTORespostaAsync(
             UsuarioProjetoPerfil obj)
         {
@@ -128,15 +122,15 @@ namespace NexusAPI.Administracao.Services
                 AtualizadoPor = new NexusNomeObjeto()
                 {
                     UID = obj.AtualizadoPorUID,
-                    //Nome = obj.AtualizadoPorUID != null ?
-                    //    await ObterNomePorUIDAsync(obj.AtualizadoPorUID) : null
+                    Nome = obj.AtualizadoPorUID != null ?
+                        await usuarioService.ObterNomePorUIDAsync(obj.AtualizadoPorUID) : null
                 },
 
                 UsuarioCriador = new NexusNomeObjeto()
                 {
                     UID = obj.UsuarioCriadorUID,
-                    //Nome = obj.UsuarioCriadorUID != null ?
-                    //    await ObterNomePorUIDAsync(obj.UsuarioCriadorUID) : null
+                    Nome = obj.UsuarioCriadorUID != null ?
+                        await usuarioService.ObterNomePorUIDAsync(obj.UsuarioCriadorUID) : null
                 },
                 DataCriacao = obj.DataCriacao
             };
