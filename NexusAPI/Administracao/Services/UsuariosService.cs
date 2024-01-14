@@ -1,5 +1,4 @@
-﻿using Microsoft.Identity.Client.Extensibility;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using NexusAPI.Administracao.DTOs;
 using NexusAPI.Administracao.Exceptions;
 using NexusAPI.Administracao.Models;

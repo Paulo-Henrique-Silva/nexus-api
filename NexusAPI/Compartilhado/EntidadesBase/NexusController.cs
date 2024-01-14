@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using NexusAPI.Administracao.DTOs;
+﻿using Microsoft.AspNetCore.Mvc;
 using NexusAPI.Administracao.Exceptions;
-using NexusAPI.Administracao.Services;
 using NexusAPI.Compartilhado.Exceptions;
 using NexusAPI.Compartilhado.RespostasAPI;
 
