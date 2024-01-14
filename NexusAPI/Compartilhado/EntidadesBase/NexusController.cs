@@ -58,7 +58,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
         {
             try
             {
-                var resposta = await service.AdicionarAsync(envioDTO);
+                var resposta = await service.AdicionarAsync(envioDTO, User.Claims);
                 return Created("", resposta);
             }
             catch (NomeAcessoJaCadastrado ex)
@@ -77,7 +77,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
         {
             try
             {
-                var resposta = await service.EditarAsync(UID, envioDTO);
+                var resposta = await service.EditarAsync(UID, envioDTO, User.Claims);
                 return Ok(resposta);
             }
             catch (ObjetoNaoEncontrado ex)
@@ -95,7 +95,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
         {
             try
             {
-                await service.DeletarAsync(UID);
+                await service.DeletarAsync(UID, User.Claims);
                 return Ok();
             }
             catch (ObjetoNaoEncontrado ex)

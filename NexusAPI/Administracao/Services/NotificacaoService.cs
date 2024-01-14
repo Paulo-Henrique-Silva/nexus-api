@@ -3,14 +3,14 @@ using NexusAPI.Administracao.DTOs.Usuario;
 using NexusAPI.Administracao.Models;
 using NexusAPI.Administracao.Repositories;
 using NexusAPI.Compartilhado.EntidadesBase;
+using NexusAPI.Compartilhado.Services;
 
 namespace NexusAPI.Administracao.Services
 {
     public class NotificacaoService : NexusService<NotificacaoEnvioDTO, NotificacaoRespostaDTO, Notificacao>
     {
-        public NotificacaoService(NotificacaoRepository repository) : base(repository)
-        {
-        }
+        public NotificacaoService(NotificacaoRepository repository, TokenService tokenService) 
+        : base(repository, tokenService) { }
 
         public override Notificacao ConverterParaClasse(NotificacaoEnvioDTO obj)
         {

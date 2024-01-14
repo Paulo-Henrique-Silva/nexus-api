@@ -8,6 +8,7 @@ using Microsoft.OpenApi.Models;
 using NexusAPI.Administracao.Repositories;
 using NexusAPI.Administracao.Services;
 using NexusAPI.Compartilhado.Data;
+using NexusAPI.Compartilhado.Services;
 using System.Text;
 
 namespace NexusAPI
@@ -55,11 +56,16 @@ namespace NexusAPI
 
             builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
+            #region InjeçãoDeDependência
+
             //Serviços
             builder.Services.AddScoped<UsuariosService, UsuariosService>();
+            builder.Services.AddScoped<TokenService, TokenService>();
 
             //Repositories
             builder.Services.AddScoped<UsuarioRepository, UsuarioRepository>();
+
+            #endregion
 
             builder.Services.AddDbContext<DataContext>(obj => obj.UseSqlServer(builder.Configuration["Logging:ConnectionStrings:conexaoBD"]));
 

@@ -12,8 +12,8 @@ using System.Net;
 namespace NexusAPI.Administracao.Controllers
 {
     [Controller]
-    [Route("api/[controller]")]
-    public class UsuariosController : NexusController<UsuarioEnvioDTO, UsuarioRespostaDTO, Usuario>
+    public class UsuariosController 
+    : NexusController<UsuarioEnvioDTO, UsuarioRespostaDTO, Usuario>
     {
         public UsuariosController(UsuariosService service) : base(service) { }
 
@@ -52,11 +52,12 @@ namespace NexusAPI.Administracao.Controllers
         }
 
         [HttpPost]
-        public override async Task<IActionResult> Post([FromBody] UsuarioEnvioDTO usuarioEnvioDTO)
+        public override async Task<IActionResult> Post(
+            [FromBody] UsuarioEnvioDTO usuarioEnvioDTO)
         {
             try
             {
-                var usuario = await service.AdicionarAsync(usuarioEnvioDTO);
+                var usuario = await service.AdicionarAsync(usuarioEnvioDTO, User.Claims);
                 return Created("", usuario);
             }
             catch (NomeAcessoJaCadastrado ex)
@@ -76,7 +77,7 @@ namespace NexusAPI.Administracao.Controllers
         {
             try
             {
-                var usuario = await service.EditarAsync(UID, usuarioEnvioDTO);
+                var usuario = await service.EditarAsync(UID, usuarioEnvioDTO, User.Claims);
                 return Ok(usuario);
             }
             catch (ObjetoNaoEncontrado ex)
@@ -95,7 +96,7 @@ namespace NexusAPI.Administracao.Controllers
         {
             try
             {
-                await service.DeletarAsync(UID);
+                await service.DeletarAsync(UID, User.Claims);
                 return Ok();
             }
             catch (ObjetoNaoEncontrado ex)

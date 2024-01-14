@@ -2,6 +2,8 @@
 using NexusAPI.Administracao.Models;
 using NexusAPI.Administracao.Repositories;
 using NexusAPI.Compartilhado.Exceptions;
+using NexusAPI.Compartilhado.Services;
+using System.Security.Claims;
 
 namespace NexusAPI.Compartilhado.EntidadesBase
 {
@@ -15,9 +17,12 @@ namespace NexusAPI.Compartilhado.EntidadesBase
     {
         protected readonly NexusRepository<O> repository;
 
-        public NexusService(NexusRepository<O> repository)
+        protected readonly TokenService tokenService;
+
+        public NexusService(NexusRepository<O> repository, TokenService tokenService)
         {
             this.repository = repository;
+            this.tokenService = tokenService;
         }
 
         public virtual async Task<U> ObterPorUIDAsync(string UID)
@@ -36,16 +41,16 @@ namespace NexusAPI.Compartilhado.EntidadesBase
             return objsResposta;
         }
 
-        public virtual async Task<U> AdicionarAsync(T obj)
+        public virtual async Task<U> AdicionarAsync(T obj, IEnumerable<Claim> claims)
         {
             var objClasse = ConverterParaClasse(obj);
             objClasse.UID = Guid.NewGuid().ToString();
-            objClasse.UsuarioCriadorUID = null;
+            objClasse.UsuarioCriadorUID = tokenService.ObterUID(claims);
 
             return await ConverterParaDTORespostaAsync(await repository.AdicionarAsync(objClasse));
         }
 
-        public virtual async Task<U> EditarAsync(string UID, T obj)
+        public virtual async Task<U> EditarAsync(string UID, T obj, IEnumerable<Claim> claims)
         {
             var objClasse = ConverterParaClasse(obj);
             objClasse.UID = UID;
@@ -55,7 +60,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
                 throw new ObjetoNaoEncontrado(objClasse.UID);
             }
 
-            objClasse.AtualizadoPorUID = null;
+            objClasse.AtualizadoPorUID = tokenService.ObterUID(claims);
 
             await repository.EditarAsync(objClasse);
 
@@ -69,7 +74,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
             return await ConverterParaDTORespostaAsync(objAposSerAtualizado);
         }
 
-        public virtual async Task DeletarAsync(string UID)
+        public virtual async Task DeletarAsync(string UID, IEnumerable<Claim> claims)
         {
             var objClasse = await repository.ObterPorUIDAsync(UID);
 
@@ -78,7 +83,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
                 throw new ObjetoNaoEncontrado(UID);
             }
 
-            objClasse.FinalizadoPorUID = null;
+            objClasse.FinalizadoPorUID = tokenService.ObterUID(claims);
 
             await repository.DeletarAsync(objClasse);
         }
