@@ -21,6 +21,8 @@ namespace NexusAPI.Compartilhado.EntidadesBase
         public virtual async Task<T?> ObterPorUIDAsync(string UID)
         {
             return await dataContext.Set<T>()
+                .Include(obj => obj.AtualizadoPor)
+                .Include(obj => obj.UsuarioCriador)
                 .FirstOrDefaultAsync(obj => obj.UID.Equals(UID) && obj.DataFinalizacao == null);
         }
         
@@ -33,6 +35,8 @@ namespace NexusAPI.Compartilhado.EntidadesBase
         public virtual async Task<List<T>> ObterTudoAsync(int numeroPagina)
         {
             return await dataContext.Set<T>()
+                .Include(obj => obj.AtualizadoPor)
+                .Include(obj => obj.UsuarioCriador)
                 .Where(obj => obj.DataFinalizacao == null)
                 .OrderBy(obj => obj.DataCriacao)
                 .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)

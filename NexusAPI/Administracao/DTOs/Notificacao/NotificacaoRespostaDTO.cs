@@ -4,6 +4,6 @@ namespace NexusAPI.Administracao.DTOs.Notificacao
 {
     public class NotificacaoRespostaDTO : NexusRespostaDTO
     {
-        public string UsuarioUID { get; set; } = "";
+        public NexusNomeObjeto Usuario { get; set; } = new NexusNomeObjeto();
     }
 }

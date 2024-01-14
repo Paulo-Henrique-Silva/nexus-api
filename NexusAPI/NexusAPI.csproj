@@ -35,6 +35,7 @@
     <Folder Include="Dados\DTOs\Requisicao\" />
     <Folder Include="Dados\Interfaces\" />
     <Folder Include="Dados\Services\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

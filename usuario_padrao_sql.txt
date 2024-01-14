@@ -1,0 +1,1 @@
+INSERT INTO USUARIOS (UID, NOMEACESSO, SENHA, NOME, DESCRICAO, DATACRIACAO) VALUES ('admin', 'admin', '1', 'Admin', 'Usuário padrão', GETDATE());

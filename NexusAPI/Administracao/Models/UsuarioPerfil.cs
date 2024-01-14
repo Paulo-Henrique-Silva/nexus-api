@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NexusAPI.Administracao.Models
 {
-    [Table("USUARIOPROJETOPERFIL")]
-    public class UsuarioProjetoPerfil : NexusRelacionamento
+    [Table("USUARIOPERFIL")]
+    public class UsuarioPerfil : NexusRelacionamento
     {
         [Column("USUARIOUID")]
         [ForeignKey("Usuario")]
@@ -32,6 +32,6 @@ namespace NexusAPI.Administracao.Models
         [Required]
         public bool Ativado { get; set; }
 
-        public UsuarioProjetoPerfil() : base() { }
+        public UsuarioPerfil() : base() { }
     }
 }

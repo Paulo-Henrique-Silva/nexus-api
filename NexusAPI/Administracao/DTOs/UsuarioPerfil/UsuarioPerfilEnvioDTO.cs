@@ -1,8 +1,10 @@
 ﻿using NexusAPI.Compartilhado.EntidadesBase;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
-namespace NexusAPI.Administracao.DTOs.UsuarioProjetoPerfil
+namespace NexusAPI.Administracao.DTOs.UsuarioPerfil
 {
-    public class UsuarioProjetoPerfilRespostaDTO : NexusRespostaDTO
+    public class UsuarioPerfilEnvioDTO : NexusEnvioDTO
     {
         public string UsuarioUID { get; set; } = "";
 

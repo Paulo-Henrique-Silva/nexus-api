@@ -20,20 +20,16 @@ namespace NexusAPI.Compartilhado.EntidadesBase
 
         protected readonly TokenService tokenService;
 
-        protected readonly UsuariosService? usuarioService;
-
-        public NexusService(NexusRepository<O> repository, TokenService tokenService, 
-            UsuariosService? usuarioService)
+        public NexusService(NexusRepository<O> repository, TokenService tokenService)
         {
             this.repository = repository;
             this.tokenService = tokenService;
-            this.usuarioService = usuarioService;
         }
 
         public virtual async Task<U> ObterPorUIDAsync(string UID)
         {
             var obj = await repository.ObterPorUIDAsync(UID);
-            return obj == null ? throw new ObjetoNaoEncontrado(UID) : await ConverterParaDTORespostaAsync(obj);
+            return obj == null ? throw new ObjetoNaoEncontrado(UID) : ConverterParaDTORespostaAsync(obj);
         }
 
         public virtual async Task<List<U>> ObterTudoAsync(int numeroPagina)
@@ -41,7 +37,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
             var objs = await repository.ObterTudoAsync(numeroPagina);
             var objsResposta = new List<U>();
                 
-            objs.ForEach(async o => objsResposta.Add(await ConverterParaDTORespostaAsync(o)));
+            objs.ForEach(o => objsResposta.Add(ConverterParaDTORespostaAsync(o)));
 
             return objsResposta;
         }
@@ -52,7 +48,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
             objClasse.UID = Guid.NewGuid().ToString();
             objClasse.UsuarioCriadorUID = tokenService.ObterUID(claims);
 
-            return await ConverterParaDTORespostaAsync(await repository.AdicionarAsync(objClasse));
+            return ConverterParaDTORespostaAsync(await repository.AdicionarAsync(objClasse));
         }
 
         public virtual async Task<U> EditarAsync(string UID, T obj, IEnumerable<Claim> claims)
@@ -76,7 +72,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
                 throw new Exception("Objeto atualizado não foi encontrado.");
             }
 
-            return await ConverterParaDTORespostaAsync(objAposSerAtualizado);
+            return ConverterParaDTORespostaAsync(objAposSerAtualizado);
         }
 
         public virtual async Task DeletarAsync(string UID, IEnumerable<Claim> claims)
@@ -100,7 +96,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
             return obj != null;
         }
 
-        public abstract Task<U> ConverterParaDTORespostaAsync(O obj);
+        public abstract U ConverterParaDTORespostaAsync(O obj);
 
         public abstract O ConverterParaClasse(T obj);
     }

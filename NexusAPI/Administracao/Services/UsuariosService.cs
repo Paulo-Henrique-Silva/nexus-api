@@ -15,7 +15,7 @@ namespace NexusAPI.Administracao.Services
     public class UsuariosService : NexusService<UsuarioEnvioDTO, UsuarioRespostaDTO, Usuario>
     {
         public UsuariosService(UsuarioRepository repository, TokenService tokenService) 
-        : base(repository, tokenService, null) { }
+        : base(repository, tokenService) { }
 
         public override Usuario ConverterParaClasse(UsuarioEnvioDTO obj)
         {
@@ -30,7 +30,7 @@ namespace NexusAPI.Administracao.Services
             return resposta;
         }
 
-        public override async Task<UsuarioRespostaDTO> ConverterParaDTORespostaAsync(Usuario obj)
+        public override UsuarioRespostaDTO ConverterParaDTORespostaAsync(Usuario obj)
         {
             var resposta = new UsuarioRespostaDTO()
             {
@@ -42,18 +42,16 @@ namespace NexusAPI.Administracao.Services
                 DataUltimaAtualizacao = obj.DataUltimaAtualizacao,
                 AtualizadoPor = new NexusNomeObjeto()
                 {
-                    UID = obj.AtualizadoPorUID,
-                    Nome = obj.AtualizadoPorUID != null ?
-                        await ObterNomePorUIDAsync(obj.AtualizadoPorUID) : null
+                    UID = obj.AtualizadoPor?.UID,
+                    Nome = obj.AtualizadoPor?.Nome
                 },
 
+                DataCriacao = obj.DataCriacao,
                 UsuarioCriador = new NexusNomeObjeto()
                 {
-                    UID = obj.UsuarioCriadorUID,
-                    Nome = obj.UsuarioCriadorUID != null ?
-                        await ObterNomePorUIDAsync(obj.UsuarioCriadorUID) : null
-                },
-                DataCriacao = obj.DataCriacao
+                    UID = obj.UsuarioCriador?.UID,
+                    Nome = obj.UsuarioCriador?.Nome
+                }
             };
 
             return resposta;
@@ -84,7 +82,7 @@ namespace NexusAPI.Administracao.Services
             usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
             usuario.UsuarioCriadorUID = tokenService.ObterUID(claims);
 
-            var dtoResposta = await ConverterParaDTORespostaAsync
+            var dtoResposta = ConverterParaDTORespostaAsync
             (
                 await repository.AdicionarAsync(usuario)
             );
@@ -126,12 +124,6 @@ namespace NexusAPI.Administracao.Services
             { 
                 Token = tokenService.GerarToken(usuario.UID, usuario.NomeAcesso) 
             };
-        }
-
-        public async Task<string> ObterNomePorUIDAsync(string UID)
-        {
-            var obj = await repository.ObterPorUIDAsync(UID);
-            return obj == null ? throw new ObjetoNaoEncontrado(UID) : obj.Nome;
         }
     }
 }

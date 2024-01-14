@@ -9,9 +9,8 @@ namespace NexusAPI.Administracao.Services
 {
     public class PerfilService : NexusService<PerfilEnvioDTO, PerfilRespostaDTO, Perfil>
     {
-        public PerfilService
-            (PerfilRepository repository, TokenService tokenService, UsuariosService usuarioService)
-        : base(repository, tokenService, usuarioService) { }
+        public PerfilService (PerfilRepository repository, TokenService tokenService)
+        : base(repository, tokenService) { }
 
         public override Perfil ConverterParaClasse(PerfilEnvioDTO obj)
         {
@@ -24,13 +23,8 @@ namespace NexusAPI.Administracao.Services
             return resposta;
         }
 
-        public async override Task<PerfilRespostaDTO> ConverterParaDTORespostaAsync(Perfil obj)
+        public override PerfilRespostaDTO ConverterParaDTORespostaAsync(Perfil obj)
         {
-            if (usuarioService == null)
-            {
-                throw new Exception("A instância da classe de serviço não pode ser nula.");
-            }
-
             var resposta = new PerfilRespostaDTO()
             {
                 UID = obj.UID,
@@ -40,16 +34,14 @@ namespace NexusAPI.Administracao.Services
                 DataUltimaAtualizacao = obj.DataUltimaAtualizacao,
                 AtualizadoPor = new NexusNomeObjeto()
                 {
-                    UID = obj.AtualizadoPorUID,
-                    Nome = obj.AtualizadoPorUID != null ?
-                        await usuarioService.ObterNomePorUIDAsync(obj.AtualizadoPorUID) : null
+                    UID = obj.AtualizadoPor?.UID,
+                    Nome = obj.AtualizadoPor?.Nome
                 },
 
                 UsuarioCriador = new NexusNomeObjeto()
                 {
-                    UID = obj.UsuarioCriadorUID,
-                    Nome = obj.UsuarioCriadorUID != null ?
-                        await usuarioService.ObterNomePorUIDAsync(obj.UsuarioCriadorUID) : null
+                    UID = obj.UsuarioCriador?.UID,
+                    Nome = obj.UsuarioCriador?.Nome
                 },
                 DataCriacao = obj.DataCriacao
             };

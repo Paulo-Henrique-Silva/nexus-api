@@ -10,8 +10,8 @@ namespace NexusAPI.Administracao.Services
     public class ProjetoService : NexusService<ProjetoEnvioDTO, ProjetoRespostaDTO, Projeto>
     {
         public ProjetoService(
-            ProjetoRepository repository, TokenService tokenService, UsuariosService usuarioService) 
-        : base(repository, tokenService, usuarioService) { }
+            ProjetoRepository repository, TokenService tokenService) 
+        : base(repository, tokenService) { }
 
         public override Projeto ConverterParaClasse(ProjetoEnvioDTO obj)
         {
@@ -24,13 +24,8 @@ namespace NexusAPI.Administracao.Services
             return resposta;
         }
 
-        public async override Task<ProjetoRespostaDTO> ConverterParaDTORespostaAsync(Projeto obj)
+        public override ProjetoRespostaDTO ConverterParaDTORespostaAsync(Projeto obj)
         {
-            if (usuarioService == null)
-            {
-                throw new Exception("A instância da classe de serviço não pode ser nula.");
-            }
-
             var resposta = new ProjetoRespostaDTO()
             {
                 UID = obj.UID,
@@ -40,18 +35,16 @@ namespace NexusAPI.Administracao.Services
                 DataUltimaAtualizacao = obj.DataUltimaAtualizacao,
                 AtualizadoPor = new NexusNomeObjeto()
                 {
-                    UID = obj.AtualizadoPorUID,
-                    Nome = obj.AtualizadoPorUID != null ?
-                        await usuarioService.ObterNomePorUIDAsync(obj.AtualizadoPorUID) : null
+                    UID = obj.AtualizadoPor?.UID,
+                    Nome = obj.AtualizadoPor?.Nome
                 },
 
+                DataCriacao = obj.DataCriacao,
                 UsuarioCriador = new NexusNomeObjeto()
                 {
-                    UID = obj.UsuarioCriadorUID,
-                    Nome = obj.UsuarioCriadorUID != null ?
-                        await usuarioService.ObterNomePorUIDAsync(obj.UsuarioCriadorUID) : null
+                    UID = obj.UsuarioCriador?.UID,
+                    Nome = obj.UsuarioCriador?.Nome
                 },
-                DataCriacao = obj.DataCriacao
             };
 
             return resposta;

@@ -16,7 +16,7 @@ namespace NexusAPI.Compartilhado.Data
 
         public DbSet<Usuario> Usuarios { get; set; }
 
-        public DbSet<UsuarioProjetoPerfil> UsuarioProjetoPerfil { get; set; }
+        public DbSet<UsuarioPerfil> UsuarioProjetoPerfil { get; set; }
 
         public DbSet<Atribuicao> Atribuicoes { get; set; }
 
@@ -42,7 +42,7 @@ namespace NexusAPI.Compartilhado.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UsuarioProjetoPerfil>()
+            modelBuilder.Entity<UsuarioPerfil>()
                 .HasKey(e => new { e.ProjetoUID, e.UsuarioUID, e.PerfilUID });
         }
     }

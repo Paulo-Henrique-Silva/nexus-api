@@ -370,37 +370,52 @@ namespace NexusAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "USUARIOPROJETOPERFIL",
+                name: "USUARIOPERFIL",
                 columns: table => new
                 {
                     USUARIOUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PROJETOUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PERFILUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ATIVADO = table.Column<bool>(type: "bit", nullable: false),
-                    ATUALIZADOPOR = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAULTIMAATUALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    USUARIOCRIADOR = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATACRIACAO = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FINALIZADOPOR = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FINALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DATAFINALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_USUARIOPROJETOPERFIL", x => new { x.PROJETOUID, x.USUARIOUID, x.PERFILUID });
+                    table.PrimaryKey("PK_USUARIOPERFIL", x => new { x.PROJETOUID, x.USUARIOUID, x.PERFILUID });
                     table.ForeignKey(
-                        name: "FK_USUARIOPROJETOPERFIL_PERFIS_PERFILUID",
+                        name: "FK_USUARIOPERFIL_PERFIS_PERFILUID",
                         column: x => x.PERFILUID,
                         principalTable: "PERFIS",
                         principalColumn: "UID",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_USUARIOPROJETOPERFIL_PROJETOS_PROJETOUID",
+                        name: "FK_USUARIOPERFIL_PROJETOS_PROJETOUID",
                         column: x => x.PROJETOUID,
                         principalTable: "PROJETOS",
                         principalColumn: "UID",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_USUARIOPROJETOPERFIL_USUARIOS_USUARIOUID",
+                        name: "FK_USUARIOPERFIL_USUARIOS_ATUALIZADOPORUID",
+                        column: x => x.ATUALIZADOPORUID,
+                        principalTable: "USUARIOS",
+                        principalColumn: "UID");
+                    table.ForeignKey(
+                        name: "FK_USUARIOPERFIL_USUARIOS_FINALIZADOPORUID",
+                        column: x => x.FINALIZADOPORUID,
+                        principalTable: "USUARIOS",
+                        principalColumn: "UID");
+                    table.ForeignKey(
+                        name: "FK_USUARIOPERFIL_USUARIOS_USUARIOCRIADORUID",
+                        column: x => x.USUARIOCRIADORUID,
+                        principalTable: "USUARIOS",
+                        principalColumn: "UID");
+                    table.ForeignKey(
+                        name: "FK_USUARIOPERFIL_USUARIOS_USUARIOUID",
                         column: x => x.USUARIOUID,
                         principalTable: "USUARIOS",
                         principalColumn: "UID",
@@ -861,13 +876,28 @@ namespace NexusAPI.Migrations
                 column: "USUARIOCRIADORUID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_USUARIOPROJETOPERFIL_PERFILUID",
-                table: "USUARIOPROJETOPERFIL",
+                name: "IX_USUARIOPERFIL_ATUALIZADOPORUID",
+                table: "USUARIOPERFIL",
+                column: "ATUALIZADOPORUID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_USUARIOPERFIL_FINALIZADOPORUID",
+                table: "USUARIOPERFIL",
+                column: "FINALIZADOPORUID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_USUARIOPERFIL_PERFILUID",
+                table: "USUARIOPERFIL",
                 column: "PERFILUID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_USUARIOPROJETOPERFIL_USUARIOUID",
-                table: "USUARIOPROJETOPERFIL",
+                name: "IX_USUARIOPERFIL_USUARIOCRIADORUID",
+                table: "USUARIOPERFIL",
+                column: "USUARIOCRIADORUID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_USUARIOPERFIL_USUARIOUID",
+                table: "USUARIOPERFIL",
                 column: "USUARIOUID");
 
             migrationBuilder.CreateIndex(
@@ -908,7 +938,7 @@ namespace NexusAPI.Migrations
                 name: "SOFTWARES");
 
             migrationBuilder.DropTable(
-                name: "USUARIOPROJETOPERFIL");
+                name: "USUARIOPERFIL");
 
             migrationBuilder.DropTable(
                 name: "CICLOVIDAPASSOS");

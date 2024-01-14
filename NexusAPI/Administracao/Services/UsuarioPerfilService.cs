@@ -1,5 +1,5 @@
 ﻿using NexusAPI.Administracao.DTOs.Projeto;
-using NexusAPI.Administracao.DTOs.UsuarioProjetoPerfil;
+using NexusAPI.Administracao.DTOs.UsuarioPerfil;
 using NexusAPI.Administracao.Models;
 using NexusAPI.Administracao.Repositories;
 using NexusAPI.Compartilhado.EntidadesBase;
@@ -9,55 +9,52 @@ using System.Security.Claims;
 
 namespace NexusAPI.Administracao.Services
 {
-    public class UsuarioProjetoPerfilService
+    public class UsuarioPerfilService
     {
-        private readonly UsuarioProjetoPerfilRepository repository;
+        private readonly UsuarioPerfilRepository repository;
 
         private readonly TokenService tokenService;
 
-        private readonly UsuariosService usuarioService;
-
-        public UsuarioProjetoPerfilService(UsuarioProjetoPerfilRepository repository, 
-            TokenService tokenService, UsuariosService usuarioService) 
+        public UsuarioPerfilService(UsuarioPerfilRepository repository, 
+            TokenService tokenService) 
         {
             this.repository = repository;
             this.tokenService = tokenService;
-            this.usuarioService = usuarioService;
         }
 
-        public virtual async Task<UsuarioProjetoPerfilRespostaDTO> ObterPorUIDAsync(string usuarioUID,
+        public virtual async Task<UsuarioPerfilRespostaDTO> ObterPorUIDAsync(string usuarioUID,
             string projetoUID, string perfilUID)
         {
             var obj = await repository.ObterPorUIDAsync(usuarioUID, projetoUID, perfilUID);
 
             return obj == null ? 
                 throw new ObjetoNaoEncontrado($"{usuarioUID} + ${projetoUID} + ${perfilUID}") 
-                : await ConverterParaDTORespostaAsync(obj);
+                : ConverterParaDTORespostaAsync(obj);
         }
 
-        public virtual async Task<List<UsuarioProjetoPerfilRespostaDTO>> ObterTudoAsync(
+        public virtual async Task<List<UsuarioPerfilRespostaDTO>> ObterTudoAsync(
             int numeroPagina)
         {
             var objs = await repository.ObterTudoAsync(numeroPagina);
-            var objsResposta = new List<UsuarioProjetoPerfilRespostaDTO>();
+            var objsResposta = new List<UsuarioPerfilRespostaDTO>();
 
-            objs.ForEach(async o => objsResposta.Add(await ConverterParaDTORespostaAsync(o)));
+            objs.ForEach(async o => objsResposta.Add(ConverterParaDTORespostaAsync(o)));
 
             return objsResposta;
         }
 
-        public virtual async Task<UsuarioProjetoPerfilRespostaDTO> AdicionarAsync(
-            UsuarioProjetoPerfilEnvioDTO obj, IEnumerable<Claim> claims)
+        public virtual async Task<UsuarioPerfilRespostaDTO> AdicionarAsync(
+            UsuarioPerfilEnvioDTO obj, IEnumerable<Claim> claims)
         {
             var objClasse = ConverterParaClasse(obj);
             objClasse.UsuarioCriadorUID = tokenService.ObterUID(claims);
 
-            return await ConverterParaDTORespostaAsync(await repository.AdicionarAsync(objClasse));
+            return ConverterParaDTORespostaAsync(await repository.AdicionarAsync(objClasse));
         }
 
-        public virtual async Task<UsuarioProjetoPerfilRespostaDTO> EditarAsync(
+        public virtual async Task<UsuarioPerfilRespostaDTO> EditarAsync(
             string usuarioUID, string projetoUID, string perfilUID,
-            UsuarioProjetoPerfilEnvioDTO obj, IEnumerable<Claim> claims)
+            UsuarioPerfilEnvioDTO obj, IEnumerable<Claim> claims)
         {
             var objClasse = ConverterParaClasse(obj);
 
@@ -82,7 +79,7 @@ namespace NexusAPI.Administracao.Services
                 throw new Exception("Objeto atualizado não foi encontrado.");
             }
 
-            return await ConverterParaDTORespostaAsync(objAposSerAtualizado);
+            return ConverterParaDTORespostaAsync(objAposSerAtualizado);
         }
 
         public virtual async Task DeletarAsync(string usuarioUID,
@@ -108,39 +105,52 @@ namespace NexusAPI.Administracao.Services
             return obj != null;
         }
 
-        public async Task<UsuarioProjetoPerfilRespostaDTO> ConverterParaDTORespostaAsync(
-            UsuarioProjetoPerfil obj)
+        public UsuarioPerfilRespostaDTO ConverterParaDTORespostaAsync(
+            UsuarioPerfil obj)
         {
-            var resposta = new UsuarioProjetoPerfilRespostaDTO()
+            var resposta = new UsuarioPerfilRespostaDTO()
             {
-                UsuarioUID = obj.UsuarioUID,
-                ProjetoUID = obj.ProjetoUID,
-                PerfilUID = obj.PerfilUID,
+                Usuario = new NexusNomeObjeto()
+                {
+                    UID = obj.Usuario?.UID,
+                    Nome = obj.Usuario?.Nome,
+                },
+
+                Projeto = new NexusNomeObjeto()
+                {
+                    UID = obj.Projeto?.UID,
+                    Nome = obj.Projeto?.Nome,
+                },
+
+                Perfil = new NexusNomeObjeto()
+                {
+                    UID = obj.Perfil?.UID,
+                    Nome = obj.Perfil?.Nome,
+                },
+
                 Ativado = obj.Ativado,
 
                 DataUltimaAtualizacao = obj.DataUltimaAtualizacao,
                 AtualizadoPor = new NexusNomeObjeto()
                 {
-                    UID = obj.AtualizadoPorUID,
-                    Nome = obj.AtualizadoPorUID != null ?
-                        await usuarioService.ObterNomePorUIDAsync(obj.AtualizadoPorUID) : null
+                    UID = obj.AtualizadoPor?.UID,
+                    Nome = obj.AtualizadoPor?.Nome
                 },
 
                 UsuarioCriador = new NexusNomeObjeto()
                 {
-                    UID = obj.UsuarioCriadorUID,
-                    Nome = obj.UsuarioCriadorUID != null ?
-                        await usuarioService.ObterNomePorUIDAsync(obj.UsuarioCriadorUID) : null
+                    UID = obj.UsuarioCriador?.UID,
+                    Nome = obj.UsuarioCriador?.Nome
                 },
-                DataCriacao = obj.DataCriacao
+                DataCriacao = obj.DataCriacao,
             };
 
             return resposta;
         }
 
-        public UsuarioProjetoPerfil ConverterParaClasse(UsuarioProjetoPerfilEnvioDTO obj)
+        public UsuarioPerfil ConverterParaClasse(UsuarioPerfilEnvioDTO obj)
         {
-            var resposta = new UsuarioProjetoPerfil()
+            var resposta = new UsuarioPerfil()
             {
                 UsuarioUID = obj.UsuarioUID,
                 ProjetoUID = obj.ProjetoUID,

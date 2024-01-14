@@ -11,8 +11,8 @@ namespace NexusAPI.Administracao.Services
     : NexusService<NotificacaoEnvioDTO, NotificacaoRespostaDTO, Notificacao>
     {
         public NotificacaoService(
-            NotificacaoRepository repository, TokenService tokenService, UsuariosService usuariosService) 
-        : base(repository, tokenService, usuariosService) { }
+            NotificacaoRepository repository, TokenService tokenService) 
+        : base(repository, tokenService) { }
 
         public override Notificacao ConverterParaClasse(NotificacaoEnvioDTO obj)
         {
@@ -26,13 +26,8 @@ namespace NexusAPI.Administracao.Services
             return resposta;
         }
 
-        public async override Task<NotificacaoRespostaDTO> ConverterParaDTORespostaAsync(Notificacao obj)
+        public override NotificacaoRespostaDTO ConverterParaDTORespostaAsync(Notificacao obj)
         {
-            if (usuarioService == null)
-            {
-                throw new Exception("A instância da classe de serviço não pode ser nula.");
-            }
-
             var resposta = new NotificacaoRespostaDTO()
             {
                 UID = obj.UID,
@@ -40,17 +35,20 @@ namespace NexusAPI.Administracao.Services
                 Descricao = obj.Descricao,
                 AtualizadoPor = new NexusNomeObjeto()
                 {
-                    UID = obj.AtualizadoPorUID,
-                    Nome = obj.AtualizadoPorUID != null ?
-                        await usuarioService.ObterNomePorUIDAsync(obj.AtualizadoPorUID) : null
+                    UID = obj.AtualizadoPor?.UID,
+                    Nome = obj.AtualizadoPor?.Nome
                 },
                 UsuarioCriador = new NexusNomeObjeto()
                 {
-                    UID = obj.UsuarioCriadorUID,
-                    Nome = obj.UsuarioCriadorUID != null ?
-                        await usuarioService.ObterNomePorUIDAsync(obj.UsuarioCriadorUID) : null
+                    UID = obj.UsuarioCriador?.UID,
+                    Nome = obj.UsuarioCriador?.Nome
                 },
-                DataCriacao = obj.DataCriacao
+                DataCriacao = obj.DataCriacao,
+                Usuario = new NexusNomeObjeto()
+                {
+                    UID = obj.Usuario?.UID,
+                    Nome = obj.Usuario?.Nome
+                }
             };
 
             return resposta;

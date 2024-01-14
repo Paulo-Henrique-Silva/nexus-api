@@ -12,7 +12,7 @@ using NexusAPI.Compartilhado.Data;
 namespace NexusAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240113143758_M1")]
+    [Migration("20240114213424_M1")]
     partial class M1
     {
         /// <inheritdoc />
@@ -242,7 +242,7 @@ namespace NexusAPI.Migrations
                     b.ToTable("USUARIOS");
                 });
 
-            modelBuilder.Entity("NexusAPI.Administracao.Models.UsuarioProjetoPerfil", b =>
+            modelBuilder.Entity("NexusAPI.Administracao.Models.UsuarioPerfil", b =>
                 {
                     b.Property<string>("ProjetoUID")
                         .HasColumnType("nvarchar(450)")
@@ -260,9 +260,9 @@ namespace NexusAPI.Migrations
                         .HasColumnType("bit")
                         .HasColumnName("ATIVADO");
 
-                    b.Property<string>("AtualizadorPor")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ATUALIZADOPOR");
+                    b.Property<string>("AtualizadoPorUID")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("ATUALIZADOPORUID");
 
                     b.Property<DateTime>("DataCriacao")
                         .HasColumnType("datetime2")
@@ -276,22 +276,27 @@ namespace NexusAPI.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("DATAULTIMAATUALIZACAO");
 
-                    b.Property<string>("FinalizadoPor")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("FINALIZADOPOR");
+                    b.Property<string>("FinalizadoPorUID")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("FINALIZADOPORUID");
 
-                    b.Property<string>("UsuarioCriador")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("USUARIOCRIADOR");
+                    b.Property<string>("UsuarioCriadorUID")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("USUARIOCRIADORUID");
 
                     b.HasKey("ProjetoUID", "UsuarioUID", "PerfilUID");
 
+                    b.HasIndex("AtualizadoPorUID");
+
+                    b.HasIndex("FinalizadoPorUID");
+
                     b.HasIndex("PerfilUID");
+
+                    b.HasIndex("UsuarioCriadorUID");
 
                     b.HasIndex("UsuarioUID");
 
-                    b.ToTable("USUARIOPROJETOPERFIL");
+                    b.ToTable("USUARIOPERFIL");
                 });
 
             modelBuilder.Entity("NexusAPI.CicloVida.Models.Atribuicao", b =>
@@ -1011,8 +1016,16 @@ namespace NexusAPI.Migrations
                     b.Navigation("UsuarioCriador");
                 });
 
-            modelBuilder.Entity("NexusAPI.Administracao.Models.UsuarioProjetoPerfil", b =>
+            modelBuilder.Entity("NexusAPI.Administracao.Models.UsuarioPerfil", b =>
                 {
+                    b.HasOne("NexusAPI.Administracao.Models.Usuario", "AtualizadoPor")
+                        .WithMany()
+                        .HasForeignKey("AtualizadoPorUID");
+
+                    b.HasOne("NexusAPI.Administracao.Models.Usuario", "FinalizadoPor")
+                        .WithMany()
+                        .HasForeignKey("FinalizadoPorUID");
+
                     b.HasOne("NexusAPI.Administracao.Models.Perfil", "Perfil")
                         .WithMany()
                         .HasForeignKey("PerfilUID")
@@ -1025,17 +1038,27 @@ namespace NexusAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("NexusAPI.Administracao.Models.Usuario", "UsuarioCriador")
+                        .WithMany()
+                        .HasForeignKey("UsuarioCriadorUID");
+
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "Usuario")
                         .WithMany()
                         .HasForeignKey("UsuarioUID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("AtualizadoPor");
+
+                    b.Navigation("FinalizadoPor");
+
                     b.Navigation("Perfil");
 
                     b.Navigation("Projeto");
 
                     b.Navigation("Usuario");
+
+                    b.Navigation("UsuarioCriador");
                 });
 
             modelBuilder.Entity("NexusAPI.CicloVida.Models.Atribuicao", b =>
