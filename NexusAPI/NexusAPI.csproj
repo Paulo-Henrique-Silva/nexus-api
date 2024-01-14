@@ -27,12 +27,6 @@
     <Folder Include="CicloVida\Controllers\" />
     <Folder Include="CicloVida\Services\" />
     <Folder Include="Dados\Controllers\" />
-    <Folder Include="Dados\DTOs\Componente\" />
-    <Folder Include="Dados\DTOs\Equipamento\" />
-    <Folder Include="Dados\DTOs\Localizacao\" />
-    <Folder Include="Dados\DTOs\Manutencao\" />
-    <Folder Include="Dados\DTOs\Software\" />
-    <Folder Include="Dados\DTOs\Requisicao\" />
     <Folder Include="Dados\Interfaces\" />
     <Folder Include="Dados\Services\" />
     <Folder Include="Migrations\" />
