@@ -20,7 +20,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
         public virtual async Task<T?> ObterPorIdAsync(string UID)
         {
             return await dataContext.Set<T>()
-                .FirstAsync(obj => obj.UID.Equals(UID) && obj.DataFinalizacao == null);
+                .FirstOrDefaultAsync(obj => obj.UID.Equals(UID) && obj.DataFinalizacao == null);
         }
         
         /// <summary>

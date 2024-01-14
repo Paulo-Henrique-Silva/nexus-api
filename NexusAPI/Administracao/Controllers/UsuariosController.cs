@@ -3,11 +3,15 @@ using NexusAPI.Administracao.DTOs;
 using NexusAPI.Administracao.Exceptions;
 using NexusAPI.Administracao.Models;
 using NexusAPI.Administracao.Services;
+using NexusAPI.Compartilhado.Exceptions;
 using NexusAPI.Compartilhado.RespostasAPI;
 using System.Net;
 
 namespace NexusAPI.Administracao.Controllers
 {
+    //TODO: Criar classe BaseController para reutilizar endpoints comuns.
+    //Colocar exceções de "objeto nao encontrado" em BaseService editar e excluir.
+
     [Controller]
     [Route("api/[controller]")]
     public class UsuariosController : ControllerBase
@@ -20,12 +24,35 @@ namespace NexusAPI.Administracao.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] int pagina = 1)
         {
-            return Ok(new Usuario()
+            try
             {
-                Nome = "Paulo Silva"
-            });
+                var usuarios = await usuariosService.ObterTudoAsync(pagina);
+                return Ok(usuarios);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, RespostaErroAPI.RespostaErro500);
+            }
+        }
+
+        [HttpGet("{UID}")]
+        public async Task<IActionResult> Get([FromRoute] string UID)
+        {
+            try
+            {
+                var usuario = await usuariosService.ObterPorUIDAsync(UID);
+                return Ok(usuario);
+            }
+            catch (ObjetoNaoEncontrado ex)
+            {
+                return NotFound(new RespostaErroAPI(404, ex.Message));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, RespostaErroAPI.RespostaErro500);
+            }
         }
 
         [HttpPost]
@@ -39,6 +66,63 @@ namespace NexusAPI.Administracao.Controllers
             catch (NomeAcessoJaCadastrado ex)
             {
                 return BadRequest(new RespostaErroAPI(400, ex.Message));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, RespostaErroAPI.RespostaErro500);
+            }
+        }
+
+        [HttpPut("{UID}")]
+        public async Task<IActionResult> Put([FromRoute] string UID, 
+            [FromBody] UsuarioEnvioDTO usuarioEnvioDTO)
+        {
+            try
+            {
+                var usuario = await usuariosService.EditarAsync(usuarioEnvioDTO);
+                return Ok(usuario);
+            }
+            catch (ObjetoNaoEncontrado ex)
+            {
+                return NotFound(new RespostaErroAPI(404, ex.Message));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, RespostaErroAPI.RespostaErro500);
+            }
+        }
+
+        [HttpDelete("{UID}")]
+        public async Task<IActionResult> Delete([FromRoute] string UID,
+            [FromBody] UsuarioEnvioDTO usuarioEnvioDTO)
+        {
+            try
+            {
+                usuarioEnvioDTO.UID = UID;
+                await usuariosService.DeletarAsync(usuarioEnvioDTO);
+                return Ok();
+            }
+            catch (ObjetoNaoEncontrado ex)
+            {
+                return NotFound(new RespostaErroAPI(404, ex.Message));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, RespostaErroAPI.RespostaErro500);
+            }
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> PostLogin([FromBody] UsuarioEnvioDTO usuarioEnvioDTO)
+        {
+            try
+            {
+                var token = await usuariosService.AutenticarUsuario(usuarioEnvioDTO);
+                return Ok(token);
+            }
+            catch (CredenciaisIncorretas ex)
+            {
+                return Unauthorized(new RespostaErroAPI(401, ex.Message));
             }
             catch (Exception)
             {

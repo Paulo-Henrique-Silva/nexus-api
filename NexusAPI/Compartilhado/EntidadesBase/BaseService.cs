@@ -19,7 +19,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
             this.repository = repository;
         }
 
-        public virtual async Task<U> ObterPorIdAsync(string UID)
+        public virtual async Task<U> ObterPorUIDAsync(string UID)
         {
             var obj = await repository.ObterPorIdAsync(UID);
             return obj == null ? throw new ObjetoNaoEncontrado(UID) : await ConverterParaDTORespostaAsync(obj);

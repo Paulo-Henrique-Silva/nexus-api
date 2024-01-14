@@ -106,7 +106,7 @@ namespace NexusAPI.Administracao.Services
             var usuario = await usuarioRepository.ObterPorNomeAcessoAsync(usuarioEnvio.NomeAcesso);
 
             //Se o usuario não existe ou a senha for incorreta.
-            if (usuario == null || !BCrypt.Net.BCrypt.Verify(usuario.Senha, usuarioEnvio.Senha))
+            if (usuario == null || !BCrypt.Net.BCrypt.Verify(usuarioEnvio.Senha, usuario.Senha))
             {
                 throw new CredenciaisIncorretas();
             }
