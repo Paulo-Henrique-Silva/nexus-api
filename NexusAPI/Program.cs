@@ -1,8 +1,11 @@
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using NexusAPI.Administracao.Repositories;
+using NexusAPI.Administracao.Services;
 using NexusAPI.Compartilhado.Data;
 using System.Text;
 
@@ -21,9 +24,17 @@ namespace NexusAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            string conexao = "Server=(localdb)\\MSSQLLocalDB;Database=BDNEXUS;Trusted_Connection=True;MultipleActiveResultSets=True";
-            builder.Services.AddDbContext<DataContext>(obj => obj.UseSqlServer(conexao));
+            builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
+            //Serviços
+            builder.Services.AddScoped<UsuariosService, UsuariosService>();
+
+            //Repositories
+            builder.Services.AddScoped<UsuarioRepository, UsuarioRepository>();
+
+            builder.Services.AddDbContext<DataContext>(obj => obj.UseSqlServer(builder.Configuration["Logging:ConnectionStrings:conexaoBD"]));
+
+            //Auth JWT
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -37,9 +48,9 @@ namespace NexusAPI
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = builder.Configuration["issuer"],
-                    ValidAudience = builder.Configuration["audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("FyuO45D@#AlkS76E!%CqwU32Z&*AmbO")),
+                    ValidIssuer = builder.Configuration["Logging:Auth:issuer"],
+                    ValidAudience = builder.Configuration["Logging:Auth:audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Logging:Auth:chave"])),
                     ClockSkew = TimeSpan.Zero
                 };
             });

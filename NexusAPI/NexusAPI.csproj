@@ -26,7 +26,6 @@
   <ItemGroup>
     <Folder Include="CicloVida\Controllers\" />
     <Folder Include="CicloVida\Services\" />
-    <Folder Include="Compartilhado\RespostasAPI\" />
     <Folder Include="Dados\Controllers\" />
     <Folder Include="Dados\Interfaces\" />
     <Folder Include="Dados\Services\" />

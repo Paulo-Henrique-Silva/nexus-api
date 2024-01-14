@@ -1,16 +1,23 @@
-﻿using NexusAPI.Administracao.DTOs;
+﻿using Microsoft.IdentityModel.Tokens;
+using NexusAPI.Administracao.DTOs;
+using NexusAPI.Administracao.Exceptions;
 using NexusAPI.Administracao.Models;
 using NexusAPI.Administracao.Repositories;
 using NexusAPI.Compartilhado.EntidadesBase;
-using NexusAPI.Compartilhado.Exceptions;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace NexusAPI.Administracao.Services
 {
     public class UsuariosService : BaseService<UsuarioEnvioDTO, UsuarioRespostaDTO, Usuario>
     {
-        public UsuariosService(UsuarioRepository repository) : base(repository)
-        {
+        private readonly IConfiguration configuration;
 
+        public UsuariosService(UsuarioRepository repository, IConfiguration configuration) 
+        : base(repository)
+        {
+            this.configuration = configuration;
         }
 
         public override Usuario ConverterParaClasse(UsuarioEnvioDTO obj)
@@ -25,7 +32,7 @@ namespace NexusAPI.Administracao.Services
             return resposta;
         }
 
-        public override async Task<UsuarioRespostaDTO> ConverterParaDTOResposta(Usuario obj)
+        public override async Task<UsuarioRespostaDTO> ConverterParaDTORespostaAsync(Usuario obj)
         {
             var resposta = new UsuarioRespostaDTO()
             {
@@ -33,29 +40,104 @@ namespace NexusAPI.Administracao.Services
                 UID = obj.UID,
                 Nome = obj.Nome,
                 Descricao = obj.Descricao,
-                AtualizadoPor = new BaseObjetoResposta() 
+                AtualizadoPor = new BaseNomeObjeto() 
                 { 
                     UID = obj.AtualizadoPorUID, 
-                    Nome = obj.AtualizadoPorUID != null ? await ObterNomePorUID(obj.AtualizadoPorUID) : null 
+                    Nome = obj.AtualizadoPorUID != null ? 
+                        await ObterNomePorUIDAsync(obj.AtualizadoPorUID) : null 
                 },
-                UsuarioCriador = new BaseObjetoResposta()
+                UsuarioCriador = new BaseNomeObjeto()
                 {
                     UID = obj.UsuarioCriadorUID,
-                    Nome = obj.UsuarioCriadorUID != null ? await ObterNomePorUID(obj.UsuarioCriadorUID) : null
+                    Nome = obj.UsuarioCriadorUID != null ? 
+                        await ObterNomePorUIDAsync(obj.UsuarioCriadorUID) : null
                 }
             };
 
             return resposta;
         }
 
-        public async Task<bool> AutenticarUsuario(UsuarioEnvioDTO usuarioEnvio)
+        public async override Task<UsuarioRespostaDTO> AdicionarAsync(UsuarioEnvioDTO usuarioDTO)
         {
-            throw new NotImplementedException();
+            var usuarioRepository = repository as UsuarioRepository;
+
+            //Converte repository para UsuarioRepository para utilizar método especifico.
+            if (usuarioRepository == null)
+            {
+                throw new Exception("Instância incorreta em 'repository'.");
+            }
+
+            var usuarioBD = await usuarioRepository.ObterPorNomeAcessoAsync(usuarioDTO.NomeAcesso);
+
+            if (usuarioBD != null)
+            {
+                throw new NomeAcessoJaCadastrado();
+            }
+
+            var usuario = ConverterParaClasse(usuarioDTO);
+
+            usuario.UID = Guid.NewGuid().ToString();
+            usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
+            usuario.UsuarioCriadorUID = null;
+
+            var dtoResposta = await ConverterParaDTORespostaAsync(await repository.AdicionarAsync(usuario));
+            dtoResposta.Token = new TokenDTO(GerarToken(dtoResposta.UID, dtoResposta.NomeAcesso));
+
+            return dtoResposta;
         }
 
-        public string GerarToken()
+        /// <summary>
+        /// Autentica o usuário e retorna o token JWT.
+        /// </summary>
+        /// <param name="usuarioEnvio"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        /// <exception cref="CredenciaisIncorretas"></exception>
+        public async Task<TokenDTO> AutenticarUsuario(UsuarioEnvioDTO usuarioEnvio)
         {
-            throw new NotImplementedException();
+            var usuarioRepository = repository as UsuarioRepository;
+
+            //Converte repository para UsuarioRepository para utilizar metodo especifico.
+            if (usuarioRepository == null)
+            {
+                throw new Exception("Instância incorreta em 'repository'.");
+            }
+
+            var usuario = await usuarioRepository.ObterPorNomeAcessoAsync(usuarioEnvio.NomeAcesso);
+
+            //Se o usuario não existe ou a senha for incorreta.
+            if (usuario == null || !BCrypt.Net.BCrypt.Verify(usuario.Senha, usuarioEnvio.Senha))
+            {
+                throw new CredenciaisIncorretas();
+            }
+
+            return new TokenDTO(GerarToken(usuario.UID, usuario.NomeAcesso));
+        }
+
+        public string GerarToken(string usuarioUID, string nomeAcesso)
+        {
+            var claims = new[]
+            {
+                new Claim("UID", usuarioUID),
+                new Claim("nomeAcesso", nomeAcesso),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
+
+            var chaveSecreta = new SymmetricSecurityKey(Encoding.UTF8
+                .GetBytes(configuration["Logging:Auth:chave"]));
+
+            var credenciais = new SigningCredentials(chaveSecreta, SecurityAlgorithms.HmacSha256);
+            var expiracao = DateTime.Now.AddMinutes(30);
+
+            var token = new JwtSecurityToken(
+                issuer: configuration["Logging:Auth:issuer"],
+                audience: configuration["Logging:Auth:audience"],
+                claims: claims,
+                expires: expiracao,
+                signingCredentials: credenciais
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }

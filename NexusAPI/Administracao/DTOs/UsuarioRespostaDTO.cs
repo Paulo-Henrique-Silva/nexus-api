@@ -2,8 +2,10 @@
 
 namespace NexusAPI.Administracao.DTOs
 {
-    public class UsuarioRespostaDTO : BaseRespostaDTO
+    public class UsuarioRespostaDTO : BaseObjetoRespostaDTO
     {
         public string NomeAcesso { get; set; } = "";
+
+        public TokenDTO? Token { get; set; }
     }
 }
