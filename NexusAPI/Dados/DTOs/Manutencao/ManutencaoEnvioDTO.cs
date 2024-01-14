@@ -13,8 +13,6 @@ namespace NexusAPI.Dados.DTOs.Manutencao
 
         public string ResponsavelUID { get; set; } = "";
 
-        public Usuario? Responsavel { get; set; }
-
         public string? Solucao { get; set; }
     }
 }

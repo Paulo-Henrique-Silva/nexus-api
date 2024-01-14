@@ -1,20 +1,23 @@
 ﻿using NexusAPI.Administracao.DTOs.Projeto;
-using NexusAPI.Administracao.DTOs.Usuario;
 using NexusAPI.Administracao.Models;
-using NexusAPI.Administracao.Repositories;
 using NexusAPI.Compartilhado.EntidadesBase;
 using NexusAPI.Compartilhado.Services;
+using NexusAPI.Dados.DTOs.Localizacao;
+using NexusAPI.Dados.Models;
 
-namespace NexusAPI.Administracao.Services
+namespace NexusAPI.Dados.Services
 {
-    public class ProjetoService : NexusService<ProjetoEnvioDTO, ProjetoRespostaDTO, Projeto>
+    public class LocalizacaoService
+    : NexusService<LocalizacaoEnvioDTO, LocalizacaoRespostaDTO, Localizacao>
     {
-        public ProjetoService(ProjetoRepository repository, TokenService tokenService) 
-        : base(repository, tokenService) { }
-
-        public override Projeto ConverterParaClasse(ProjetoEnvioDTO obj)
+        public LocalizacaoService(NexusRepository<Localizacao> repository, TokenService tokenService) 
+        : base(repository, tokenService)
         {
-            var resposta = new Projeto()
+        }
+
+        public override Localizacao ConverterParaClasse(LocalizacaoEnvioDTO obj)
+        {
+            var resposta = new Localizacao()
             {
                 Nome = obj.Nome,
                 Descricao = obj.Descricao
@@ -23,9 +26,9 @@ namespace NexusAPI.Administracao.Services
             return resposta;
         }
 
-        public override ProjetoRespostaDTO ConverterParaDTORespostaAsync(Projeto obj)
+        public override LocalizacaoRespostaDTO ConverterParaDTORespostaAsync(Localizacao obj)
         {
-            var resposta = new ProjetoRespostaDTO()
+            var resposta = new LocalizacaoRespostaDTO()
             {
                 UID = obj.UID,
                 Nome = obj.Nome,

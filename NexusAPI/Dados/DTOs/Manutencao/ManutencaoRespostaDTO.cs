@@ -3,7 +3,7 @@ using NexusAPI.Compartilhado.EntidadesBase;
 
 namespace NexusAPI.Dados.DTOs.Manutencao
 {
-    public class ManutencaoRespostaDTO
+    public class ManutencaoRespostaDTO : NexusRespostaDTO
     {
         public NexusNomeObjeto Componente { get; set; } = new NexusNomeObjeto();
 

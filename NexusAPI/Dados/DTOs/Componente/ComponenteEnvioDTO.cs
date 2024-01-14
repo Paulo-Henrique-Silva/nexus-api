@@ -1,10 +1,11 @@
 ﻿using NexusAPI.Dados.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using NexusAPI.Compartilhado.EntidadesBase;
 
 namespace NexusAPI.Dados.DTOs.Componente
 {
-    public class ComponenteEnvioDTO
+    public class ComponenteEnvioDTO : NexusEnvioDTO
     {
         public string NumeroSerie { get; set; } = "";
 
