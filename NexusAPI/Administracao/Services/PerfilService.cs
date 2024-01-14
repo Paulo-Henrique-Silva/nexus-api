@@ -1,5 +1,5 @@
-﻿using NexusAPI.Administracao.DTOs.Notificacao;
-using NexusAPI.Administracao.DTOs.Usuario;
+﻿using NexusAPI.Administracao.DTOs.Perfil;
+using NexusAPI.Administracao.DTOs.Projeto;
 using NexusAPI.Administracao.Models;
 using NexusAPI.Administracao.Repositories;
 using NexusAPI.Compartilhado.EntidadesBase;
@@ -7,36 +7,38 @@ using NexusAPI.Compartilhado.Services;
 
 namespace NexusAPI.Administracao.Services
 {
-    public class NotificacaoService : NexusService<NotificacaoEnvioDTO, NotificacaoRespostaDTO, Notificacao>
+    public class PerfilService : NexusService<PerfilEnvioDTO, PerfilRespostaDTO, Perfil>
     {
-        public NotificacaoService(NotificacaoRepository repository, TokenService tokenService) 
+        public PerfilService(PerfilRepository repository, TokenService tokenService)
         : base(repository, tokenService) { }
 
-        public override Notificacao ConverterParaClasse(NotificacaoEnvioDTO obj)
+        public override Perfil ConverterParaClasse(PerfilEnvioDTO obj)
         {
-            var resposta = new Notificacao()
+            var resposta = new Perfil()
             {
                 Nome = obj.Nome,
-                Descricao = obj.Descricao,
-                UsuarioUID = obj.UsuarioUID
+                Descricao = obj.Descricao
             };
 
             return resposta;
         }
 
-        public async override Task<NotificacaoRespostaDTO> ConverterParaDTORespostaAsync(Notificacao obj)
+        public async override Task<PerfilRespostaDTO> ConverterParaDTORespostaAsync(Perfil obj)
         {
-            var resposta = new NotificacaoRespostaDTO()
+            var resposta = new PerfilRespostaDTO()
             {
                 UID = obj.UID,
                 Nome = obj.Nome,
                 Descricao = obj.Descricao,
+
+                DataUltimaAtualizacao = obj.DataUltimaAtualizacao,
                 AtualizadoPor = new NexusNomeObjeto()
                 {
                     UID = obj.AtualizadoPorUID,
                     Nome = obj.AtualizadoPorUID != null ?
                         await ObterNomePorUIDAsync(obj.AtualizadoPorUID) : null
                 },
+
                 UsuarioCriador = new NexusNomeObjeto()
                 {
                     UID = obj.UsuarioCriadorUID,
