@@ -23,7 +23,8 @@ namespace NexusAPI.Dados.Services
                 cfg.CreateMap<Manutencao, ManutencaoRespostaDTO>()
                     .ForMember(c => c.AtualizadoPor, opt => opt.Ignore())
                     .ForMember(c => c.UsuarioCriador, opt => opt.Ignore())
-                    .ForMember(c => c.Componente, opt => opt.Ignore());
+                    .ForMember(c => c.Componente, opt => opt.Ignore())
+                    .ForMember(c => c.Responsavel, opt => opt.Ignore());
             });
             var mapper = new Mapper(config);
 
@@ -45,6 +46,12 @@ namespace NexusAPI.Dados.Services
             {
                 UID = obj.Componente?.UID,
                 Nome = obj.Componente?.Nome,
+            };
+
+            resposta.Responsavel = new NexusNomeObjeto()
+            {
+                UID = obj.Responsavel?.UID,
+                Nome = obj.Responsavel?.Nome,
             };
 
             return resposta;

@@ -11,9 +11,7 @@ namespace NexusAPI.Dados.DTOs.Manutencao
 
         public DateTime? DataTermino { get; set; }
 
-        public string ResponsavelUID { get; set; } = "";
-
-        public Usuario? Responsavel { get; set; }
+        public NexusNomeObjeto Responsavel { get; set; } = new NexusNomeObjeto();
 
         public string? Solucao { get; set; }
     }

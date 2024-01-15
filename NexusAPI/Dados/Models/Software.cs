@@ -7,13 +7,6 @@ namespace NexusAPI.Dados.Models
     [Table("SOFTWARES")]
     public class Software : NexusObjeto
     {
-        [Column("LOCALIZACAOUID")]
-        [ForeignKey("Localizacao")]
-        [Required]
-        public string LocalizacaoUID { get; set; } = "";
-
-        public Localizacao? Localizacao { get; set; }
-
         [Column("COMPONENTEUID")]
         [ForeignKey("Componente")]
         [Required]

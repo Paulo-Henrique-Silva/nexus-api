@@ -46,12 +46,6 @@ namespace NexusAPI.Dados.Services
                 Nome = obj.Componente?.Nome,
             };
 
-            resposta.Localizacao = new NexusNomeObjeto()
-            {
-                UID = obj.Localizacao?.UID,
-                Nome = obj.Localizacao?.Nome,
-            };
-
             return resposta;
         }
     }
