@@ -7,8 +7,13 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NexusAPI.Administracao.Repositories;
 using NexusAPI.Administracao.Services;
+using NexusAPI.CicloVidaAtivo.Models;
+using NexusAPI.CicloVidaAtivo.Repositories;
+using NexusAPI.CicloVidaAtivo.Services;
 using NexusAPI.Compartilhado.Data;
 using NexusAPI.Compartilhado.Services;
+using NexusAPI.Dados.Repositories;
+using NexusAPI.Dados.Services;
 using System.Text;
 
 namespace NexusAPI
@@ -59,13 +64,42 @@ namespace NexusAPI
             #region InjeçãoDeDependência
 
             //Serviços
-            builder.Services.AddScoped<UsuarioService, UsuarioService>();
-            builder.Services.AddScoped<NotificacaoService, NotificacaoService>();
             builder.Services.AddScoped<TokenService, TokenService>();
 
+            builder.Services.AddScoped<NotificacaoService, NotificacaoService>();
+            builder.Services.AddScoped<PerfilService, PerfilService>();
+            builder.Services.AddScoped<ProjetoService, ProjetoService>();
+            builder.Services.AddScoped<UsuarioService, UsuarioService>();
+            builder.Services.AddScoped<UsuarioPerfilService, UsuarioPerfilService>();
+
+            builder.Services.AddScoped<AtribuicaoService, AtribuicaoService>();
+            builder.Services.AddScoped<CicloVidaService, CicloVidaService>();
+            builder.Services.AddScoped<CicloVidaPasso, CicloVidaPasso>();
+
+            builder.Services.AddScoped<ComponenteService, ComponenteService>();
+            builder.Services.AddScoped<EquipamentoService, EquipamentoService>();
+            builder.Services.AddScoped<LocalizacaoService, LocalizacaoService>();
+            builder.Services.AddScoped<ManutencaoService, ManutencaoService>();
+            builder.Services.AddScoped<RequisicaoService, RequisicaoService>();
+            builder.Services.AddScoped<SoftwareService, SoftwareService>();
+
             //Repositories
-            builder.Services.AddScoped<UsuarioRepository, UsuarioRepository>();
             builder.Services.AddScoped<NotificacaoRepository, NotificacaoRepository>();
+            builder.Services.AddScoped<PerfilRepository, PerfilRepository>();
+            builder.Services.AddScoped<ProjetoRepository, ProjetoRepository>();
+            builder.Services.AddScoped<UsuarioRepository, UsuarioRepository>();
+            builder.Services.AddScoped<UsuarioPerfilRepository, UsuarioPerfilRepository>();
+
+            builder.Services.AddScoped<AtribuicaoRepository, AtribuicaoRepository>();
+            builder.Services.AddScoped<CicloVidaRepository, CicloVidaRepository>();
+            builder.Services.AddScoped<CicloVidaPasso, CicloVidaPasso>();
+
+            builder.Services.AddScoped<ComponenteRepository, ComponenteRepository>();
+            builder.Services.AddScoped<EquipamentoRepository, EquipamentoRepository>();
+            builder.Services.AddScoped<LocalizacaoRepository, LocalizacaoRepository>();
+            builder.Services.AddScoped<ManutencaoRepository, ManutencaoRepository>();
+            builder.Services.AddScoped<RequisicaoRepository, RequisicaoRepository>();
+            builder.Services.AddScoped<SoftwareRepository, SoftwareRepository>();
 
             #endregion
 
