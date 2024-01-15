@@ -59,7 +59,7 @@ namespace NexusAPI
             #region InjeçãoDeDependência
 
             //Serviços
-            builder.Services.AddScoped<UsuariosService, UsuariosService>();
+            builder.Services.AddScoped<UsuarioService, UsuarioService>();
             builder.Services.AddScoped<NotificacaoService, NotificacaoService>();
             builder.Services.AddScoped<TokenService, TokenService>();
 

@@ -11,10 +11,10 @@ using NexusAPI.Compartilhado.RespostasAPI;
 namespace NexusAPI.Administracao.Controllers
 {
     [Controller]
-    public class UsuariosController
+    public class UsuarioController
     : NexusController<UsuarioEnvioDTO, UsuarioRespostaDTO, Usuario>
     {
-        public UsuariosController(UsuariosService service) : base(service) { }
+        public UsuarioController(UsuarioService service) : base(service) { }
 
         [HttpGet]
         [Authorize]
@@ -113,7 +113,7 @@ namespace NexusAPI.Administracao.Controllers
         {
             try
             {
-                var usuarioService = service as UsuariosService;
+                var usuarioService = service as UsuarioService;
 
                 if (usuarioService == null)
                 {

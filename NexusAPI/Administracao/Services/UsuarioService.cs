@@ -13,9 +13,9 @@ using System.Text;
 
 namespace NexusAPI.Administracao.Services
 {
-    public class UsuariosService : NexusService<UsuarioEnvioDTO, UsuarioRespostaDTO, Usuario>
+    public class UsuarioService : NexusService<UsuarioEnvioDTO, UsuarioRespostaDTO, Usuario>
     {
-        public UsuariosService(UsuarioRepository repository, TokenService tokenService) 
+        public UsuarioService(UsuarioRepository repository, TokenService tokenService) 
         : base(repository, tokenService) { }
 
         public override UsuarioRespostaDTO ConverterParaDTORespostaAsync(Usuario obj)
