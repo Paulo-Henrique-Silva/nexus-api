@@ -73,18 +73,18 @@ namespace NexusAPI.Compartilhado.EntidadesBase
 
         public virtual async Task DeletarAsync(T obj)
         {
-            var objRastreado = dataContext.Set<T>().Find(obj.UID);
+            var objExistente = dataContext.Set<T>().Find(obj.UID);
 
-            if (objRastreado != null)
+            if (objExistente != null)
             {
-                objRastreado.DataFinalizacao = DateTime.Now;
+                objExistente.DataFinalizacao = DateTime.Now;
 
-                dataContext.Set<T>().Update(objRastreado);
+                dataContext.Set<T>().Update(objExistente);
                 await dataContext.SaveChangesAsync();
             }
         }
 
-        protected virtual void EditarApenasCamposDiferentes(T objExistente, T objAtualizado)
+        public virtual void EditarApenasCamposDiferentes(T objExistente, T objAtualizado)
         {
             var properties = typeof(T).GetProperties();
 

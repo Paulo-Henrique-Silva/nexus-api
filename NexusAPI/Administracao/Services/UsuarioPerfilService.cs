@@ -39,7 +39,7 @@ namespace NexusAPI.Administracao.Services
             var objs = await repository.ObterTudoAsync(numeroPagina);
             var objsResposta = new List<UsuarioPerfilRespostaDTO>();
 
-            objs.ForEach(async o => objsResposta.Add(ConverterParaDTORespostaAsync(o)));
+            objs.ForEach(o => objsResposta.Add(ConverterParaDTORespostaAsync(o)));
 
             return objsResposta;
         }
@@ -50,7 +50,17 @@ namespace NexusAPI.Administracao.Services
             var objClasse = ConverterParaClasse(obj);
             objClasse.UsuarioCriadorUID = tokenService.ObterUID(claims);
 
-            return ConverterParaDTORespostaAsync(await repository.AdicionarAsync(objClasse));
+            await repository.AdicionarAsync(objClasse);
+
+            var objAposSerCriado = await repository.ObterPorUIDAsync(obj.UsuarioUID, obj.ProjetoUID, 
+                obj.PerfilUID);
+
+            if (objAposSerCriado == null)
+            {
+                throw new Exception("Objeto atualizado não foi encontrado.");
+            }
+
+            return ConverterParaDTORespostaAsync(objAposSerCriado);
         }
 
         public virtual async Task<UsuarioPerfilRespostaDTO> EditarAsync(

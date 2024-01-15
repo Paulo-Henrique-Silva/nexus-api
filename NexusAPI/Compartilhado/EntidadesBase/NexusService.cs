@@ -49,7 +49,16 @@ namespace NexusAPI.Compartilhado.EntidadesBase
             objClasse.UID = Guid.NewGuid().ToString();
             objClasse.UsuarioCriadorUID = tokenService.ObterUID(claims);
 
-            return ConverterParaDTORespostaAsync(await repository.AdicionarAsync(objClasse));
+            var UID = (await repository.AdicionarAsync(objClasse)).UID;
+
+            var objAposSerCriado = await repository.ObterPorUIDAsync(UID);
+
+            if (objAposSerCriado == null)
+            {
+                throw new Exception("Objeto atualizado não foi encontrado.");
+            }
+
+            return ConverterParaDTORespostaAsync(objAposSerCriado);
         }
 
         public virtual async Task<U> EditarAsync(string UID, T obj, IEnumerable<Claim> claims)

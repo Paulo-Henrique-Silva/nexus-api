@@ -45,7 +45,10 @@ namespace NexusAPI.Administracao.Controllers
         {
             try
             {
-                var objeto = await service.ObterPorUIDAsync(UIDs[0], UIDs[1], UIDs[2]);
+                var UIDsSeparados = UIDs[0].Split(",");
+
+                var objeto = await service.ObterPorUIDAsync(UIDsSeparados[0], UIDsSeparados[1], 
+                    UIDsSeparados[2]);
                 return Ok(objeto);
             }
             catch (ObjetoNaoEncontrado ex)
@@ -82,8 +85,10 @@ namespace NexusAPI.Administracao.Controllers
         {
             try
             {
-                var resposta = await service.EditarAsync(UIDs[0], UIDs[1], UIDs[2], 
-                    envioDTO, User.Claims);
+                var UIDsSeparados = UIDs[0].Split(",");
+
+                var resposta = await service.EditarAsync(UIDsSeparados[0], UIDsSeparados[1], 
+                    UIDsSeparados[2], envioDTO, User.Claims);
                 return Ok(resposta);
             }
             catch (ObjetoNaoEncontrado ex)
@@ -101,7 +106,10 @@ namespace NexusAPI.Administracao.Controllers
         {
             try
             {
-                await service.DeletarAsync(UIDs[0], UIDs[1], UIDs[2], User.Claims);
+                var UIDsSeparados = UIDs[0].Split(",");
+
+                await service.DeletarAsync(UIDsSeparados[0], UIDsSeparados[1], UIDsSeparados[2], 
+                    User.Claims);
                 return Ok();
             }
             catch (ObjetoNaoEncontrado ex)

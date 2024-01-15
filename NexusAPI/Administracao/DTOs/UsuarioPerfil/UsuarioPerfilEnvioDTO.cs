@@ -4,7 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NexusAPI.Administracao.DTOs.UsuarioPerfil
 {
-    public class UsuarioPerfilEnvioDTO : NexusEnvioDTO
+    //Não herda a classe pois é um relacionamento e não uma entidade em si.
+    public class UsuarioPerfilEnvioDTO
     {
         public string UsuarioUID { get; set; } = "";
 
