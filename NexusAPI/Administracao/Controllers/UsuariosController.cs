@@ -7,12 +7,11 @@ using NexusAPI.Administracao.Services;
 using NexusAPI.Compartilhado.EntidadesBase;
 using NexusAPI.Compartilhado.Exceptions;
 using NexusAPI.Compartilhado.RespostasAPI;
-using System.Net;
 
 namespace NexusAPI.Administracao.Controllers
 {
     [Controller]
-    public class UsuariosController 
+    public class UsuariosController
     : NexusController<UsuarioEnvioDTO, UsuarioRespostaDTO, Usuario>
     {
         public UsuariosController(UsuariosService service) : base(service) { }
@@ -72,7 +71,7 @@ namespace NexusAPI.Administracao.Controllers
 
         [HttpPut("{UID}")]
         [Authorize]
-        public override async Task<IActionResult> Put([FromRoute] string UID, 
+        public override async Task<IActionResult> Put([FromRoute] string UID,
             [FromBody] UsuarioEnvioDTO usuarioEnvioDTO)
         {
             try

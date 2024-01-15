@@ -1,4 +1,5 @@
-﻿using NexusAPI.Administracao.DTOs.Projeto;
+﻿using AutoMapper;
+using NexusAPI.Administracao.DTOs.Projeto;
 using NexusAPI.Administracao.DTOs.UsuarioPerfil;
 using NexusAPI.Administracao.Models;
 using NexusAPI.Administracao.Repositories;
@@ -108,41 +109,47 @@ namespace NexusAPI.Administracao.Services
         public UsuarioPerfilRespostaDTO ConverterParaDTORespostaAsync(
             UsuarioPerfil obj)
         {
-            var resposta = new UsuarioPerfilRespostaDTO()
+            var config = new MapperConfiguration(cfg =>
             {
-                Usuario = new NexusNomeObjeto()
-                {
-                    UID = obj.Usuario?.UID,
-                    Nome = obj.Usuario?.Nome,
-                },
+                cfg.CreateMap<UsuarioPerfil, UsuarioPerfilRespostaDTO>()
+                    .ForMember(c => c.AtualizadoPor, opt => opt.Ignore())
+                    .ForMember(c => c.UsuarioCriador, opt => opt.Ignore())
+                    .ForMember(c => c.Usuario, opt => opt.Ignore())
+                    .ForMember(c => c.Projeto, opt => opt.Ignore())
+                    .ForMember(c => c.Perfil, opt => opt.Ignore());
+            });
+            var mapper = new Mapper(config);
 
-                Projeto = new NexusNomeObjeto()
-                {
-                    UID = obj.Projeto?.UID,
-                    Nome = obj.Projeto?.Nome,
-                },
+            var resposta = mapper.Map<UsuarioPerfilRespostaDTO>(obj);
 
-                Perfil = new NexusNomeObjeto()
-                {
-                    UID = obj.Perfil?.UID,
-                    Nome = obj.Perfil?.Nome,
-                },
+            resposta.AtualizadoPor = new NexusNomeObjeto()
+            {
+                UID = obj.AtualizadoPor?.UID,
+                Nome = obj.AtualizadoPor?.Nome
+            };
 
-                Ativado = obj.Ativado,
+            resposta.UsuarioCriador = new NexusNomeObjeto()
+            {
+                UID = obj.UsuarioCriador?.UID,
+                Nome = obj.UsuarioCriador?.Nome
+            };
 
-                DataUltimaAtualizacao = obj.DataUltimaAtualizacao,
-                AtualizadoPor = new NexusNomeObjeto()
-                {
-                    UID = obj.AtualizadoPor?.UID,
-                    Nome = obj.AtualizadoPor?.Nome
-                },
+            resposta.Usuario = new NexusNomeObjeto()
+            {
+                UID = obj.Usuario?.UID,
+                Nome = obj.Usuario?.Nome,
+            };
 
-                UsuarioCriador = new NexusNomeObjeto()
-                {
-                    UID = obj.UsuarioCriador?.UID,
-                    Nome = obj.UsuarioCriador?.Nome
-                },
-                DataCriacao = obj.DataCriacao,
+            resposta.Projeto = new NexusNomeObjeto()
+            {
+                UID = obj.Projeto?.UID,
+                Nome = obj.Projeto?.Nome,
+            };
+
+            resposta.Perfil = new NexusNomeObjeto()
+            {
+                UID = obj.Perfil?.UID,
+                Nome = obj.Perfil?.Nome,
             };
 
             return resposta;
@@ -150,15 +157,10 @@ namespace NexusAPI.Administracao.Services
 
         public UsuarioPerfil ConverterParaClasse(UsuarioPerfilEnvioDTO obj)
         {
-            var resposta = new UsuarioPerfil()
-            {
-                UsuarioUID = obj.UsuarioUID,
-                ProjetoUID = obj.ProjetoUID,
-                PerfilUID = obj.PerfilUID,
-                Ativado = obj.Ativado
-            };
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UsuarioPerfilEnvioDTO, UsuarioPerfil>());
+            var mapper = new Mapper(config);
 
-            return resposta;
+            return mapper.Map<UsuarioPerfil>(obj);
         }
     }
 }

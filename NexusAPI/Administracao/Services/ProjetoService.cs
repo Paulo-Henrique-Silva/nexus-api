@@ -1,4 +1,6 @@
-﻿using NexusAPI.Administracao.DTOs.Projeto;
+﻿using AutoMapper;
+using NexusAPI.Administracao.DTOs.Perfil;
+using NexusAPI.Administracao.DTOs.Projeto;
 using NexusAPI.Administracao.DTOs.Usuario;
 using NexusAPI.Administracao.Models;
 using NexusAPI.Administracao.Repositories;
@@ -12,38 +14,28 @@ namespace NexusAPI.Administracao.Services
         public ProjetoService(ProjetoRepository repository, TokenService tokenService) 
         : base(repository, tokenService) { }
 
-        public override Projeto ConverterParaClasse(ProjetoEnvioDTO obj)
-        {
-            var resposta = new Projeto()
-            {
-                Nome = obj.Nome,
-                Descricao = obj.Descricao
-            };
-
-            return resposta;
-        }
-
         public override ProjetoRespostaDTO ConverterParaDTORespostaAsync(Projeto obj)
         {
-            var resposta = new ProjetoRespostaDTO()
+            var config = new MapperConfiguration(cfg =>
             {
-                UID = obj.UID,
-                Nome = obj.Nome,
-                Descricao = obj.Descricao,
+                cfg.CreateMap<Projeto, ProjetoRespostaDTO>()
+                    .ForMember(c => c.AtualizadoPor, opt => opt.Ignore())
+                    .ForMember(c => c.UsuarioCriador, opt => opt.Ignore());
+            });
+            var mapper = new Mapper(config);
 
-                DataUltimaAtualizacao = obj.DataUltimaAtualizacao,
-                AtualizadoPor = new NexusNomeObjeto()
-                {
-                    UID = obj.AtualizadoPor?.UID,
-                    Nome = obj.AtualizadoPor?.Nome
-                },
+            var resposta = mapper.Map<ProjetoRespostaDTO>(obj);
 
-                DataCriacao = obj.DataCriacao,
-                UsuarioCriador = new NexusNomeObjeto()
-                {
-                    UID = obj.UsuarioCriador?.UID,
-                    Nome = obj.UsuarioCriador?.Nome
-                },
+            resposta.AtualizadoPor = new NexusNomeObjeto()
+            {
+                UID = obj.AtualizadoPor?.UID,
+                Nome = obj.AtualizadoPor?.Nome
+            };
+
+            resposta.UsuarioCriador = new NexusNomeObjeto()
+            {
+                UID = obj.UsuarioCriador?.UID,
+                Nome = obj.UsuarioCriador?.Nome
             };
 
             return resposta;

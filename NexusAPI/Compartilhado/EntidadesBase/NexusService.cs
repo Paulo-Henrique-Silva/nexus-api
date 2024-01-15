@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using NexusAPI.Administracao.Models;
 using NexusAPI.Administracao.Repositories;
 using NexusAPI.Administracao.Services;
@@ -98,6 +99,12 @@ namespace NexusAPI.Compartilhado.EntidadesBase
 
         public abstract U ConverterParaDTORespostaAsync(O obj);
 
-        public abstract O ConverterParaClasse(T obj);
+        public virtual O ConverterParaClasse(T obj)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<T, O>());
+            var mapper = new Mapper(config);
+
+            return mapper.Map<O>(obj);
+        }
     }
 }
