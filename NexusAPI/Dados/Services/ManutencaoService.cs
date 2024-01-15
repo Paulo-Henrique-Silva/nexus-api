@@ -1,4 +1,5 @@
-﻿using NexusAPI.Administracao.Models;
+﻿using AutoMapper;
+using NexusAPI.Administracao.Models;
 using NexusAPI.Compartilhado.EntidadesBase;
 using NexusAPI.Compartilhado.Services;
 using NexusAPI.Dados.DTOs.Componente;
@@ -14,53 +15,35 @@ namespace NexusAPI.Dados.Services
         {
         }
 
-        public override Manutencao ConverterParaClasse(ManutencaoEnvioDTO obj)
-        {
-            var resposta = new Manutencao()
-            {
-                Nome = obj.Nome,
-                Descricao = obj.Descricao,
-                ComponenteUID = obj.ComponenteUID,
-                DataInicio = obj.DataInicio, 
-                DataTermino = obj.DataTermino,
-                ResponsavelUID = obj.ResponsavelUID,
-                Solucao = obj.Solucao,
-            };
-
-            return resposta;
-        }
-
         public override ManutencaoRespostaDTO ConverterParaDTORespostaAsync(Manutencao obj)
         {
-            var resposta = new ManutencaoRespostaDTO()
+            var config = new MapperConfiguration(cfg =>
             {
-                UID = obj.UID,
-                Nome = obj.Nome,
-                Descricao = obj.Descricao,
-                DataInicio = obj.DataInicio,
-                DataTermino = obj.DataTermino,
-                ResponsavelUID = obj.ResponsavelUID,
-                Solucao = obj.Solucao,
+                cfg.CreateMap<Manutencao, ManutencaoRespostaDTO>()
+                    .ForMember(c => c.AtualizadoPor, opt => opt.Ignore())
+                    .ForMember(c => c.UsuarioCriador, opt => opt.Ignore())
+                    .ForMember(c => c.Componente, opt => opt.Ignore());
+            });
+            var mapper = new Mapper(config);
 
-                DataUltimaAtualizacao = obj.DataUltimaAtualizacao,
-                AtualizadoPor = new NexusNomeObjeto()
-                {
-                    UID = obj.AtualizadoPor?.UID,
-                    Nome = obj.AtualizadoPor?.Nome
-                },
+            var resposta = mapper.Map<ManutencaoRespostaDTO>(obj);
 
-                DataCriacao = obj.DataCriacao,
-                UsuarioCriador = new NexusNomeObjeto()
-                {
-                    UID = obj.UsuarioCriador?.UID,
-                    Nome = obj.UsuarioCriador?.Nome
-                },
+            resposta.AtualizadoPor = new NexusNomeObjeto()
+            {
+                UID = obj.AtualizadoPor?.UID,
+                Nome = obj.AtualizadoPor?.Nome
+            };
 
-                Componente = new NexusNomeObjeto()
-                {
-                    UID = obj.Componente?.UID,
-                    Nome = obj.Componente?.Nome
-                },
+            resposta.UsuarioCriador = new NexusNomeObjeto()
+            {
+                UID = obj.UsuarioCriador?.UID,
+                Nome = obj.UsuarioCriador?.Nome
+            };
+
+            resposta.Componente = new NexusNomeObjeto()
+            {
+                UID = obj.Componente?.UID,
+                Nome = obj.Componente?.Nome,
             };
 
             return resposta;
