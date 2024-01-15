@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NexusAPI.Administracao.Models;
-using NexusAPI.CicloVida.Models;
+using NexusAPI.CicloVidaAtivo.Models;
 using NexusAPI.Compartilhado.Data;
 using NexusAPI.Compartilhado.EntidadesBase;
 using NexusAPI.Compartilhado.Interfaces;

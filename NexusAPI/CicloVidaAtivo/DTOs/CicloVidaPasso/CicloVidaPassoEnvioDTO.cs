@@ -1,9 +1,9 @@
-﻿using NexusAPI.CicloVida.Enums;
+﻿using NexusAPI.CicloVidaAtivo.Enums;
 using NexusAPI.Compartilhado.EntidadesBase;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace NexusAPI.CicloVida.DTOs.CicloVidaPasso
+namespace NexusAPI.CicloVidaAtivo.DTOs.CicloVidaPasso
 {
     public class CicloVidaPassoEnvioDTO : NexusEnvioDTO
     {

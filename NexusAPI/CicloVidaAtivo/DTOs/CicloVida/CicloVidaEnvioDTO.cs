@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace NexusAPI.CicloVida.DTOs.CicloVida
+namespace NexusAPI.CicloVidaAtivo.DTOs.CicloVida
 {
     public class CicloVidaEnvioDTO : NexusEnvioDTO
     {

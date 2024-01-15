@@ -1,11 +1,11 @@
 ﻿using NexusAPI.Administracao.Models;
-using NexusAPI.CicloVida.Enums;
-using NexusAPI.CicloVida.Models;
+using NexusAPI.CicloVidaAtivo.Enums;
+using NexusAPI.CicloVidaAtivo.Models;
 using NexusAPI.Compartilhado.EntidadesBase;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace NexusAPI.CicloVida.DTOs.Atribuicao
+namespace NexusAPI.CicloVidaAtivo.DTOs.Atribuicao
 {
     public class AtribuicaoEnvioDTO : NexusEnvioDTO
     {

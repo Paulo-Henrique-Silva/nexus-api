@@ -4,12 +4,13 @@ using NexusAPI.Compartilhado.Services;
 using NexusAPI.Dados.DTOs.Manutencao;
 using NexusAPI.Dados.DTOs.Software;
 using NexusAPI.Dados.Models;
+using NexusAPI.Dados.Repositories;
 
 namespace NexusAPI.Dados.Services
 {
     public class SoftwareService : NexusService<SoftwareEnvioDTO, SoftwareRespostaDTO, Software>
     {
-        public SoftwareService(NexusRepository<Software> repository, TokenService tokenService) 
+        public SoftwareService(SoftwareRepository repository, TokenService tokenService) 
         : base(repository, tokenService)
         {
         }

@@ -1,6 +1,6 @@
 ﻿using NexusAPI.Compartilhado.EntidadesBase;
 
-namespace NexusAPI.CicloVida.DTOs.CicloVida
+namespace NexusAPI.CicloVidaAtivo.DTOs.CicloVida
 {
     public class CicloVidaRespostaDTO : NexusRespostaDTO
     {

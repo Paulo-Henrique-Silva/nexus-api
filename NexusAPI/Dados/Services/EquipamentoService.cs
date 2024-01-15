@@ -4,13 +4,15 @@ using NexusAPI.Compartilhado.Services;
 using NexusAPI.Dados.DTOs.Componente;
 using NexusAPI.Dados.DTOs.Equipamento;
 using NexusAPI.Dados.Models;
+using NexusAPI.Dados.Repositories;
 
 namespace NexusAPI.Dados.Services
 {
     public class EquipamentoService
     : NexusService<EquipamentoEnvioDTO, EquipamentoRespostaDTO, Equipamento>
     {
-        public EquipamentoService(NexusRepository<Equipamento> repository, TokenService tokenService) : base(repository, tokenService)
+        public EquipamentoService(EquipamentoRepository repository, TokenService tokenService) 
+        : base(repository, tokenService)
         {
         }
 

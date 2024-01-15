@@ -6,12 +6,14 @@ using NexusAPI.Dados.DTOs.Componente;
 using NexusAPI.Dados.DTOs.Localizacao;
 using NexusAPI.Dados.Enums;
 using NexusAPI.Dados.Models;
+using NexusAPI.Dados.Repositories;
 
 namespace NexusAPI.Dados.Services
 {
     public class ComponenteService : NexusService<ComponenteEnvioDTO, ComponenteRespostaDTO, Componente>
     {
-        public ComponenteService(NexusRepository<Componente> repository, TokenService tokenService) : base(repository, tokenService)
+        public ComponenteService(ComponenteRepository repository, TokenService tokenService) 
+        : base(repository, tokenService)
         {
         }
 

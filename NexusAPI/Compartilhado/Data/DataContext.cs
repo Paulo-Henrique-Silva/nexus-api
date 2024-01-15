@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using NexusAPI.Administracao.Models;
-using NexusAPI.CicloVida.Models;
+using NexusAPI.CicloVidaAtivo.Models;
 using NexusAPI.Dados.Models;
 
 namespace NexusAPI.Compartilhado.Data
@@ -20,7 +20,7 @@ namespace NexusAPI.Compartilhado.Data
 
         public DbSet<Atribuicao> Atribuicoes { get; set; }
 
-        public DbSet<CicloVida.Models.CicloVida> CiclosVida { get; set; }
+        public DbSet<CicloVidaAtivo.Models.CicloVida> CiclosVida { get; set; }
 
         public DbSet<CicloVidaPasso> CicloVidaPassos { get; set; }
 

@@ -5,12 +5,13 @@ using NexusAPI.Compartilhado.Services;
 using NexusAPI.Dados.DTOs.Componente;
 using NexusAPI.Dados.DTOs.Manutencao;
 using NexusAPI.Dados.Models;
+using NexusAPI.Dados.Repositories;
 
 namespace NexusAPI.Dados.Services
 {
     public class ManutencaoService : NexusService<ManutencaoEnvioDTO, ManutencaoRespostaDTO, Manutencao>
     {
-        public ManutencaoService(NexusRepository<Manutencao> repository, TokenService tokenService) 
+        public ManutencaoService(ManutencaoRepository repository, TokenService tokenService) 
         : base(repository, tokenService)
         {
         }

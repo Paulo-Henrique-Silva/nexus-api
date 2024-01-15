@@ -1,4 +1,4 @@
-﻿using NexusAPI.CicloVida.Models;
+﻿using NexusAPI.CicloVidaAtivo.Models;
 using NexusAPI.Compartilhado.EntidadesBase;
 using NexusAPI.Dados.Models;
 using System.ComponentModel.DataAnnotations;

@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using NexusAPI.CicloVida.Enums;
+using NexusAPI.CicloVidaAtivo.Enums;
 using NexusAPI.Administracao.Models;
 using NexusAPI.Compartilhado.EntidadesBase;
 
-namespace NexusAPI.CicloVida.Models
+namespace NexusAPI.CicloVidaAtivo.Models
 {
     [Table("CICLOVIDAPASSOS")]
     public class CicloVidaPasso : NexusObjeto

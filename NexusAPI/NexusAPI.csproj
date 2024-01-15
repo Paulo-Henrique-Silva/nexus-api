@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CicloVida\Controllers\" />
+    <Folder Include="CicloVidaAtivo\Controllers\" />
     <Folder Include="Dados\Controllers\" />
     <Folder Include="Migrations\" />
   </ItemGroup>

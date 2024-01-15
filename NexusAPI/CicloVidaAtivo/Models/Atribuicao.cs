@@ -1,10 +1,10 @@
 ﻿using NexusAPI.Administracao.Models;
-using NexusAPI.CicloVida.Enums;
+using NexusAPI.CicloVidaAtivo.Enums;
 using NexusAPI.Compartilhado.EntidadesBase;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace NexusAPI.CicloVida.Models
+namespace NexusAPI.CicloVidaAtivo.Models
 {
     [Table("ATRIBUICOES")]
     public class Atribuicao : NexusObjeto

@@ -1,7 +1,7 @@
-﻿using NexusAPI.CicloVida.Enums;
+﻿using NexusAPI.CicloVidaAtivo.Enums;
 using NexusAPI.Compartilhado.EntidadesBase;
 
-namespace NexusAPI.CicloVida.DTOs.Atribuicao
+namespace NexusAPI.CicloVidaAtivo.DTOs.Atribuicao
 {
     public class AtribuicaoRespostaDTO : NexusRespostaDTO
     {

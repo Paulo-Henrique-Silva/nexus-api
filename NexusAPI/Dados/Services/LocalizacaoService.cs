@@ -6,13 +6,14 @@ using NexusAPI.Compartilhado.EntidadesBase;
 using NexusAPI.Compartilhado.Services;
 using NexusAPI.Dados.DTOs.Localizacao;
 using NexusAPI.Dados.Models;
+using NexusAPI.Dados.Repositories;
 
 namespace NexusAPI.Dados.Services
 {
     public class LocalizacaoService
     : NexusService<LocalizacaoEnvioDTO, LocalizacaoRespostaDTO, Localizacao>
     {
-        public LocalizacaoService(NexusRepository<Localizacao> repository, TokenService tokenService) 
+        public LocalizacaoService(LocalizacaoRepository repository, TokenService tokenService) 
         : base(repository, tokenService)
         {
         }

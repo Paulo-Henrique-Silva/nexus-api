@@ -4,13 +4,15 @@ using NexusAPI.Compartilhado.Services;
 using NexusAPI.Dados.DTOs.Manutencao;
 using NexusAPI.Dados.DTOs.Requisicao;
 using NexusAPI.Dados.Models;
+using NexusAPI.Dados.Repositories;
 
 namespace NexusAPI.Dados.Services
 {
     public class RequisicaoService
     : NexusService<RequisicaoEnvioDTO, RequisicaoRespostaDTO, Requisicao>
     {
-        public RequisicaoService(NexusRepository<Requisicao> repository, TokenService tokenService) : base(repository, tokenService)
+        public RequisicaoService(RequisicaoRepository repository, TokenService tokenService) 
+        : base(repository, tokenService)
         {
         }
 

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using NexusAPI.Compartilhado.EntidadesBase;
 
-namespace NexusAPI.CicloVida.Models
+namespace NexusAPI.CicloVidaAtivo.Models
 {
     [Table("CICLOSVIDA")]
     public class CicloVida : NexusObjeto

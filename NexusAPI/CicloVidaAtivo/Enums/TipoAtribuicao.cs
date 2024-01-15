@@ -1,4 +1,4 @@
-﻿namespace NexusAPI.CicloVida.Enums
+﻿namespace NexusAPI.CicloVidaAtivo.Enums
 {
     public enum TipoAtribuicao
     {

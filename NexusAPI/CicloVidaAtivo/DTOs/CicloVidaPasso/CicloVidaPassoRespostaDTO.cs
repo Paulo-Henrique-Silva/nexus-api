@@ -1,7 +1,7 @@
-﻿using NexusAPI.CicloVida.Enums;
+﻿using NexusAPI.CicloVidaAtivo.Enums;
 using NexusAPI.Compartilhado.EntidadesBase;
 
-namespace NexusAPI.CicloVida.DTOs.CicloVidaPasso
+namespace NexusAPI.CicloVidaAtivo.DTOs.CicloVidaPasso
 {
     public class CicloVidaPassoRespostaDTO : NexusRespostaDTO
     {

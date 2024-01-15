@@ -1,8 +1,8 @@
-﻿using NexusAPI.CicloVida.Models;
+﻿using NexusAPI.CicloVidaAtivo.Models;
 using NexusAPI.Compartilhado.Data;
 using NexusAPI.Compartilhado.EntidadesBase;
 
-namespace NexusAPI.CicloVida.Repositories
+namespace NexusAPI.CicloVidaAtivo.Repositories
 {
     public class CicloVidaPassoRepository : NexusRepository<CicloVidaPasso>
     {
