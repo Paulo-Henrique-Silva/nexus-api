@@ -11,6 +11,8 @@ namespace NexusAPI.CicloVidaAtivo.Models
         [Required]
         public string ObjetoUID { get; set; } = "";
 
+        //Não há propriedade de navegação pois qualquer obj pode ser uma classe.
+
         public CicloVida() : base() { }
     }
 }

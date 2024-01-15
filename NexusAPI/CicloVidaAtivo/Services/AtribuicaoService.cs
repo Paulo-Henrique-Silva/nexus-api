@@ -1,30 +1,30 @@
 ﻿using AutoMapper;
-using NexusAPI.CicloVidaAtivo.DTOs.CicloVida;
+using NexusAPI.CicloVidaAtivo.DTOs.Atribuicao;
 using NexusAPI.CicloVidaAtivo.Models;
 using NexusAPI.CicloVidaAtivo.Repositories;
 using NexusAPI.Compartilhado.EntidadesBase;
 using NexusAPI.Compartilhado.Services;
-using NexusAPI.Dados.DTOs.Componente;
 
 namespace NexusAPI.CicloVidaAtivo.Services
 {
-    public class CicloVidaService : NexusService<CicloVidaEnvioDTO, CicloVidaRespostaDTO, CicloVida>
+    public class AtribuicaoService
+    : NexusService<AtribuicaoEnvioDTO, AtribuicaoRespostaDTO, Atribuicao>
     {
-        public CicloVidaService(CicloVidaRepository repository, TokenService tokenService) : base(repository, tokenService)
+        public AtribuicaoService(AtribuicaoRepository repository, TokenService tokenService) : base(repository, tokenService)
         {
         }
 
-        public override CicloVidaRespostaDTO ConverterParaDTORespostaAsync(CicloVida obj)
+        public override AtribuicaoRespostaDTO ConverterParaDTORespostaAsync(Atribuicao obj)
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<CicloVida, CicloVidaRespostaDTO>()
+                cfg.CreateMap<Atribuicao, AtribuicaoRespostaDTO>()
                     .ForMember(c => c.AtualizadoPor, opt => opt.Ignore())
                     .ForMember(c => c.UsuarioCriador, opt => opt.Ignore());
             });
             var mapper = new Mapper(config);
 
-            var resposta = mapper.Map<CicloVidaRespostaDTO>(obj);
+            var resposta = mapper.Map<AtribuicaoRespostaDTO>(obj);
 
             resposta.AtualizadoPor = new NexusNomeObjeto()
             {
@@ -36,6 +36,18 @@ namespace NexusAPI.CicloVidaAtivo.Services
             {
                 UID = obj.UsuarioCriador?.UID,
                 Nome = obj.UsuarioCriador?.Nome
+            };
+
+            resposta.Usuario = new NexusNomeObjeto()
+            {
+                UID = obj.Usuario?.UID,
+                Nome = obj.Usuario?.Nome
+            };
+
+            resposta.CicloVidaPasso = new NexusNomeObjeto()
+            {
+                UID = obj.CicloVidaPasso?.UID,
+                Nome = obj.CicloVidaPasso?.Nome
             };
 
             return resposta;

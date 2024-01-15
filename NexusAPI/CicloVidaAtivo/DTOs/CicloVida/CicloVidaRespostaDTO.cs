@@ -4,6 +4,6 @@ namespace NexusAPI.CicloVidaAtivo.DTOs.CicloVida
 {
     public class CicloVidaRespostaDTO : NexusRespostaDTO
     {
-        public NexusNomeObjeto Objeto { get; set; } = new NexusNomeObjeto();
+        public string ObjetoUID { get; set; } = "";
     }
 }
