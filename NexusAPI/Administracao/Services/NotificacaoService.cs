@@ -48,5 +48,23 @@ namespace NexusAPI.Administracao.Services
 
             return resposta;
         }
+
+        public virtual async Task<List<NotificacaoRespostaDTO>> ObterTudoPorUsuarioUIDAsync(int numeroPagina, 
+            string UsuarioUID)
+        {
+            var notificacaoRepository = repository as NotificacaoRepository;
+
+            if (notificacaoRepository == null)
+            {
+                throw new Exception("Conversão não sucedida.");
+            }
+
+            var objs = await notificacaoRepository.ObterTudoPorUsuarioUIDAsync(numeroPagina, UsuarioUID);
+            var objsResposta = new List<NotificacaoRespostaDTO>();
+
+            objs.ForEach(o => objsResposta.Add(ConverterParaDTORespostaAsync(o)));
+
+            return objsResposta;
+        }
     }
 }

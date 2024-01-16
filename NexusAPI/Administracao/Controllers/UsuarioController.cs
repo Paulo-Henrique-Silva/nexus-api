@@ -14,7 +14,13 @@ namespace NexusAPI.Administracao.Controllers
     public class UsuarioController
     : NexusController<UsuarioEnvioDTO, UsuarioRespostaDTO, Usuario>
     {
-        public UsuarioController(UsuarioService service) : base(service) { }
+        private readonly NotificacaoService notificacaoService;
+
+        public UsuarioController(UsuarioService service, NotificacaoService notificacaoService) 
+        : base(service) 
+        { 
+            this.notificacaoService = notificacaoService;
+        }
 
         [HttpGet]
         [Authorize]
@@ -126,6 +132,26 @@ namespace NexusAPI.Administracao.Controllers
             catch (CredenciaisIncorretas ex)
             {
                 return Unauthorized(new RespostaErroAPI(401, ex.Message));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, RespostaErroAPI.RespostaErro500);
+            }
+        }
+
+        [HttpGet("{UID}/Notificacoes")]
+        [Authorize]
+        public async Task<IActionResult> GetNotificacoes([FromRoute] string UID, 
+            [FromQuery] int pagina = 1)
+        {
+            try
+            {
+                var usuario = await notificacaoService.ObterTudoPorUsuarioUIDAsync(pagina, UID);
+                return Ok(usuario);
+            }
+            catch (ObjetoNaoEncontrado ex)
+            {
+                return NotFound(new RespostaErroAPI(404, ex.Message));
             }
             catch (Exception)
             {
