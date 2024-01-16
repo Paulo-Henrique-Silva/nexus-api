@@ -11,6 +11,8 @@ namespace NexusAPI.Dados.DTOs.Componente
 
         public string LocalizacaoUID { get; set; } = "";
 
+        public string ProjetoUID { get; set; } = "";
+
         public StatusComponente Status { get; set; }
 
         public string Marca { get; set; } = "";

@@ -8,6 +8,8 @@ namespace NexusAPI.Dados.DTOs.Software
 
         public string ChaveLicenca { get; set; } = "";
 
+        public string ProjetoUID { get; set; } = "";
+
         public DateTime? DataVencimento { get; set; }
     }
 }

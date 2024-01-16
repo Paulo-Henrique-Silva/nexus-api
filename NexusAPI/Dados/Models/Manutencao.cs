@@ -15,6 +15,13 @@ namespace NexusAPI.Dados.Models
 
         public Componente? Componente { get; set; }
 
+        [Column("PROJETOUID")]
+        [ForeignKey("Projeto")]
+        [Required]
+        public string ProjetoUID { get; set; } = "";
+
+        public Projeto? Projeto { get; set; }
+
         [Column("DATAINICIO")]
         public DateTime? DataInicio { get; set; }
 

@@ -27,6 +27,14 @@ namespace NexusAPI.CicloVidaAtivo.Models
         [Required]
         public TipoAtribuicao Tipo { get; set; }
 
+        [Column("DATAVENCIMENTO")]
+        [Required]
+        public DateTime DataVencimento { get; set; }
+
+        [Column("CONCLUIDA")]
+        [Required]
+        public bool Concluida { get; set; }
+
         protected Atribuicao() : base() { }
     }
 }

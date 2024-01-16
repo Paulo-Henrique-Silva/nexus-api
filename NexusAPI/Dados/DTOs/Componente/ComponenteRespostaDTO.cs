@@ -9,6 +9,8 @@ namespace NexusAPI.Dados.DTOs.Componente
 
         public NexusNomeObjeto Localizacao { get; set; } = new NexusNomeObjeto();
 
+        public NexusNomeObjeto Projeto { get; set; } = new NexusNomeObjeto();
+
         public StatusComponente Status { get; set; }
 
         public string Marca { get; set; } = "";

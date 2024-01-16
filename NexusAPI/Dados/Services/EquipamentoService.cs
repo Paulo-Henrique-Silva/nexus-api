@@ -54,6 +54,12 @@ namespace NexusAPI.Dados.Services
                 Nome = obj.Componente?.Nome,
             };
 
+            resposta.Projeto = new NexusNomeObjeto()
+            {
+                UID = obj.Projeto?.UID,
+                Nome = obj.Projeto?.Nome,
+            };
+
             return resposta;
         }
     }

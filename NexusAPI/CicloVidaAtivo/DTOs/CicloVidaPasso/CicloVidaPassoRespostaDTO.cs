@@ -12,5 +12,7 @@ namespace NexusAPI.CicloVidaAtivo.DTOs.CicloVidaPasso
         public NexusNomeObjeto PassoSucesso { get; set; } = new NexusNomeObjeto();
 
         public TipoCicloVidaPasso Tipo { get; set; }
+
+        public string Metodo { get; set; } = "";
     }
 }

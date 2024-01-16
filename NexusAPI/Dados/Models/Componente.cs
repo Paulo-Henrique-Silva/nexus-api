@@ -32,6 +32,13 @@ namespace NexusAPI.Dados.Models
         [Required]
         public string Modelo { get; set; } = "";
 
+        [Column("PROJETOUID")]
+        [ForeignKey("Projeto")]
+        [Required]
+        public string ProjetoUID { get; set; } = "";
+
+        public Projeto? Projeto { get; set; }
+
         [Column("TIPO")]
         [Required]
         public TipoComponente Tipo { get; set; }

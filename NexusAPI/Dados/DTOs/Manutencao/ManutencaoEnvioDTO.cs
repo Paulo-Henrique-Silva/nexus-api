@@ -7,6 +7,8 @@ namespace NexusAPI.Dados.DTOs.Manutencao
     {
         public string ComponenteUID { get; set; } = "";
 
+        public string ProjetoUID { get; set; } = "";
+
         public DateTime? DataInicio { get; set; }
 
         public DateTime? DataTermino { get; set; }

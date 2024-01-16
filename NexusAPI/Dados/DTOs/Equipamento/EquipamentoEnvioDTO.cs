@@ -11,6 +11,8 @@ namespace NexusAPI.Dados.DTOs.Equipamento
 
         public string ComponenteUID { get; set; } = "";
 
+        public string ProjetoUID { get; set; } = "";
+
         public string Marca { get; set; } = "";
 
         public string Modelo { get; set; } = "";

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using NexusAPI.Compartilhado.EntidadesBase;
+using NexusAPI.Administracao.Models;
 
 namespace NexusAPI.Dados.Models
 {
@@ -13,6 +14,13 @@ namespace NexusAPI.Dados.Models
         public string ComponenteUID { get; set; } = "";
 
         public Componente? Componente { get; set; }
+
+        [Column("PROJETOUID")]
+        [ForeignKey("Projeto")]
+        [Required]
+        public string ProjetoUID { get; set; } = "";
+
+        public Projeto? Projeto { get; set; }
 
         [Column("CHAVELICENCA")]
         [Required]

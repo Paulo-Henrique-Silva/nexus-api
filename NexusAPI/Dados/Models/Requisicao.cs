@@ -15,6 +15,13 @@ namespace NexusAPI.Dados.Models
 
         public Usuario? Coordenador { get; set; }
 
+        [Column("PROJETOUID")]
+        [ForeignKey("Projeto")]
+        [Required]
+        public string ProjetoUID { get; set; } = "";
+
+        public Projeto? Projeto { get; set; }
+
         public Requisicao() : base() { }
     }
 }

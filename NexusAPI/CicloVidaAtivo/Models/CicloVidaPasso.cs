@@ -34,6 +34,9 @@ namespace NexusAPI.CicloVidaAtivo.Models
         [Required]
         public TipoCicloVidaPasso Tipo { get; set; }
 
+        [Column("METODO")]
+        public string? Metodo { get; set; }
+
         public CicloVidaPasso() : base() { }
     }
 }

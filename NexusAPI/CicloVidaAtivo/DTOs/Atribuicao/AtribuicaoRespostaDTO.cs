@@ -10,5 +10,9 @@ namespace NexusAPI.CicloVidaAtivo.DTOs.Atribuicao
         public NexusNomeObjeto CicloVidaPasso { get; set; } = new NexusNomeObjeto();
 
         public TipoAtribuicao Tipo { get; set; }
+
+        public DateTime DataVencimento { get; set; }
+
+        public bool Concluida { get; set; }
     }
 }
