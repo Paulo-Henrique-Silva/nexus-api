@@ -4,6 +4,7 @@ using NexusAPI.Administracao.DTOs.Usuario;
 using NexusAPI.Administracao.Exceptions;
 using NexusAPI.Administracao.Models;
 using NexusAPI.Administracao.Services;
+using NexusAPI.CicloVidaAtivo.Services;
 using NexusAPI.Compartilhado.EntidadesBase;
 using NexusAPI.Compartilhado.Exceptions;
 using NexusAPI.Compartilhado.RespostasAPI;
@@ -16,10 +17,14 @@ namespace NexusAPI.Administracao.Controllers
     {
         private readonly NotificacaoService notificacaoService;
 
-        public UsuarioController(UsuarioService service, NotificacaoService notificacaoService) 
+        private readonly AtribuicaoService atribuicaoService;
+
+        public UsuarioController(UsuarioService service, NotificacaoService notificacaoService,
+            AtribuicaoService atribuicaoService) 
         : base(service) 
         { 
             this.notificacaoService = notificacaoService;
+            this.atribuicaoService = atribuicaoService;
         }
 
         [HttpGet]
@@ -147,6 +152,26 @@ namespace NexusAPI.Administracao.Controllers
             try
             {
                 var usuario = await notificacaoService.ObterTudoPorUsuarioUIDAsync(pagina, UID);
+                return Ok(usuario);
+            }
+            catch (ObjetoNaoEncontrado ex)
+            {
+                return NotFound(new RespostaErroAPI(404, ex.Message));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, RespostaErroAPI.RespostaErro500);
+            }
+        }
+
+        [HttpGet("{UID}/Atribuicoes")]
+        [Authorize]
+        public async Task<IActionResult> GetAtribuicoes([FromRoute] string UID,
+            [FromQuery] int pagina = 1)
+        {
+            try
+            {
+                var usuario = await atribuicaoService.ObterTudoPorUsuarioUIDAsync(pagina, UID);
                 return Ok(usuario);
             }
             catch (ObjetoNaoEncontrado ex)

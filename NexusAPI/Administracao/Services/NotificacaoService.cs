@@ -49,8 +49,8 @@ namespace NexusAPI.Administracao.Services
             return resposta;
         }
 
-        public virtual async Task<List<NotificacaoRespostaDTO>> ObterTudoPorUsuarioUIDAsync(int numeroPagina, 
-            string UsuarioUID)
+        public virtual async Task<List<NotificacaoRespostaDTO>> ObterTudoPorUsuarioUIDAsync(
+            int numeroPagina, string UsuarioUID)
         {
             var notificacaoRepository = repository as NotificacaoRepository;
 

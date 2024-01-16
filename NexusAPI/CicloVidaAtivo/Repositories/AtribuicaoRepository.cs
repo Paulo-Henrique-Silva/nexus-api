@@ -36,5 +36,20 @@ namespace NexusAPI.CicloVidaAtivo.Repositories
                 .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .ToListAsync();
         }
+
+        public async Task<List<Atribuicao>> ObterTudoPorUsuarioUIDAsync(int numeroPagina,
+            string usuarioUID)
+        {
+            return await dataContext.Set<Atribuicao>()
+                .Include(obj => obj.AtualizadoPor)
+                .Include(obj => obj.UsuarioCriador)
+                .Include(obj => obj.Usuario)
+                .Include(obj => obj.CicloVidaPasso)
+                .Where(obj => obj.DataFinalizacao == null && obj.UsuarioUID.Equals(usuarioUID))
+                .OrderBy(obj => obj.DataCriacao)
+                .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
+                .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
+                .ToListAsync();
+        }
     }
 }
