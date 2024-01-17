@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using NexusAPI.CicloVidaAtivo.DTOs.CicloVida;
+using NexusAPI.CicloVidaAtivo.DTOs;
 using NexusAPI.CicloVidaAtivo.Models;
 using NexusAPI.CicloVidaAtivo.Repositories;
 using NexusAPI.Compartilhado.EntidadesBase;
@@ -8,37 +8,120 @@ using NexusAPI.Dados.DTOs.Componente;
 
 namespace NexusAPI.CicloVidaAtivo.Services
 {
-    public class CicloVidaService : NexusService<CicloVidaEnvioDTO, CicloVidaRespostaDTO, CicloVida>
+    public class CicloVidaService
     {
-        public CicloVidaService(CicloVidaRepository repository, TokenService tokenService) : base(repository, tokenService)
+        #region CicloVidas
+        public static List<CicloVida> CiclosVida
         {
+            get
+            {
+                string CicloUID = Guid.NewGuid().ToString();
+
+                var lista = new List<CicloVida>
+                {
+                    new()
+                    {
+                        UID = CicloUID,
+
+                        Nome = "Análise de Requisicao",
+
+                        Descricao = "Análise das requisições pelo coordenador.",
+
+                        Tipo = Enums.TipoCicloVida.AnaliseRequisicao,
+
+                        Passos =
+                        [
+                            new()
+                            {
+                                UID = "AnaliseCoordenador" + CicloUID,
+                                CicloVidaUID = CicloUID,
+                                Nome = "Análise do Coordenador",
+                                Descricao = "Coordenador recebe a requisição para aprová-la ou rejeitá-la.",
+                                Metodo = "RequisicoesAnaliseCoordenador",
+                                PassoSucessoUID = "CoordenadorAprovou" + CicloUID,
+                                PassoFalhaUID = "CoordenadorReprovou" + CicloUID
+                            },
+                            new()
+                            {
+                                UID = "CoordenadorReprovou" + CicloUID,
+                                CicloVidaUID = CicloUID,
+                                Nome = "Coordenador reprovou",
+                                Descricao = "Coordenador reprovou a requisição.",
+                                Metodo = "RequisicoesReprovar"
+                            },
+                            new()
+                            {
+                                UID = "CoordenadorAprovou" + CicloUID,
+                                CicloVidaUID = CicloUID,
+                                Nome = "Coordenador aprovou",
+                                Descricao = "Coordenador aprovou a requisição.",
+                                Metodo = "RequisicoesAprovar",
+                                PassoSucessoUID = "CoordenadorCompletou" + CicloUID,
+                            },
+                            new()
+                            {
+                                UID = "CoordenadorCompletou" + CicloUID,
+                                CicloVidaUID = CicloUID,
+                                Nome = "Coordenador completou",
+                                Descricao = "Coordenador completou a requisição.",
+                                Metodo = "RequisicoesCompletar"
+                            }
+                        ]
+                    },
+                    new()
+                    {
+                        UID = CicloUID,
+
+                        Nome = "Análise de Manutenção",
+
+                        Descricao = "Análise das manutenções pelo coordenador.",
+
+                        Tipo = Enums.TipoCicloVida.AnaliseManutencao,
+
+                        Passos =
+                        [
+                            new()
+                            {
+                                UID = "CriacaoManutencao" + CicloUID,
+                                CicloVidaUID = CicloUID,
+                                Nome = "Manutenção Criada",
+                                Descricao = "Usuário cria manutenção.",
+                                Metodo = "RequisicoesAnaliseCoordenador",
+                                PassoSucessoUID = "CriarManutencao" + CicloUID
+                            },
+                            new()
+                            {
+                                UID = "UsuarioConcluiu" + CicloUID,
+                                CicloVidaUID = CicloUID,
+                                Nome = "Usuário conclui a manutenção, após preencher a solução.",
+                                Descricao = "Coordenador reprovou a requisição.",
+                                Metodo = "ConcluirManutencao"
+                            }
+                        ]
+                    }
+                };
+
+                return lista;
+            }
         }
+        #endregion
 
-        public override CicloVidaRespostaDTO ConverterParaDTORespostaAsync(CicloVida obj)
+        private readonly CicloVidaRepository cicloVidaRepository;
+
+        private readonly CicloVidaPassoRepository cicloVidaPassoRepository;
+
+        private readonly AtribuicaoRepository atribuicaoRepository;
+
+        private readonly TokenService tokenService;
+
+        public CicloVidaService(CicloVidaRepository cicloVidaRepository, 
+            CicloVidaPassoRepository cicloVidaPassoRepository, AtribuicaoRepository atribuicaoRepository, 
+            TokenService tokenService)
         {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<CicloVida, CicloVidaRespostaDTO>()
-                    .ForMember(c => c.AtualizadoPor, opt => opt.Ignore())
-                    .ForMember(c => c.UsuarioCriador, opt => opt.Ignore());
-            });
-            var mapper = new Mapper(config);
-
-            var resposta = mapper.Map<CicloVidaRespostaDTO>(obj);
-
-            resposta.AtualizadoPor = new NexusNomeObjeto()
-            {
-                UID = obj.AtualizadoPor?.UID,
-                Nome = obj.AtualizadoPor?.Nome
-            };
-
-            resposta.UsuarioCriador = new NexusNomeObjeto()
-            {
-                UID = obj.UsuarioCriador?.UID,
-                Nome = obj.UsuarioCriador?.Nome
-            };
-
-            return resposta;
+            this.cicloVidaRepository = cicloVidaRepository;
+            this.cicloVidaPassoRepository = cicloVidaPassoRepository;
+            this.atribuicaoRepository = atribuicaoRepository;
+            this.tokenService = tokenService;
         }
     }
 }

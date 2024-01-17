@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using NexusAPI.Compartilhado.EntidadesBase;
+using NexusAPI.CicloVidaAtivo.Enums;
 
 namespace NexusAPI.CicloVidaAtivo.Models
 {
@@ -14,6 +15,10 @@ namespace NexusAPI.CicloVidaAtivo.Models
 
 
         public List<CicloVidaPasso>? Passos { get; set; }
+
+        [Column("TIPO")]
+        [Required]
+        public TipoCicloVida Tipo { get; set; }
 
         public CicloVida() : base() { }
     }

@@ -15,6 +15,13 @@ namespace NexusAPI.Administracao.Models
 
         public Usuario? Usuario { get; set; }
 
+        /// <summary>
+        /// Se a notificação foi visualizada pelo usuário.
+        /// </summary>
+        [Column("VISTA")]
+        [Required]
+        public bool Vista { get; set; }
+
         public Notificacao() : base() { }
     }
 }

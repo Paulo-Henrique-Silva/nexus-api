@@ -74,7 +74,6 @@ namespace NexusAPI
 
             builder.Services.AddScoped<AtribuicaoService, AtribuicaoService>();
             builder.Services.AddScoped<CicloVidaService, CicloVidaService>();
-            builder.Services.AddScoped<CicloVidaPasso, CicloVidaPasso>();
 
             builder.Services.AddScoped<ComponenteService, ComponenteService>();
             builder.Services.AddScoped<EquipamentoService, EquipamentoService>();
@@ -92,7 +91,7 @@ namespace NexusAPI
 
             builder.Services.AddScoped<AtribuicaoRepository, AtribuicaoRepository>();
             builder.Services.AddScoped<CicloVidaRepository, CicloVidaRepository>();
-            builder.Services.AddScoped<CicloVidaPasso, CicloVidaPasso>();
+            builder.Services.AddScoped<CicloVidaPassoRepository, CicloVidaPassoRepository>();
 
             builder.Services.AddScoped<ComponenteRepository, ComponenteRepository>();
             builder.Services.AddScoped<EquipamentoRepository, EquipamentoRepository>();
