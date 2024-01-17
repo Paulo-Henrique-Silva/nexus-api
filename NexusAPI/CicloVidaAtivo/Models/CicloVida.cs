@@ -6,20 +6,21 @@ using NexusAPI.CicloVidaAtivo.Enums;
 namespace NexusAPI.CicloVidaAtivo.Models
 {
     [Table("CICLOSVIDA")]
-    public class CicloVida : NexusObjeto
+    public class CicloVida
     {
+        [Key]
+        [Column("UID")]
+        public string UID { get; set; } = "";
+
         //Não há propriedade de navegação para ObjetoUID, pois qualquer obj pode ser uma classe.
         [Column("OBJETOUID")]
         [Required]
         public string ObjetoUID { get; set; } = "";
 
-
-        public List<CicloVidaPasso>? Passos { get; set; }
-
-        [Column("TIPO")]
+        [Column("FINALIZADO")]
         [Required]
-        public TipoCicloVida Tipo { get; set; }
+        public bool Finalizado { get; set; }
 
-        public CicloVida() : base() { }
+        public CicloVida() { }
     }
 }

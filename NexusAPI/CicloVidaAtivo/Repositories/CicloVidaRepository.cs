@@ -3,9 +3,9 @@ using NexusAPI.Compartilhado.EntidadesBase;
 
 namespace NexusAPI.CicloVidaAtivo.Repositories
 {
-    public class CicloVidaRepository : NexusRepository<Models.CicloVida>
+    public class CicloVidaRepository 
     {
-        public CicloVidaRepository(DataContext dataContext) : base(dataContext)
+        public CicloVidaRepository(DataContext dataContext)
         {
         }
     }

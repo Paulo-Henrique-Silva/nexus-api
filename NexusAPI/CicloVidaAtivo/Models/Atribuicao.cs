@@ -16,13 +16,6 @@ namespace NexusAPI.CicloVidaAtivo.Models
 
         public Usuario? Usuario { get; set; }
 
-        [Column("CICLOVIDAPASSOUID")]
-        [ForeignKey("CicloVidaPasso")]
-        [Required]
-        public string CicloVidaPassoUID { get; set; } = "";
-
-        public CicloVidaPasso? CicloVidaPasso { get; set; }
-
         [Column("TIPO")]
         [Required]
         public TipoAtribuicao Tipo { get; set; }
@@ -30,10 +23,6 @@ namespace NexusAPI.CicloVidaAtivo.Models
         [Column("DATAVENCIMENTO")]
         [Required]
         public DateTime DataVencimento { get; set; }
-
-        [Column("CONCLUIDA")]
-        [Required]
-        public bool Concluida { get; set; }
 
         protected Atribuicao() : base() { }
     }

@@ -20,9 +20,7 @@ namespace NexusAPI.Compartilhado.Data
 
         public DbSet<Atribuicao> Atribuicoes { get; set; }
 
-        public DbSet<CicloVidaAtivo.Models.CicloVida> CiclosVida { get; set; }
-
-        public DbSet<CicloVidaPasso> CicloVidaPassos { get; set; }
+        public DbSet<CicloVida> CiclosVida { get; set; }
 
         public DbSet<Componente> Componentes { get; set; }
 

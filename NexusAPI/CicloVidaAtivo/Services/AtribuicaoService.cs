@@ -46,12 +46,6 @@ namespace NexusAPI.CicloVidaAtivo.Services
                 Nome = obj.Usuario?.Nome
             };
 
-            resposta.CicloVidaPasso = new NexusNomeObjeto()
-            {
-                UID = obj.CicloVidaPasso?.UID,
-                Nome = obj.CicloVidaPasso?.Nome
-            };
-
             return resposta;
         }
 

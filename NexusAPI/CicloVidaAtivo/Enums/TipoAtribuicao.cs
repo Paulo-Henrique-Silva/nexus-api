@@ -2,6 +2,7 @@
 {
     public enum TipoAtribuicao
     {
-        AprovarRejeitar
+        AprovarRejeitar,
+        Completar
     }
 }
