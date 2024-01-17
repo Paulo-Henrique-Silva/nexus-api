@@ -17,22 +17,14 @@ namespace NexusAPI.CicloVidaAtivo.Models
         public CicloVida? CicloVida { get; set; }
 
         [Column("PASSOFALHAUID")]
-        [ForeignKey("PassoFalha")]
-        [Required]
-        public string PassoFalhaUID { get; set; } = "";
+        public string? PassoFalhaUID { get; set; }
 
         public CicloVidaPasso? PassoFalha { get; set; }
 
         [Column("PASSOSUCESSOUID")]
-        [ForeignKey("PassoSucesso")]
-        [Required]
-        public string PassoSucessoUID { get; set; } = "";
+        public string? PassoSucessoUID { get; set; }
 
         public CicloVidaPasso? PassoSucesso { get; set; }
-
-        [Column("TIPO")]
-        [Required]
-        public TipoCicloVidaPasso Tipo { get; set; }
 
         [Column("METODO")]
         public string? Metodo { get; set; }
