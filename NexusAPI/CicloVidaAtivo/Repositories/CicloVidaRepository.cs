@@ -1,11 +1,12 @@
-﻿using NexusAPI.Compartilhado.Data;
+﻿using NexusAPI.CicloVidaAtivo.Models;
+using NexusAPI.Compartilhado.Data;
 using NexusAPI.Compartilhado.EntidadesBase;
 
 namespace NexusAPI.CicloVidaAtivo.Repositories
 {
-    public class CicloVidaRepository 
+    public class CicloVidaRepository : NexusRepository<CicloVida>
     {
-        public CicloVidaRepository(DataContext dataContext)
+        public CicloVidaRepository(DataContext dataContext) : base(dataContext)
         {
         }
     }
