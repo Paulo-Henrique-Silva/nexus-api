@@ -20,6 +20,12 @@ namespace NexusAPI.CicloVidaAtivo.Models
         [Required]
         public TipoAtribuicao Tipo { get; set; }
 
+        [Column("CICLOVIDAUID")]
+        [Required]
+        public string CicloVidaUID { get; set; } = "";
+
+        public CicloVida? CicloVida { get; set; }
+
         [Column("DATAVENCIMENTO")]
         [Required]
         public DateTime DataVencimento { get; set; }

@@ -1,4 +1,5 @@
 ﻿using NexusAPI.CicloVidaAtivo.Repositories;
+using NexusAPI.Compartilhado.EntidadesBase;
 using NexusAPI.Compartilhado.Services;
 using NexusAPI.Dados.Models;
 using System.Runtime.Intrinsics.X86;
@@ -11,20 +12,15 @@ namespace NexusAPI.CicloVidaAtivo.Services
     /// Uma notificação é gerada em caso de aprovação ou rejeição. 
     /// Se aprovada, o coordenador deverá completar após o equipamento for adquirido.
     /// </summary>
-    public class AnaliseRequisicaoService
+    public class AnaliseRequisicaoService : NexusCicloVidaService
     {
-        private readonly AtribuicaoRepository atribuicaoRepository;
-
-        private readonly TokenService tokenService;
-
-        public AnaliseRequisicaoService(AtribuicaoRepository atribuicaoRepository,
-            TokenService tokenService)
+        public AnaliseRequisicaoService(AtribuicaoRepository atribuicaoRepository, 
+            CicloVidaRepository cicloVidaRepository, TokenService tokenService) 
+        : base(atribuicaoRepository, cicloVidaRepository, tokenService)
         {
-            this.atribuicaoRepository = atribuicaoRepository;
-            this.tokenService = tokenService;
         }
 
-        public async Task IniciarCiclovida()
+        public override async Task IniciarCiclovida()
         {
             await AnaliseCoordenador();
         }

@@ -2,34 +2,17 @@
 using Microsoft.AspNetCore.Mvc;
 using NexusAPI.CicloVidaAtivo.DTOs.CicloVida;
 using NexusAPI.CicloVidaAtivo.Services;
+using NexusAPI.Compartilhado.EntidadesBase;
 using NexusAPI.Compartilhado.RespostasAPI;
 
 namespace NexusAPI.CicloVidaAtivo.Controllers
 {
     [Controller]
-    [Authorize]
-    [Route("api/CicloVida/[controller]")]
-    public class AnaliseRequisicaoController : ControllerBase
+    public class AnaliseRequisicaoController : NexusCicloVidaController
     {
-        private readonly AnaliseRequisicaoService analiseRequisicaoService;
-
-        public AnaliseRequisicaoController(AnaliseRequisicaoService analiseRequisicaoService)
+        public AnaliseRequisicaoController(AnaliseRequisicaoService nexusCicloVidaService) 
+        : base(nexusCicloVidaService)
         {
-            this.analiseRequisicaoService = analiseRequisicaoService;
-        }
-
-        [HttpPost("iniciar")]
-        public async Task<IActionResult> PostCicloVidaIniciar([FromBody] CicloVidaIniciarDTO envioDTO)
-        {
-            try
-            {
-                await analiseRequisicaoService.IniciarCiclovida();
-                return Ok();
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, RespostaErroAPI.RespostaErro500);
-            }
         }
 
         [HttpPost("AnaliseCoordenador")]
