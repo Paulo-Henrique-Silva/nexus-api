@@ -12,7 +12,7 @@ using NexusAPI.Compartilhado.Data;
 namespace NexusAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240114213424_M1")]
+    [Migration("20240118221513_M1")]
     partial class M1
     {
         /// <inheritdoc />
@@ -68,6 +68,10 @@ namespace NexusAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("USUARIOUID");
+
+                    b.Property<bool>("Vista")
+                        .HasColumnType("bit")
+                        .HasColumnName("VISTA");
 
                     b.HasKey("UID");
 
@@ -299,7 +303,7 @@ namespace NexusAPI.Migrations
                     b.ToTable("USUARIOPERFIL");
                 });
 
-            modelBuilder.Entity("NexusAPI.CicloVida.Models.Atribuicao", b =>
+            modelBuilder.Entity("NexusAPI.CicloVidaAtivo.Models.Atribuicao", b =>
                 {
                     b.Property<string>("UID")
                         .HasColumnType("nvarchar(450)")
@@ -309,10 +313,10 @@ namespace NexusAPI.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("ATUALIZADOPORUID");
 
-                    b.Property<string>("CicloVidaPassoUID")
+                    b.Property<string>("CicloVidaUID")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
-                        .HasColumnName("CICLOVIDAPASSOUID");
+                        .HasColumnName("CICLOVIDAUID");
 
                     b.Property<DateTime>("DataCriacao")
                         .HasColumnType("datetime2")
@@ -325,6 +329,10 @@ namespace NexusAPI.Migrations
                     b.Property<DateTime?>("DataUltimaAtualizacao")
                         .HasColumnType("datetime2")
                         .HasColumnName("DATAULTIMAATUALIZACAO");
+
+                    b.Property<DateTime>("DataVencimento")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DATAVENCIMENTO");
 
                     b.Property<string>("Descricao")
                         .HasColumnType("nvarchar(max)")
@@ -356,7 +364,7 @@ namespace NexusAPI.Migrations
 
                     b.HasIndex("AtualizadoPorUID");
 
-                    b.HasIndex("CicloVidaPassoUID");
+                    b.HasIndex("CicloVidaUID");
 
                     b.HasIndex("FinalizadoPorUID");
 
@@ -367,7 +375,7 @@ namespace NexusAPI.Migrations
                     b.ToTable("ATRIBUICOES");
                 });
 
-            modelBuilder.Entity("NexusAPI.CicloVida.Models.CicloVida", b =>
+            modelBuilder.Entity("NexusAPI.CicloVidaAtivo.Models.CicloVida", b =>
                 {
                     b.Property<string>("UID")
                         .HasColumnType("nvarchar(450)")
@@ -392,6 +400,10 @@ namespace NexusAPI.Migrations
                     b.Property<string>("Descricao")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("DESCRICAO");
+
+                    b.Property<bool>("Finalizado")
+                        .HasColumnType("bit")
+                        .HasColumnName("FINALIZADO");
 
                     b.Property<string>("FinalizadoPorUID")
                         .HasColumnType("nvarchar(450)")
@@ -420,81 +432,6 @@ namespace NexusAPI.Migrations
                     b.HasIndex("UsuarioCriadorUID");
 
                     b.ToTable("CICLOSVIDA");
-                });
-
-            modelBuilder.Entity("NexusAPI.CicloVida.Models.CicloVidaPasso", b =>
-                {
-                    b.Property<string>("UID")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("UID");
-
-                    b.Property<string>("AtualizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("ATUALIZADOPORUID");
-
-                    b.Property<string>("CicloVidaUID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("CICLOVIDAUID");
-
-                    b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DATACRIACAO");
-
-                    b.Property<DateTime?>("DataFinalizacao")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DATAFINALIZACAO");
-
-                    b.Property<DateTime?>("DataUltimaAtualizacao")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DATAULTIMAATUALIZACAO");
-
-                    b.Property<string>("Descricao")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("DESCRICAO");
-
-                    b.Property<string>("FinalizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("FINALIZADOPORUID");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("NOME");
-
-                    b.Property<string>("PassoFalhaUID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("PASSOFALHAUID");
-
-                    b.Property<string>("PassoSucessoUID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("PASSOSUCESSOUID");
-
-                    b.Property<int>("Tipo")
-                        .HasColumnType("int")
-                        .HasColumnName("TIPO");
-
-                    b.Property<string>("UsuarioCriadorUID")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("USUARIOCRIADORUID");
-
-                    b.HasKey("UID");
-
-                    b.HasIndex("AtualizadoPorUID");
-
-                    b.HasIndex("CicloVidaUID");
-
-                    b.HasIndex("FinalizadoPorUID");
-
-                    b.HasIndex("PassoFalhaUID");
-
-                    b.HasIndex("PassoSucessoUID");
-
-                    b.HasIndex("UsuarioCriadorUID");
-
-                    b.ToTable("CICLOVIDAPASSOS");
                 });
 
             modelBuilder.Entity("NexusAPI.Dados.Models.Componente", b =>
@@ -556,6 +493,11 @@ namespace NexusAPI.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("NUMEROSERIE");
 
+                    b.Property<string>("ProjetoUID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("PROJETOUID");
+
                     b.Property<int>("Status")
                         .HasColumnType("int")
                         .HasColumnName("STATUS");
@@ -575,6 +517,8 @@ namespace NexusAPI.Migrations
                     b.HasIndex("FinalizadoPorUID");
 
                     b.HasIndex("LocalizacaoUID");
+
+                    b.HasIndex("ProjetoUID");
 
                     b.HasIndex("UsuarioCriadorUID");
 
@@ -645,6 +589,11 @@ namespace NexusAPI.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("NUMEROSERIE");
 
+                    b.Property<string>("ProjetoUID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("PROJETOUID");
+
                     b.Property<int>("Tipo")
                         .HasColumnType("int")
                         .HasColumnName("TIPO");
@@ -662,6 +611,8 @@ namespace NexusAPI.Migrations
                     b.HasIndex("FinalizadoPorUID");
 
                     b.HasIndex("LocalizacaoUID");
+
+                    b.HasIndex("ProjetoUID");
 
                     b.HasIndex("UsuarioCriadorUID");
 
@@ -703,6 +654,11 @@ namespace NexusAPI.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("NOME");
 
+                    b.Property<string>("ProjetoUID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("PROJETOUID");
+
                     b.Property<string>("UsuarioCriadorUID")
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("USUARIOCRIADORUID");
@@ -712,6 +668,8 @@ namespace NexusAPI.Migrations
                     b.HasIndex("AtualizadoPorUID");
 
                     b.HasIndex("FinalizadoPorUID");
+
+                    b.HasIndex("ProjetoUID");
 
                     b.HasIndex("UsuarioCriadorUID");
 
@@ -766,6 +724,11 @@ namespace NexusAPI.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("NOME");
 
+                    b.Property<string>("ProjetoUID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("PROJETOUID");
+
                     b.Property<string>("ResponsavelUID")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
@@ -786,6 +749,8 @@ namespace NexusAPI.Migrations
                     b.HasIndex("ComponenteUID");
 
                     b.HasIndex("FinalizadoPorUID");
+
+                    b.HasIndex("ProjetoUID");
 
                     b.HasIndex("ResponsavelUID");
 
@@ -834,6 +799,11 @@ namespace NexusAPI.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("NOME");
 
+                    b.Property<string>("ProjetoUID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("PROJETOUID");
+
                     b.Property<string>("UsuarioCriadorUID")
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("USUARIOCRIADORUID");
@@ -845,6 +815,8 @@ namespace NexusAPI.Migrations
                     b.HasIndex("CoordenadorUID");
 
                     b.HasIndex("FinalizadoPorUID");
+
+                    b.HasIndex("ProjetoUID");
 
                     b.HasIndex("UsuarioCriadorUID");
 
@@ -895,15 +867,15 @@ namespace NexusAPI.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("FINALIZADOPORUID");
 
-                    b.Property<string>("LocalizacaoUID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("LOCALIZACAOUID");
-
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("NOME");
+
+                    b.Property<string>("ProjetoUID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("PROJETOUID");
 
                     b.Property<string>("UsuarioCriadorUID")
                         .HasColumnType("nvarchar(450)")
@@ -917,7 +889,7 @@ namespace NexusAPI.Migrations
 
                     b.HasIndex("FinalizadoPorUID");
 
-                    b.HasIndex("LocalizacaoUID");
+                    b.HasIndex("ProjetoUID");
 
                     b.HasIndex("UsuarioCriadorUID");
 
@@ -1061,15 +1033,15 @@ namespace NexusAPI.Migrations
                     b.Navigation("UsuarioCriador");
                 });
 
-            modelBuilder.Entity("NexusAPI.CicloVida.Models.Atribuicao", b =>
+            modelBuilder.Entity("NexusAPI.CicloVidaAtivo.Models.Atribuicao", b =>
                 {
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "AtualizadoPor")
                         .WithMany()
                         .HasForeignKey("AtualizadoPorUID");
 
-                    b.HasOne("NexusAPI.CicloVida.Models.CicloVidaPasso", "CicloVidaPasso")
+                    b.HasOne("NexusAPI.CicloVidaAtivo.Models.CicloVida", "CicloVida")
                         .WithMany()
-                        .HasForeignKey("CicloVidaPassoUID")
+                        .HasForeignKey("CicloVidaUID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1089,7 +1061,7 @@ namespace NexusAPI.Migrations
 
                     b.Navigation("AtualizadoPor");
 
-                    b.Navigation("CicloVidaPasso");
+                    b.Navigation("CicloVida");
 
                     b.Navigation("FinalizadoPor");
 
@@ -1098,7 +1070,7 @@ namespace NexusAPI.Migrations
                     b.Navigation("UsuarioCriador");
                 });
 
-            modelBuilder.Entity("NexusAPI.CicloVida.Models.CicloVida", b =>
+            modelBuilder.Entity("NexusAPI.CicloVidaAtivo.Models.CicloVida", b =>
                 {
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "AtualizadoPor")
                         .WithMany()
@@ -1115,51 +1087,6 @@ namespace NexusAPI.Migrations
                     b.Navigation("AtualizadoPor");
 
                     b.Navigation("FinalizadoPor");
-
-                    b.Navigation("UsuarioCriador");
-                });
-
-            modelBuilder.Entity("NexusAPI.CicloVida.Models.CicloVidaPasso", b =>
-                {
-                    b.HasOne("NexusAPI.Administracao.Models.Usuario", "AtualizadoPor")
-                        .WithMany()
-                        .HasForeignKey("AtualizadoPorUID");
-
-                    b.HasOne("NexusAPI.CicloVida.Models.CicloVida", "CicloVida")
-                        .WithMany()
-                        .HasForeignKey("CicloVidaUID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("NexusAPI.Administracao.Models.Usuario", "FinalizadoPor")
-                        .WithMany()
-                        .HasForeignKey("FinalizadoPorUID");
-
-                    b.HasOne("NexusAPI.CicloVida.Models.CicloVidaPasso", "PassoFalha")
-                        .WithMany()
-                        .HasForeignKey("PassoFalhaUID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("NexusAPI.CicloVida.Models.CicloVidaPasso", "PassoSucesso")
-                        .WithMany()
-                        .HasForeignKey("PassoSucessoUID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("NexusAPI.Administracao.Models.Usuario", "UsuarioCriador")
-                        .WithMany()
-                        .HasForeignKey("UsuarioCriadorUID");
-
-                    b.Navigation("AtualizadoPor");
-
-                    b.Navigation("CicloVida");
-
-                    b.Navigation("FinalizadoPor");
-
-                    b.Navigation("PassoFalha");
-
-                    b.Navigation("PassoSucesso");
 
                     b.Navigation("UsuarioCriador");
                 });
@@ -1180,6 +1107,12 @@ namespace NexusAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("NexusAPI.Administracao.Models.Projeto", "Projeto")
+                        .WithMany()
+                        .HasForeignKey("ProjetoUID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "UsuarioCriador")
                         .WithMany()
                         .HasForeignKey("UsuarioCriadorUID");
@@ -1189,6 +1122,8 @@ namespace NexusAPI.Migrations
                     b.Navigation("FinalizadoPor");
 
                     b.Navigation("Localizacao");
+
+                    b.Navigation("Projeto");
 
                     b.Navigation("UsuarioCriador");
                 });
@@ -1215,6 +1150,12 @@ namespace NexusAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("NexusAPI.Administracao.Models.Projeto", "Projeto")
+                        .WithMany()
+                        .HasForeignKey("ProjetoUID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "UsuarioCriador")
                         .WithMany()
                         .HasForeignKey("UsuarioCriadorUID");
@@ -1226,6 +1167,8 @@ namespace NexusAPI.Migrations
                     b.Navigation("FinalizadoPor");
 
                     b.Navigation("Localizacao");
+
+                    b.Navigation("Projeto");
 
                     b.Navigation("UsuarioCriador");
                 });
@@ -1240,6 +1183,12 @@ namespace NexusAPI.Migrations
                         .WithMany()
                         .HasForeignKey("FinalizadoPorUID");
 
+                    b.HasOne("NexusAPI.Administracao.Models.Projeto", "Projeto")
+                        .WithMany()
+                        .HasForeignKey("ProjetoUID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "UsuarioCriador")
                         .WithMany()
                         .HasForeignKey("UsuarioCriadorUID");
@@ -1247,6 +1196,8 @@ namespace NexusAPI.Migrations
                     b.Navigation("AtualizadoPor");
 
                     b.Navigation("FinalizadoPor");
+
+                    b.Navigation("Projeto");
 
                     b.Navigation("UsuarioCriador");
                 });
@@ -1267,6 +1218,12 @@ namespace NexusAPI.Migrations
                         .WithMany()
                         .HasForeignKey("FinalizadoPorUID");
 
+                    b.HasOne("NexusAPI.Administracao.Models.Projeto", "Projeto")
+                        .WithMany()
+                        .HasForeignKey("ProjetoUID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "Responsavel")
                         .WithMany()
                         .HasForeignKey("ResponsavelUID")
@@ -1282,6 +1239,8 @@ namespace NexusAPI.Migrations
                     b.Navigation("Componente");
 
                     b.Navigation("FinalizadoPor");
+
+                    b.Navigation("Projeto");
 
                     b.Navigation("Responsavel");
 
@@ -1304,6 +1263,12 @@ namespace NexusAPI.Migrations
                         .WithMany()
                         .HasForeignKey("FinalizadoPorUID");
 
+                    b.HasOne("NexusAPI.Administracao.Models.Projeto", "Projeto")
+                        .WithMany()
+                        .HasForeignKey("ProjetoUID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "UsuarioCriador")
                         .WithMany()
                         .HasForeignKey("UsuarioCriadorUID");
@@ -1313,6 +1278,8 @@ namespace NexusAPI.Migrations
                     b.Navigation("Coordenador");
 
                     b.Navigation("FinalizadoPor");
+
+                    b.Navigation("Projeto");
 
                     b.Navigation("UsuarioCriador");
                 });
@@ -1333,9 +1300,9 @@ namespace NexusAPI.Migrations
                         .WithMany()
                         .HasForeignKey("FinalizadoPorUID");
 
-                    b.HasOne("NexusAPI.Dados.Models.Localizacao", "Localizacao")
+                    b.HasOne("NexusAPI.Administracao.Models.Projeto", "Projeto")
                         .WithMany()
-                        .HasForeignKey("LocalizacaoUID")
+                        .HasForeignKey("ProjetoUID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1349,7 +1316,7 @@ namespace NexusAPI.Migrations
 
                     b.Navigation("FinalizadoPor");
 
-                    b.Navigation("Localizacao");
+                    b.Navigation("Projeto");
 
                     b.Navigation("UsuarioCriador");
                 });

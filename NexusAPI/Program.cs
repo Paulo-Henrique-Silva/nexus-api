@@ -65,6 +65,8 @@ namespace NexusAPI
 
             //Serviços
             builder.Services.AddScoped<TokenService, TokenService>();
+            builder.Services.AddScoped<AnaliseRequisicaoService, AnaliseRequisicaoService>();
+            builder.Services.AddScoped<VerificacaoManutencaoService, VerificacaoManutencaoService>();
 
             builder.Services.AddScoped<NotificacaoService, NotificacaoService>();
             builder.Services.AddScoped<PerfilService, PerfilService>();

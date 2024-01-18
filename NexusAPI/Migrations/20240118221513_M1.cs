@@ -53,6 +53,7 @@ namespace NexusAPI.Migrations
                 {
                     UID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     OBJETOUID = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FINALIZADO = table.Column<bool>(type: "bit", nullable: false),
                     NOME = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DESCRICAO = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
@@ -83,45 +84,12 @@ namespace NexusAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LOCALIZACOES",
-                columns: table => new
-                {
-                    UID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    NOME = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DESCRICAO = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    DATAULTIMAATUALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    DATACRIACAO = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FINALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    DATAFINALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LOCALIZACOES", x => x.UID);
-                    table.ForeignKey(
-                        name: "FK_LOCALIZACOES_USUARIOS_ATUALIZADOPORUID",
-                        column: x => x.ATUALIZADOPORUID,
-                        principalTable: "USUARIOS",
-                        principalColumn: "UID");
-                    table.ForeignKey(
-                        name: "FK_LOCALIZACOES_USUARIOS_FINALIZADOPORUID",
-                        column: x => x.FINALIZADOPORUID,
-                        principalTable: "USUARIOS",
-                        principalColumn: "UID");
-                    table.ForeignKey(
-                        name: "FK_LOCALIZACOES_USUARIOS_USUARIOCRIADORUID",
-                        column: x => x.USUARIOCRIADORUID,
-                        principalTable: "USUARIOS",
-                        principalColumn: "UID");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "NOTIFICACOES",
                 columns: table => new
                 {
                     UID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     USUARIOUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    VISTA = table.Column<bool>(type: "bit", nullable: false),
                     NOME = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DESCRICAO = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
@@ -226,11 +194,103 @@ namespace NexusAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ATRIBUICOES",
+                columns: table => new
+                {
+                    UID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    USUARIOUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TIPO = table.Column<int>(type: "int", nullable: false),
+                    CICLOVIDAUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    DATAVENCIMENTO = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NOME = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DESCRICAO = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    DATAULTIMAATUALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    DATACRIACAO = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FINALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    DATAFINALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ATRIBUICOES", x => x.UID);
+                    table.ForeignKey(
+                        name: "FK_ATRIBUICOES_CICLOSVIDA_CICLOVIDAUID",
+                        column: x => x.CICLOVIDAUID,
+                        principalTable: "CICLOSVIDA",
+                        principalColumn: "UID",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_ATRIBUICOES_USUARIOS_ATUALIZADOPORUID",
+                        column: x => x.ATUALIZADOPORUID,
+                        principalTable: "USUARIOS",
+                        principalColumn: "UID");
+                    table.ForeignKey(
+                        name: "FK_ATRIBUICOES_USUARIOS_FINALIZADOPORUID",
+                        column: x => x.FINALIZADOPORUID,
+                        principalTable: "USUARIOS",
+                        principalColumn: "UID");
+                    table.ForeignKey(
+                        name: "FK_ATRIBUICOES_USUARIOS_USUARIOCRIADORUID",
+                        column: x => x.USUARIOCRIADORUID,
+                        principalTable: "USUARIOS",
+                        principalColumn: "UID");
+                    table.ForeignKey(
+                        name: "FK_ATRIBUICOES_USUARIOS_USUARIOUID",
+                        column: x => x.USUARIOUID,
+                        principalTable: "USUARIOS",
+                        principalColumn: "UID",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LOCALIZACOES",
+                columns: table => new
+                {
+                    UID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PROJETOUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    NOME = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DESCRICAO = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    DATAULTIMAATUALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    DATACRIACAO = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FINALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    DATAFINALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LOCALIZACOES", x => x.UID);
+                    table.ForeignKey(
+                        name: "FK_LOCALIZACOES_PROJETOS_PROJETOUID",
+                        column: x => x.PROJETOUID,
+                        principalTable: "PROJETOS",
+                        principalColumn: "UID",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_LOCALIZACOES_USUARIOS_ATUALIZADOPORUID",
+                        column: x => x.ATUALIZADOPORUID,
+                        principalTable: "USUARIOS",
+                        principalColumn: "UID");
+                    table.ForeignKey(
+                        name: "FK_LOCALIZACOES_USUARIOS_FINALIZADOPORUID",
+                        column: x => x.FINALIZADOPORUID,
+                        principalTable: "USUARIOS",
+                        principalColumn: "UID");
+                    table.ForeignKey(
+                        name: "FK_LOCALIZACOES_USUARIOS_USUARIOCRIADORUID",
+                        column: x => x.USUARIOCRIADORUID,
+                        principalTable: "USUARIOS",
+                        principalColumn: "UID");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "REQUISICOES",
                 columns: table => new
                 {
                     UID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     COORDENADORUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PROJETOUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     NOME = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DESCRICAO = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
@@ -243,6 +303,12 @@ namespace NexusAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_REQUISICOES", x => x.UID);
+                    table.ForeignKey(
+                        name: "FK_REQUISICOES_PROJETOS_PROJETOUID",
+                        column: x => x.PROJETOUID,
+                        principalTable: "PROJETOS",
+                        principalColumn: "UID",
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_REQUISICOES_USUARIOS_ATUALIZADOPORUID",
                         column: x => x.ATUALIZADOPORUID,
@@ -261,109 +327,6 @@ namespace NexusAPI.Migrations
                         principalColumn: "UID");
                     table.ForeignKey(
                         name: "FK_REQUISICOES_USUARIOS_USUARIOCRIADORUID",
-                        column: x => x.USUARIOCRIADORUID,
-                        principalTable: "USUARIOS",
-                        principalColumn: "UID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CICLOVIDAPASSOS",
-                columns: table => new
-                {
-                    UID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CICLOVIDAUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PASSOFALHAUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PASSOSUCESSOUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    TIPO = table.Column<int>(type: "int", nullable: false),
-                    NOME = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DESCRICAO = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    DATAULTIMAATUALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    DATACRIACAO = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FINALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    DATAFINALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CICLOVIDAPASSOS", x => x.UID);
-                    table.ForeignKey(
-                        name: "FK_CICLOVIDAPASSOS_CICLOSVIDA_CICLOVIDAUID",
-                        column: x => x.CICLOVIDAUID,
-                        principalTable: "CICLOSVIDA",
-                        principalColumn: "UID",
-                        onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
-                        name: "FK_CICLOVIDAPASSOS_CICLOVIDAPASSOS_PASSOFALHAUID",
-                        column: x => x.PASSOFALHAUID,
-                        principalTable: "CICLOVIDAPASSOS",
-                        principalColumn: "UID",
-                        onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
-                        name: "FK_CICLOVIDAPASSOS_CICLOVIDAPASSOS_PASSOSUCESSOUID",
-                        column: x => x.PASSOSUCESSOUID,
-                        principalTable: "CICLOVIDAPASSOS",
-                        principalColumn: "UID",
-                        onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
-                        name: "FK_CICLOVIDAPASSOS_USUARIOS_ATUALIZADOPORUID",
-                        column: x => x.ATUALIZADOPORUID,
-                        principalTable: "USUARIOS",
-                        principalColumn: "UID");
-                    table.ForeignKey(
-                        name: "FK_CICLOVIDAPASSOS_USUARIOS_FINALIZADOPORUID",
-                        column: x => x.FINALIZADOPORUID,
-                        principalTable: "USUARIOS",
-                        principalColumn: "UID");
-                    table.ForeignKey(
-                        name: "FK_CICLOVIDAPASSOS_USUARIOS_USUARIOCRIADORUID",
-                        column: x => x.USUARIOCRIADORUID,
-                        principalTable: "USUARIOS",
-                        principalColumn: "UID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "COMPONENTES",
-                columns: table => new
-                {
-                    UID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    NUMEROSERIE = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LOCALIZACAOUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    STATUS = table.Column<int>(type: "int", nullable: false),
-                    MARCA = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MODELO = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TIPO = table.Column<int>(type: "int", nullable: false),
-                    DATAAQUISICAO = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NOME = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DESCRICAO = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    DATAULTIMAATUALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    DATACRIACAO = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FINALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    DATAFINALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_COMPONENTES", x => x.UID);
-                    table.ForeignKey(
-                        name: "FK_COMPONENTES_LOCALIZACOES_LOCALIZACAOUID",
-                        column: x => x.LOCALIZACAOUID,
-                        principalTable: "LOCALIZACOES",
-                        principalColumn: "UID",
-                        onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
-                        name: "FK_COMPONENTES_USUARIOS_ATUALIZADOPORUID",
-                        column: x => x.ATUALIZADOPORUID,
-                        principalTable: "USUARIOS",
-                        principalColumn: "UID");
-                    table.ForeignKey(
-                        name: "FK_COMPONENTES_USUARIOS_FINALIZADOPORUID",
-                        column: x => x.FINALIZADOPORUID,
-                        principalTable: "USUARIOS",
-                        principalColumn: "UID");
-                    table.ForeignKey(
-                        name: "FK_COMPONENTES_USUARIOS_USUARIOCRIADORUID",
                         column: x => x.USUARIOCRIADORUID,
                         principalTable: "USUARIOS",
                         principalColumn: "UID");
@@ -423,13 +386,18 @@ namespace NexusAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ATRIBUICOES",
+                name: "COMPONENTES",
                 columns: table => new
                 {
                     UID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    USUARIOUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CICLOVIDAPASSOUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    NUMEROSERIE = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LOCALIZACAOUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    STATUS = table.Column<int>(type: "int", nullable: false),
+                    MARCA = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MODELO = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PROJETOUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     TIPO = table.Column<int>(type: "int", nullable: false),
+                    DATAAQUISICAO = table.Column<DateTime>(type: "datetime2", nullable: false),
                     NOME = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DESCRICAO = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(450)", nullable: true),
@@ -441,34 +409,34 @@ namespace NexusAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ATRIBUICOES", x => x.UID);
+                    table.PrimaryKey("PK_COMPONENTES", x => x.UID);
                     table.ForeignKey(
-                        name: "FK_ATRIBUICOES_CICLOVIDAPASSOS_CICLOVIDAPASSOUID",
-                        column: x => x.CICLOVIDAPASSOUID,
-                        principalTable: "CICLOVIDAPASSOS",
+                        name: "FK_COMPONENTES_LOCALIZACOES_LOCALIZACAOUID",
+                        column: x => x.LOCALIZACAOUID,
+                        principalTable: "LOCALIZACOES",
                         principalColumn: "UID",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_ATRIBUICOES_USUARIOS_ATUALIZADOPORUID",
+                        name: "FK_COMPONENTES_PROJETOS_PROJETOUID",
+                        column: x => x.PROJETOUID,
+                        principalTable: "PROJETOS",
+                        principalColumn: "UID",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_COMPONENTES_USUARIOS_ATUALIZADOPORUID",
                         column: x => x.ATUALIZADOPORUID,
                         principalTable: "USUARIOS",
                         principalColumn: "UID");
                     table.ForeignKey(
-                        name: "FK_ATRIBUICOES_USUARIOS_FINALIZADOPORUID",
+                        name: "FK_COMPONENTES_USUARIOS_FINALIZADOPORUID",
                         column: x => x.FINALIZADOPORUID,
                         principalTable: "USUARIOS",
                         principalColumn: "UID");
                     table.ForeignKey(
-                        name: "FK_ATRIBUICOES_USUARIOS_USUARIOCRIADORUID",
+                        name: "FK_COMPONENTES_USUARIOS_USUARIOCRIADORUID",
                         column: x => x.USUARIOCRIADORUID,
                         principalTable: "USUARIOS",
                         principalColumn: "UID");
-                    table.ForeignKey(
-                        name: "FK_ATRIBUICOES_USUARIOS_USUARIOUID",
-                        column: x => x.USUARIOUID,
-                        principalTable: "USUARIOS",
-                        principalColumn: "UID",
-                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -479,6 +447,7 @@ namespace NexusAPI.Migrations
                     NUMEROSERIE = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LOCALIZACAOUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     COMPONENTEUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PROJETOUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     MARCA = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MODELO = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TIPO = table.Column<int>(type: "int", nullable: false),
@@ -508,6 +477,12 @@ namespace NexusAPI.Migrations
                         principalColumn: "UID",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
+                        name: "FK_EQUIPAMENTOS_PROJETOS_PROJETOUID",
+                        column: x => x.PROJETOUID,
+                        principalTable: "PROJETOS",
+                        principalColumn: "UID",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
                         name: "FK_EQUIPAMENTOS_USUARIOS_ATUALIZADOPORUID",
                         column: x => x.ATUALIZADOPORUID,
                         principalTable: "USUARIOS",
@@ -530,6 +505,7 @@ namespace NexusAPI.Migrations
                 {
                     UID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     COMPONENTEUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PROJETOUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     DATAINICIO = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DATATERMINO = table.Column<DateTime>(type: "datetime2", nullable: true),
                     RESPONSAVELUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -550,6 +526,12 @@ namespace NexusAPI.Migrations
                         name: "FK_MANUTENCOES_COMPONENTES_COMPONENTEUID",
                         column: x => x.COMPONENTEUID,
                         principalTable: "COMPONENTES",
+                        principalColumn: "UID",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_MANUTENCOES_PROJETOS_PROJETOUID",
+                        column: x => x.PROJETOUID,
+                        principalTable: "PROJETOS",
                         principalColumn: "UID",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
@@ -580,8 +562,8 @@ namespace NexusAPI.Migrations
                 columns: table => new
                 {
                     UID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LOCALIZACAOUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     COMPONENTEUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PROJETOUID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CHAVELICENCA = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DATAVENCIMENTO = table.Column<DateTime>(type: "datetime2", nullable: true),
                     NOME = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -603,9 +585,9 @@ namespace NexusAPI.Migrations
                         principalColumn: "UID",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_SOFTWARES_LOCALIZACOES_LOCALIZACAOUID",
-                        column: x => x.LOCALIZACAOUID,
-                        principalTable: "LOCALIZACOES",
+                        name: "FK_SOFTWARES_PROJETOS_PROJETOUID",
+                        column: x => x.PROJETOUID,
+                        principalTable: "PROJETOS",
                         principalColumn: "UID",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
@@ -631,9 +613,9 @@ namespace NexusAPI.Migrations
                 column: "ATUALIZADOPORUID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ATRIBUICOES_CICLOVIDAPASSOUID",
+                name: "IX_ATRIBUICOES_CICLOVIDAUID",
                 table: "ATRIBUICOES",
-                column: "CICLOVIDAPASSOUID");
+                column: "CICLOVIDAUID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ATRIBUICOES_FINALIZADOPORUID",
@@ -666,36 +648,6 @@ namespace NexusAPI.Migrations
                 column: "USUARIOCRIADORUID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CICLOVIDAPASSOS_ATUALIZADOPORUID",
-                table: "CICLOVIDAPASSOS",
-                column: "ATUALIZADOPORUID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CICLOVIDAPASSOS_CICLOVIDAUID",
-                table: "CICLOVIDAPASSOS",
-                column: "CICLOVIDAUID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CICLOVIDAPASSOS_FINALIZADOPORUID",
-                table: "CICLOVIDAPASSOS",
-                column: "FINALIZADOPORUID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CICLOVIDAPASSOS_PASSOFALHAUID",
-                table: "CICLOVIDAPASSOS",
-                column: "PASSOFALHAUID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CICLOVIDAPASSOS_PASSOSUCESSOUID",
-                table: "CICLOVIDAPASSOS",
-                column: "PASSOSUCESSOUID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CICLOVIDAPASSOS_USUARIOCRIADORUID",
-                table: "CICLOVIDAPASSOS",
-                column: "USUARIOCRIADORUID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_COMPONENTES_ATUALIZADOPORUID",
                 table: "COMPONENTES",
                 column: "ATUALIZADOPORUID");
@@ -709,6 +661,11 @@ namespace NexusAPI.Migrations
                 name: "IX_COMPONENTES_LOCALIZACAOUID",
                 table: "COMPONENTES",
                 column: "LOCALIZACAOUID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_COMPONENTES_PROJETOUID",
+                table: "COMPONENTES",
+                column: "PROJETOUID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_COMPONENTES_USUARIOCRIADORUID",
@@ -736,6 +693,11 @@ namespace NexusAPI.Migrations
                 column: "LOCALIZACAOUID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EQUIPAMENTOS_PROJETOUID",
+                table: "EQUIPAMENTOS",
+                column: "PROJETOUID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_EQUIPAMENTOS_USUARIOCRIADORUID",
                 table: "EQUIPAMENTOS",
                 column: "USUARIOCRIADORUID");
@@ -749,6 +711,11 @@ namespace NexusAPI.Migrations
                 name: "IX_LOCALIZACOES_FINALIZADOPORUID",
                 table: "LOCALIZACOES",
                 column: "FINALIZADOPORUID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LOCALIZACOES_PROJETOUID",
+                table: "LOCALIZACOES",
+                column: "PROJETOUID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LOCALIZACOES_USUARIOCRIADORUID",
@@ -769,6 +736,11 @@ namespace NexusAPI.Migrations
                 name: "IX_MANUTENCOES_FINALIZADOPORUID",
                 table: "MANUTENCOES",
                 column: "FINALIZADOPORUID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MANUTENCOES_PROJETOUID",
+                table: "MANUTENCOES",
+                column: "PROJETOUID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MANUTENCOES_RESPONSAVELUID",
@@ -846,6 +818,11 @@ namespace NexusAPI.Migrations
                 column: "FINALIZADOPORUID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_REQUISICOES_PROJETOUID",
+                table: "REQUISICOES",
+                column: "PROJETOUID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_REQUISICOES_USUARIOCRIADORUID",
                 table: "REQUISICOES",
                 column: "USUARIOCRIADORUID");
@@ -866,9 +843,9 @@ namespace NexusAPI.Migrations
                 column: "FINALIZADOPORUID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SOFTWARES_LOCALIZACAOUID",
+                name: "IX_SOFTWARES_PROJETOUID",
                 table: "SOFTWARES",
-                column: "LOCALIZACAOUID");
+                column: "PROJETOUID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SOFTWARES_USUARIOCRIADORUID",
@@ -941,7 +918,7 @@ namespace NexusAPI.Migrations
                 name: "USUARIOPERFIL");
 
             migrationBuilder.DropTable(
-                name: "CICLOVIDAPASSOS");
+                name: "CICLOSVIDA");
 
             migrationBuilder.DropTable(
                 name: "COMPONENTES");
@@ -950,13 +927,10 @@ namespace NexusAPI.Migrations
                 name: "PERFIS");
 
             migrationBuilder.DropTable(
-                name: "PROJETOS");
-
-            migrationBuilder.DropTable(
-                name: "CICLOSVIDA");
-
-            migrationBuilder.DropTable(
                 name: "LOCALIZACOES");
+
+            migrationBuilder.DropTable(
+                name: "PROJETOS");
 
             migrationBuilder.DropTable(
                 name: "USUARIOS");
