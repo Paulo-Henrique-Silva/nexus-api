@@ -11,12 +11,8 @@ namespace NexusAPI.CicloVidaAtivo.DTOs.Atribuicao
     {
         public string UsuarioUID { get; set; } = "";
 
-        public string CicloVidaPassoUID { get; set; } = "";
-
         public TipoAtribuicao Tipo { get; set; }
 
         public DateTime DataVencimento { get; set; }
-
-        public bool Concluida { get; set; }
     }
 }
