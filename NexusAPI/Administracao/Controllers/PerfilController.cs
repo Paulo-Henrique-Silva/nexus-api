@@ -13,6 +13,7 @@ namespace NexusAPI.Administracao.Controllers
     {
         public PerfilController(PerfilService service) : base(service)
         {
+
         }
     }
 }
