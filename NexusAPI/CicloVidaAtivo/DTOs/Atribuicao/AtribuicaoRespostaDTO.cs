@@ -12,5 +12,7 @@ namespace NexusAPI.CicloVidaAtivo.DTOs.Atribuicao
         public DateTime DataVencimento { get; set; }
 
         public bool Concluida { get; set; }
+
+        public NexusNomeObjeto CicloVida { get; set; } = new NexusNomeObjeto();
     }
 }

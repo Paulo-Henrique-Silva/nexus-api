@@ -22,7 +22,8 @@ namespace NexusAPI.CicloVidaAtivo.Services
             {
                 cfg.CreateMap<Atribuicao, AtribuicaoRespostaDTO>()
                     .ForMember(c => c.AtualizadoPor, opt => opt.Ignore())
-                    .ForMember(c => c.UsuarioCriador, opt => opt.Ignore());
+                    .ForMember(c => c.UsuarioCriador, opt => opt.Ignore())
+                    .ForMember(c => c.CicloVida, opt => opt.Ignore());
             });
             var mapper = new Mapper(config);
 
@@ -44,6 +45,12 @@ namespace NexusAPI.CicloVidaAtivo.Services
             {
                 UID = obj.Usuario?.UID,
                 Nome = obj.Usuario?.Nome
+            };
+
+            resposta.CicloVida = new NexusNomeObjeto()
+            {
+                UID = obj.CicloVida?.UID,
+                Nome = obj.CicloVida?.Nome
             };
 
             return resposta;
