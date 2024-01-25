@@ -89,7 +89,7 @@ namespace NexusAPI.Administracao.Services
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
         /// <exception cref="CredenciaisIncorretas"></exception>
-        public async Task<TokenDTO> AutenticarUsuario(UsuarioEnvioDTO usuarioEnvio)
+        public async Task<UsuarioRespostaDTO> AutenticarUsuario(UsuarioEnvioDTO usuarioEnvio)
         {
             var usuarioRepository = repository as UsuarioRepository;
 
@@ -108,9 +108,10 @@ namespace NexusAPI.Administracao.Services
                 throw new CredenciaisIncorretas();
             }
 
-            return new TokenDTO() 
-            { 
-                Token = tokenService.GerarToken(usuario.UID, usuario.NomeAcesso) 
+            return new UsuarioRespostaDTO() 
+            {
+                UID = usuario.UID,
+                Token = new TokenDTO() { Token = tokenService.GerarToken(usuario.UID, usuario.NomeAcesso) }
             };
         }
     }
