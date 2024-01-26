@@ -82,6 +82,32 @@ namespace NexusAPI.Administracao.Services
             return dtoResposta;
         }
 
+        public override async Task<UsuarioRespostaDTO> EditarAsync(string UID, UsuarioEnvioDTO obj, 
+            IEnumerable<Claim> claims)
+        {
+            var usuario = ConverterParaClasse(obj);
+            usuario.UID = UID;
+
+            if (!await ExistePorUIDAsync(usuario.UID))
+            {
+                throw new ObjetoNaoEncontrado(usuario.UID);
+            }
+
+            usuario.AtualizadoPorUID = tokenService.ObterUID(claims);
+            usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
+
+            await repository.EditarAsync(usuario);
+
+            var usuarioAposSerAtualizado = await repository.ObterPorUIDAsync(UID);
+
+            if (usuarioAposSerAtualizado == null)
+            {
+                throw new Exception("Objeto atualizado não foi encontrado.");
+            }
+
+            return ConverterParaDTOResposta(usuarioAposSerAtualizado);
+        }
+
         /// <summary>
         /// Autentica o usuário e retorna o token JWT.
         /// </summary>
