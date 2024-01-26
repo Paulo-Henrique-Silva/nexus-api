@@ -113,5 +113,35 @@ namespace NexusAPI.Administracao.Services
 
             return resposta;
         }
+
+        /// <summary>
+        /// Verifica a senha enviada condiz com
+        /// </summary>
+        /// <param name="usuarioEnvio"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        /// <exception cref="CredenciaisIncorretas"></exception>
+        public async Task<SenhaCorretaDTO> VerificarSenha(string UID, UsuarioEnvioDTO usuarioEnvio)
+        {
+            var usuarioRepository = repository as UsuarioRepository;
+
+            //Converte repository para UsuarioRepository para utilizar metodo especifico.
+            if (usuarioRepository == null)
+            {
+                throw new Exception("Instância incorreta em 'repository'.");
+            }
+
+            var usuario = await usuarioRepository.ObterPorUIDAsync(UID);
+
+            //Se o usuario não existe ou a senha for incorreta.
+            if (usuario == null)
+            {
+                throw new ObjetoNaoEncontrado(UID);
+            }
+
+            bool senhaCorreta = BCrypt.Net.BCrypt.Verify(usuarioEnvio.Senha, usuario.Senha);
+
+            return new SenhaCorretaDTO() { SenhaCorreta = senhaCorreta };
+        }
     }
 }

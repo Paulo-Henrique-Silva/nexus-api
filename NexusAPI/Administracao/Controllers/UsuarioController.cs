@@ -183,5 +183,32 @@ namespace NexusAPI.Administracao.Controllers
                 return StatusCode(500, RespostaErroAPI.RespostaErro500);
             }
         }
+
+        [HttpPost("{UID}/Senha")]
+        [Authorize]
+        public async Task<IActionResult> GetNotificacoes([FromRoute] string UID, 
+            [FromBody] UsuarioEnvioDTO usuarioEnvioDTO)
+        {
+            try
+            {
+                var usuarioService = service as UsuarioService;
+
+                if (usuarioService == null)
+                {
+                    throw new Exception("Instância incorreta da classe.");
+                }
+
+                var senhaCorretaDTO = await usuarioService.VerificarSenha(UID, usuarioEnvioDTO);
+                return Ok(senhaCorretaDTO);
+            }
+            catch (ObjetoNaoEncontrado ex)
+            {
+                return NotFound(new RespostaErroAPI(404, ex.Message));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, RespostaErroAPI.RespostaErro500);
+            }
+        }
     }
 }
