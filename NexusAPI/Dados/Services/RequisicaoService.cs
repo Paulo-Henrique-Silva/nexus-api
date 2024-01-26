@@ -16,7 +16,7 @@ namespace NexusAPI.Dados.Services
         {
         }
 
-        public override RequisicaoRespostaDTO ConverterParaDTORespostaAsync(Requisicao obj)
+        public override RequisicaoRespostaDTO ConverterParaDTOResposta(Requisicao obj)
         {
             var config = new MapperConfiguration(cfg =>
             {

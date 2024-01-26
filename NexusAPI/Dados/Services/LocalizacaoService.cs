@@ -18,7 +18,7 @@ namespace NexusAPI.Dados.Services
         {
         }
 
-        public override LocalizacaoRespostaDTO ConverterParaDTORespostaAsync(Localizacao obj)
+        public override LocalizacaoRespostaDTO ConverterParaDTOResposta(Localizacao obj)
         {
             var config = new MapperConfiguration(cfg =>
             {

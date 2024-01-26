@@ -15,7 +15,7 @@ namespace NexusAPI.Administracao.Services
             NotificacaoRepository repository, TokenService tokenService) 
         : base(repository, tokenService) { }
 
-        public override NotificacaoRespostaDTO ConverterParaDTORespostaAsync(Notificacao obj)
+        public override NotificacaoRespostaDTO ConverterParaDTOResposta(Notificacao obj)
         {
             var config = new MapperConfiguration(cfg =>
             {
@@ -62,7 +62,7 @@ namespace NexusAPI.Administracao.Services
             var objs = await notificacaoRepository.ObterTudoPorUsuarioUIDAsync(numeroPagina, UsuarioUID);
             var objsResposta = new List<NotificacaoRespostaDTO>();
 
-            objs.ForEach(o => objsResposta.Add(ConverterParaDTORespostaAsync(o)));
+            objs.ForEach(o => objsResposta.Add(ConverterParaDTOResposta(o)));
 
             return objsResposta;
         }

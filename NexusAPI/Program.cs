@@ -138,6 +138,7 @@ namespace NexusAPI
             });
 
             var app = builder.Build();
+            app.UseCors("AllowFrontend");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -152,7 +153,6 @@ namespace NexusAPI
             app.UseAuthorization();
 
             app.MapControllers();
-            app.UseCors("AllowFrontend");
 
             app.Run();
         }

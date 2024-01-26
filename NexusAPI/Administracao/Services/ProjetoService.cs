@@ -14,7 +14,7 @@ namespace NexusAPI.Administracao.Services
         public ProjetoService(ProjetoRepository repository, TokenService tokenService) 
         : base(repository, tokenService) { }
 
-        public override ProjetoRespostaDTO ConverterParaDTORespostaAsync(Projeto obj)
+        public override ProjetoRespostaDTO ConverterParaDTOResposta(Projeto obj)
         {
             var config = new MapperConfiguration(cfg =>
             {

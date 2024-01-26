@@ -16,7 +16,7 @@ namespace NexusAPI.CicloVidaAtivo.Services
         {
         }
 
-        public override AtribuicaoRespostaDTO ConverterParaDTORespostaAsync(Atribuicao obj)
+        public override AtribuicaoRespostaDTO ConverterParaDTOResposta(Atribuicao obj)
         {
             var config = new MapperConfiguration(cfg =>
             {
@@ -69,7 +69,7 @@ namespace NexusAPI.CicloVidaAtivo.Services
             var objs = await atribuicaoRepository.ObterTudoPorUsuarioUIDAsync(numeroPagina, UsuarioUID);
             var objsResposta = new List<AtribuicaoRespostaDTO>();
 
-            objs.ForEach(o => objsResposta.Add(ConverterParaDTORespostaAsync(o)));
+            objs.ForEach(o => objsResposta.Add(ConverterParaDTOResposta(o)));
 
             return objsResposta;
         }

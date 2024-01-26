@@ -14,7 +14,7 @@ namespace NexusAPI.Administracao.Services
         public PerfilService (PerfilRepository repository, TokenService tokenService)
         : base(repository, tokenService) { }
 
-        public override PerfilRespostaDTO ConverterParaDTORespostaAsync(Perfil obj)
+        public override PerfilRespostaDTO ConverterParaDTOResposta(Perfil obj)
         {
             var config = new MapperConfiguration(cfg =>
             {

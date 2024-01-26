@@ -16,7 +16,7 @@ namespace NexusAPI.Dados.Services
         {
         }
 
-        public override EquipamentoRespostaDTO ConverterParaDTORespostaAsync(Equipamento obj)
+        public override EquipamentoRespostaDTO ConverterParaDTOResposta(Equipamento obj)
         {
             var config = new MapperConfiguration(cfg =>
             {

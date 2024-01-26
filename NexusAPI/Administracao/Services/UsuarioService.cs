@@ -18,7 +18,7 @@ namespace NexusAPI.Administracao.Services
         public UsuarioService(UsuarioRepository repository, TokenService tokenService) 
         : base(repository, tokenService) { }
 
-        public override UsuarioRespostaDTO ConverterParaDTORespostaAsync(Usuario obj)
+        public override UsuarioRespostaDTO ConverterParaDTOResposta(Usuario obj)
         {
             var config = new MapperConfiguration(cfg =>
             {
@@ -70,7 +70,7 @@ namespace NexusAPI.Administracao.Services
             usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
             usuario.UsuarioCriadorUID = tokenService.ObterUID(claims);
 
-            var dtoResposta = ConverterParaDTORespostaAsync
+            var dtoResposta = ConverterParaDTOResposta
             (
                 await repository.AdicionarAsync(usuario)
             );
@@ -108,11 +108,10 @@ namespace NexusAPI.Administracao.Services
                 throw new CredenciaisIncorretas();
             }
 
-            return new UsuarioRespostaDTO() 
-            {
-                UID = usuario.UID,
-                Token = new TokenDTO() { Token = tokenService.GerarToken(usuario.UID, usuario.NomeAcesso) }
-            };
+            UsuarioRespostaDTO resposta = ConverterParaDTOResposta(usuario);
+            resposta.Token = new TokenDTO() { Token = tokenService.GerarToken(usuario.UID, usuario.NomeAcesso) };
+
+            return resposta;
         }
     }
 }
