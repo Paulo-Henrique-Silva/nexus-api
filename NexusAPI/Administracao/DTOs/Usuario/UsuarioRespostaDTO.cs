@@ -6,6 +6,6 @@ namespace NexusAPI.Administracao.DTOs.Usuario
     {
         public string NomeAcesso { get; set; } = "";
 
-        public TokenDTO? Token { get; set; }
+        public string? Token { get; set; }
     }
 }

@@ -74,10 +74,8 @@ namespace NexusAPI.Administracao.Services
             (
                 await repository.AdicionarAsync(usuario)
             );
-            dtoResposta.Token = new TokenDTO() 
-            { 
-                Token = tokenService.GerarToken(dtoResposta.UID, dtoResposta.NomeAcesso) 
-            };
+
+            dtoResposta.Token = tokenService.GerarToken(dtoResposta.UID, dtoResposta.NomeAcesso);
 
             return dtoResposta;
         }
@@ -135,7 +133,7 @@ namespace NexusAPI.Administracao.Services
             }
 
             UsuarioRespostaDTO resposta = ConverterParaDTOResposta(usuario);
-            resposta.Token = new TokenDTO() { Token = tokenService.GerarToken(usuario.UID, usuario.NomeAcesso) };
+            resposta.Token = tokenService.GerarToken(usuario.UID, usuario.NomeAcesso);
 
             return resposta;
         }
