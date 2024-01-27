@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.IdentityModel.Tokens;
 using NexusAPI.Administracao.DTOs.Usuario;
 using NexusAPI.Administracao.Exceptions;
 using NexusAPI.Administracao.Models;
@@ -7,9 +6,7 @@ using NexusAPI.Administracao.Repositories;
 using NexusAPI.Compartilhado.EntidadesBase;
 using NexusAPI.Compartilhado.Exceptions;
 using NexusAPI.Compartilhado.Services;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 
 namespace NexusAPI.Administracao.Services
 {
@@ -56,6 +53,7 @@ namespace NexusAPI.Administracao.Services
                 throw new Exception("Instância incorreta em 'repository'.");
             }
 
+            //Verifica se o usuário já existe.
             var usuarioBD = await usuarioRepository
                 .ObterPorNomeAcessoAsync(usuarioDTO.NomeAcesso);
 
@@ -64,17 +62,26 @@ namespace NexusAPI.Administracao.Services
                 throw new NomeAcessoJaCadastrado();
             }
 
+            //Converte para model para cadastrar.
             var usuario = ConverterParaClasse(usuarioDTO);
 
             usuario.UID = Guid.NewGuid().ToString();
             usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
             usuario.UsuarioCriadorUID = tokenService.ObterUID(claims);
 
-            var dtoResposta = ConverterParaDTOResposta
-            (
-                await repository.AdicionarAsync(usuario)
-            );
+            await repository.AdicionarAsync(usuario);
 
+
+            //Obtém o usuário após ser cadastrado para ter as informações completas.
+            var usuarioAposSerCadastrado = await repository.ObterPorUIDAsync(usuario.UID);
+
+            if (usuarioAposSerCadastrado == null)
+            {
+                throw new Exception("Objeto atualizado não foi encontrado.");
+            }
+
+            //gera token do usuário.
+            var dtoResposta = ConverterParaDTOResposta(usuarioAposSerCadastrado);
             dtoResposta.Token = tokenService.GerarToken(dtoResposta.UID, dtoResposta.NomeAcesso);
 
             return dtoResposta;
@@ -83,6 +90,7 @@ namespace NexusAPI.Administracao.Services
         public override async Task<UsuarioRespostaDTO> EditarAsync(string UID, UsuarioEnvioDTO obj, 
             IEnumerable<Claim> claims)
         {
+            //Verifica se o usuário existe.
             var usuario = ConverterParaClasse(obj);
             usuario.UID = UID;
 
@@ -91,11 +99,13 @@ namespace NexusAPI.Administracao.Services
                 throw new ObjetoNaoEncontrado(usuario.UID);
             }
 
+            //Converte pra model e atualiza no BD.
             usuario.AtualizadoPorUID = tokenService.ObterUID(claims);
             usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
 
             await repository.EditarAsync(usuario);
 
+            //Obtém o usuário para ter as informações completas.
             var usuarioAposSerAtualizado = await repository.ObterPorUIDAsync(UID);
 
             if (usuarioAposSerAtualizado == null)

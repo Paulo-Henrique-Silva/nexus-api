@@ -102,7 +102,8 @@ namespace NexusAPI
 
             #endregion
 
-            builder.Services.AddDbContext<DataContext>(obj => obj.UseSqlServer(builder.Configuration["Logging:ConnectionStrings:conexaoBD"]));
+            builder.Services.AddDbContext<DataContext>(obj => obj.UseSqlServer(builder.Configuration["Logging:ConnectionStrings:conexaoBD"]), 
+                ServiceLifetime.Transient);
 
             //Auth JWT
             builder.Services.AddAuthentication(options =>

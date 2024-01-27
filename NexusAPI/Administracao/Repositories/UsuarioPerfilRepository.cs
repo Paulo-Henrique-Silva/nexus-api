@@ -44,6 +44,22 @@ namespace NexusAPI.Administracao.Repositories
                 .ToListAsync();
         }
 
+        public async Task<List<UsuarioPerfil>> ObterTudoPorUsuarioUIDAsync(int numeroPagina, 
+            string usuarioUID)
+        {
+            return await dataContext.Set<UsuarioPerfil>()
+                .Include(obj => obj.AtualizadoPor)
+                .Include(obj => obj.UsuarioCriador)
+                .Include(obj => obj.Usuario)
+                .Include(obj => obj.Projeto)
+                .Include(obj => obj.Perfil)
+                .Where(obj => obj.DataFinalizacao == null && obj.UsuarioUID.Equals(usuarioUID))
+                .OrderBy(obj => obj.DataCriacao)
+                .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
+                .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
+                .ToListAsync();
+        }
+
         public async Task<UsuarioPerfil> AdicionarAsync(UsuarioPerfil obj)
         {
             obj.DataCriacao = DateTime.Now;

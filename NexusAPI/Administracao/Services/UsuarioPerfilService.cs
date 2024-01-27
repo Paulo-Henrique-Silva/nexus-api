@@ -16,11 +16,14 @@ namespace NexusAPI.Administracao.Services
 
         private readonly TokenService tokenService;
 
-        public UsuarioPerfilService(UsuarioPerfilRepository repository, 
-            TokenService tokenService) 
+        private readonly UsuarioRepository usuarioRepository;
+
+        public UsuarioPerfilService(UsuarioPerfilRepository repository, TokenService tokenService,
+            UsuarioRepository usuarioRepository) 
         {
             this.repository = repository;
             this.tokenService = tokenService;
+            this.usuarioRepository = usuarioRepository;
         }
 
         public virtual async Task<UsuarioPerfilRespostaDTO> ObterPorUIDAsync(string usuarioUID,
@@ -31,6 +34,24 @@ namespace NexusAPI.Administracao.Services
             return obj == null ? 
                 throw new ObjetoNaoEncontrado($"{usuarioUID} + ${projetoUID} + ${perfilUID}") 
                 : ConverterParaDTORespostaAsync(obj);
+        }
+
+        public virtual async Task<List<UsuarioPerfilRespostaDTO>> ObterPorUIDUsuarioUIDAsync(
+            int numeroPagina, string usuarioUID)
+        {
+            var usuario = usuarioRepository.ObterPorUIDAsync(usuarioUID);
+
+            if (usuario == null)
+            {
+                throw new ObjetoNaoEncontrado(usuarioUID);
+            }
+
+            var objs = await repository.ObterTudoPorUsuarioUIDAsync(numeroPagina, usuarioUID);
+            var objsResposta = new List<UsuarioPerfilRespostaDTO>();
+
+            objs.ForEach(o => objsResposta.Add(ConverterParaDTORespostaAsync(o)));
+
+            return objsResposta;
         }
 
         public virtual async Task<List<UsuarioPerfilRespostaDTO>> ObterTudoAsync(
