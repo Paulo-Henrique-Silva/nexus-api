@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.IdentityModel.Tokens;
 using NexusAPI.Administracao.DTOs.Projeto;
 using NexusAPI.Administracao.DTOs.UsuarioPerfil;
 using NexusAPI.Administracao.Models;
@@ -36,8 +37,7 @@ namespace NexusAPI.Administracao.Services
                 : ConverterParaDTORespostaAsync(obj);
         }
 
-        public virtual async Task<List<UsuarioPerfilRespostaDTO>> ObterPorUIDUsuarioUIDAsync(
-            int numeroPagina, string usuarioUID)
+        public virtual async Task<List<UsuarioPerfilRespostaDTO>> ObterPorUIDUsuarioUIDAsync(string usuarioUID)
         {
             var usuario = usuarioRepository.ObterPorUIDAsync(usuarioUID);
 
@@ -46,7 +46,7 @@ namespace NexusAPI.Administracao.Services
                 throw new ObjetoNaoEncontrado(usuarioUID);
             }
 
-            var objs = await repository.ObterTudoPorUsuarioUIDAsync(numeroPagina, usuarioUID);
+            var objs = await repository.ObterTudoPorUsuarioUIDAsync(usuarioUID);
             var objsResposta = new List<UsuarioPerfilRespostaDTO>();
 
             objs.ForEach(o => objsResposta.Add(ConverterParaDTORespostaAsync(o)));
@@ -88,6 +88,7 @@ namespace NexusAPI.Administracao.Services
             string usuarioUID, string projetoUID, string perfilUID,
             UsuarioPerfilEnvioDTO obj, IEnumerable<Claim> claims)
         {
+            //Verifica se o objeto existe.
             var objClasse = ConverterParaClasse(obj);
 
             objClasse.UsuarioUID = usuarioUID;
@@ -99,11 +100,33 @@ namespace NexusAPI.Administracao.Services
                 throw new ObjetoNaoEncontrado($"{usuarioUID} + ${projetoUID} + ${perfilUID}");
             }
 
+            //Edita o objeto.
             objClasse.AtualizadoPorUID = tokenService.ObterUID(claims);
-
             await repository.EditarAsync(objClasse);
 
-            var objAposSerAtualizado = await repository.ObterPorUIDAsync(usuarioUID, 
+            //Coloca como falso o perfil antigo.
+            UsuarioPerfil perfilAtivadoAntigo = new();
+
+            var outrosPerfis = await repository.ObterTudoPorUsuarioUIDAsync(objClasse.UsuarioUID);
+            outrosPerfis.ForEach(o =>
+            {
+                //Se for um perfil diferente no mesmo projeto e ativado ou,
+                //O mesmo perfil em um projeto diferente e ativado, coloca como falso.
+                if (!o.PerfilUID.Equals(objClasse.PerfilUID) && o.Ativado 
+                    || !o.ProjetoUID.Equals(objClasse.ProjetoUID) && o.Ativado)
+                {
+                    perfilAtivadoAntigo = o;
+                    perfilAtivadoAntigo.Ativado = false;
+                }
+            });
+
+            if (!perfilAtivadoAntigo.UsuarioUID.IsNullOrEmpty())
+            {
+                await repository.EditarAsync(perfilAtivadoAntigo);
+            }
+
+            //Obtém a versão mais recente do obj.
+            var objAposSerAtualizado = await repository.ObterPorUIDAsync(usuarioUID,
                 projetoUID, perfilUID);
 
             if (objAposSerAtualizado == null)
@@ -111,7 +134,7 @@ namespace NexusAPI.Administracao.Services
                 throw new Exception("Objeto atualizado não foi encontrado.");
             }
 
-            return ConverterParaDTORespostaAsync(objAposSerAtualizado);
+            return ConverterParaDTORespostaAsync(objClasse);
         }
 
         public virtual async Task DeletarAsync(string usuarioUID,

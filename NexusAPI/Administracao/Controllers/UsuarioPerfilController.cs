@@ -41,19 +41,18 @@ namespace NexusAPI.Administracao.Controllers
         }
 
         [HttpGet("usuario/{UID}")]
-        public virtual async Task<IActionResult> GetPorUsuario([FromRoute] string UID, 
-            [FromQuery] int pagina = 1)
+        public virtual async Task<IActionResult> GetPorUsuario([FromRoute] string UID)
         {
             try
             {
-                var objetos = await service.ObterPorUIDUsuarioUIDAsync(pagina, UID);
+                var objetos = await service.ObterPorUIDUsuarioUIDAsync(UID);
                 return Ok(objetos);
             }
             catch (ObjetoNaoEncontrado ex)
             {
                 return NotFound(new RespostaErroAPI(404, ex.Message));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(500, RespostaErroAPI.RespostaErro500);
             }
