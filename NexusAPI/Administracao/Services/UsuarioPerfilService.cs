@@ -134,7 +134,7 @@ namespace NexusAPI.Administracao.Services
                 throw new Exception("Objeto atualizado não foi encontrado.");
             }
 
-            return ConverterParaDTORespostaAsync(objClasse);
+            return ConverterParaDTORespostaAsync(objAposSerAtualizado);
         }
 
         public virtual async Task DeletarAsync(string usuarioUID,
