@@ -2,6 +2,7 @@
 using NexusAPI.Compartilhado.EntidadesBase;
 using NexusAPI.Compartilhado.Services;
 using NexusAPI.Dados.DTOs.Manutencao;
+using NexusAPI.Dados.DTOs.Requisicao;
 using NexusAPI.Dados.DTOs.Software;
 using NexusAPI.Dados.Models;
 using NexusAPI.Dados.Repositories;
@@ -53,6 +54,24 @@ namespace NexusAPI.Dados.Services
             };
 
             return resposta;
+        }
+
+        public async Task<List<SoftwareRespostaDTO>> ObterTudoPorProjetoAsync(int numeroPagina,
+            string projetoUID)
+        {
+            var softwareRepository = repository as SoftwareRepository;
+
+            if (softwareRepository == null)
+            {
+                throw new Exception("Instância incorreta em repository.");
+            }
+
+            var objs = await softwareRepository.ObterTudoPorProjetoUIDAsync(numeroPagina, projetoUID);
+            var objsResposta = new List<SoftwareRespostaDTO>();
+
+            objs.ForEach(o => objsResposta.Add(ConverterParaDTOResposta(o)));
+
+            return objsResposta;
         }
     }
 }
