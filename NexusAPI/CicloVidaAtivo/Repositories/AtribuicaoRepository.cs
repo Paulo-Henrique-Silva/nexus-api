@@ -22,7 +22,7 @@ namespace NexusAPI.CicloVidaAtivo.Repositories
                 .FirstOrDefaultAsync(obj => obj.UID.Equals(UID) && obj.DataFinalizacao == null);
         }
 
-        public override async Task<List<Atribuicao>> ObterTudoAsync(int numeroPagina)
+        public override async Task<List<Atribuicao>> ObterTudoUIDAsync(int numeroPagina)
         {
             return await dataContext.Set<Atribuicao>()
                 .Include(obj => obj.AtualizadoPor)

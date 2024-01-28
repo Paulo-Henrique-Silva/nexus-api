@@ -35,7 +35,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
 
         public virtual async Task<List<U>> ObterTudoAsync(int numeroPagina)
         {
-            var objs = await repository.ObterTudoAsync(numeroPagina);
+            var objs = await repository.ObterTudoUIDAsync(numeroPagina);
             var objsResposta = new List<U>();
                 
             objs.ForEach(o => objsResposta.Add(ConverterParaDTOResposta(o)));

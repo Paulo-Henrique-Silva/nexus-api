@@ -32,7 +32,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
         /// </summary>
         /// <param name="numeroPagina"></param>
         /// <returns></returns>
-        public virtual async Task<List<T>> ObterTudoAsync(int numeroPagina)
+        public virtual async Task<List<T>> ObterTudoUIDAsync(int numeroPagina)
         {
             return await dataContext.Set<T>()
                 .Include(obj => obj.AtualizadoPor)
