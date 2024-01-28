@@ -56,7 +56,7 @@ namespace NexusAPI.Dados.Services
             return resposta;
         }
 
-        public async Task<List<RequisicaoRespostaDTO>> ObterTudoPorProjetoAsync(int numeroPagina,
+        public async Task<List<RequisicaoRespostaDTO>> ObterTudoPorProjetoUIDAsync(int numeroPagina,
             string projetoUID)
         {
             var requisicaoRepository = repository as RequisicaoRepository;

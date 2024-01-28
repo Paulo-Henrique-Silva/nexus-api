@@ -52,7 +52,7 @@ namespace NexusAPI.Dados.Services
             return resposta;
         }
 
-        public async Task<List<LocalizacaoRespostaDTO>> ObterTudoPorProjetoAsync(int numeroPagina,
+        public async Task<List<LocalizacaoRespostaDTO>> ObterTudoPorProjetoUIDAsync(int numeroPagina,
             string projetoUID)
         {
             var localizacaoRepository = repository as LocalizacaoRepository;

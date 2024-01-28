@@ -15,9 +15,13 @@ namespace NexusAPI.Administracao.Repositories
 
         public async Task<Usuario?> ObterPorNomeAcessoAsync(string nomeAcesso)
         {
-            return await dataContext.Set<Usuario>()
-                .Where(obj => obj.NomeAcesso.Equals(nomeAcesso, StringComparison.Ordinal) && obj.DataFinalizacao == null)
+            //EF não suporta comparações com case sensitive, logo, é feita a lógica abaixo.
+            var usuario = await dataContext.Set<Usuario>()
+                .Where(obj => obj.NomeAcesso.Equals(nomeAcesso) && obj.DataFinalizacao == null)
                 .FirstOrDefaultAsync();
+
+            return usuario == null || !usuario.NomeAcesso.Equals(nomeAcesso, StringComparison.Ordinal) ?
+                null : usuario;
         }
     }
 }

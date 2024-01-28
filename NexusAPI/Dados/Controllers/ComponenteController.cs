@@ -17,12 +17,20 @@ namespace NexusAPI.Dados.Controllers
         {
         }
 
-        [HttpGet]
-        public override async Task<IActionResult> Get([FromQuery] int pagina = 1)
+        [HttpGet("Projeto/{projetoUID}")]
+        public async Task<IActionResult> Get([FromRoute] string projetoUID, 
+            [FromQuery] int pagina = 1)
         {
             try
             {
-                var objetos = await service.ObterTudoAsync(pagina);
+                var novoService = service as ComponenteService;
+
+                if (novoService == null)
+                {
+                    throw new Exception("Instância incorreta em service");
+                }
+
+                var objetos = await novoService.ObterTudoPorProjetoUIDAsync(pagina, projetoUID);
                 return Ok(objetos);
             }
             catch (Exception)
