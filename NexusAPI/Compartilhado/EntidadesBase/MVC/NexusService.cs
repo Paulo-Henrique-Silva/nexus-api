@@ -7,6 +7,9 @@ using System.Security.Claims;
 
 namespace NexusAPI.Compartilhado.EntidadesBase.MVC
 {
+    //TODO: Implementar quantidades de itens pro projeto na interface de ProjetoItem.
+    //Ajustar obterTudo em classes que implementam a interface. 
+
     /// <summary>
     /// Interface para implementar serviços de regras de negócio.
     /// </summary>
