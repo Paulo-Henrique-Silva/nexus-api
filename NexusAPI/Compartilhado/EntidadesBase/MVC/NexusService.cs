@@ -7,7 +7,7 @@ using NexusAPI.Compartilhado.Exceptions;
 using NexusAPI.Compartilhado.Services;
 using System.Security.Claims;
 
-namespace NexusAPI.Compartilhado.EntidadesBase
+namespace NexusAPI.Compartilhado.EntidadesBase.MVC
 {
     /// <summary>
     /// Interface para implementar serviços de regras de negócio.
@@ -37,7 +37,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
         {
             var objs = await repository.ObterTudoUIDAsync(numeroPagina);
             var objsResposta = new List<U>();
-                
+
             objs.ForEach(o => objsResposta.Add(ConverterParaDTOResposta(o)));
 
             return objsResposta;
@@ -76,7 +76,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
             await repository.EditarAsync(objClasse);
 
             var objAposSerAtualizado = await repository.ObterPorUIDAsync(UID);
-            
+
             if (objAposSerAtualizado == null)
             {
                 throw new Exception("Objeto atualizado não foi encontrado.");

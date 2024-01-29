@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NexusAPI.Compartilhado.EntidadesBase;
+using NexusAPI.Compartilhado.EntidadesBase.MVC;
 using NexusAPI.Compartilhado.RespostasAPI;
 using NexusAPI.Dados.DTOs.Localizacao;
 using NexusAPI.Dados.Models;

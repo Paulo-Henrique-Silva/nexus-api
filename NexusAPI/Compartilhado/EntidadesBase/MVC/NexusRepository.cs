@@ -3,7 +3,7 @@ using NexusAPI.Administracao.Models;
 using NexusAPI.Compartilhado.Data;
 using NexusAPI.Compartilhado.Interfaces;
 
-namespace NexusAPI.Compartilhado.EntidadesBase
+namespace NexusAPI.Compartilhado.EntidadesBase.MVC
 {
     /// <summary>
     /// CRUD básico para as tabelas da aplicação.
@@ -25,7 +25,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
                 .Include(obj => obj.UsuarioCriador)
                 .FirstOrDefaultAsync(obj => obj.UID.Equals(UID) && obj.DataFinalizacao == null);
         }
-        
+
         /// <summary>
         /// Obtém apenas os registros não finalizados, ordenados por dataCriacao mais recente e
         /// apenas um determinado numero de itens por página.
@@ -42,6 +42,16 @@ namespace NexusAPI.Compartilhado.EntidadesBase
                 .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .ToListAsync();
+        }
+
+        /// <summary>
+        /// Obtém a quantidade itens não finalizados.
+        /// </summary>
+        /// <param name="numeroPagina"></param>
+        /// <returns></returns>
+        public virtual async Task<int> ObterCountAsync()
+        {
+            return await dataContext.Set<T>().Where(obj => obj.DataFinalizacao == null).CountAsync();
         }
 
         public virtual async Task<T> AdicionarAsync(T obj)
@@ -93,8 +103,8 @@ namespace NexusAPI.Compartilhado.EntidadesBase
                 var valorAtualizado = property.GetValue(objAtualizado);
 
                 //Transforma strings vazias e datas mínimas em null.
-                if ((valorAtualizado is string && valorAtualizado.Equals(string.Empty)) ||
-                    (valorAtualizado is DateTime && valorAtualizado.Equals(DateTime.MinValue)))
+                if (valorAtualizado is string && valorAtualizado.Equals(string.Empty) ||
+                    valorAtualizado is DateTime && valorAtualizado.Equals(DateTime.MinValue))
                 {
                     valorAtualizado = null;
                 }

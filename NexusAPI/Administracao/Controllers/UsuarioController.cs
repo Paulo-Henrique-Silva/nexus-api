@@ -5,7 +5,7 @@ using NexusAPI.Administracao.Exceptions;
 using NexusAPI.Administracao.Models;
 using NexusAPI.Administracao.Services;
 using NexusAPI.CicloVidaAtivo.Services;
-using NexusAPI.Compartilhado.EntidadesBase;
+using NexusAPI.Compartilhado.EntidadesBase.MVC;
 using NexusAPI.Compartilhado.Exceptions;
 using NexusAPI.Compartilhado.RespostasAPI;
 

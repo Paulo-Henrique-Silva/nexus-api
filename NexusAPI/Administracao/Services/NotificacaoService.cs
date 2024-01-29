@@ -3,7 +3,7 @@ using NexusAPI.Administracao.DTOs.Notificacao;
 using NexusAPI.Administracao.DTOs.Usuario;
 using NexusAPI.Administracao.Models;
 using NexusAPI.Administracao.Repositories;
-using NexusAPI.Compartilhado.EntidadesBase;
+using NexusAPI.Compartilhado.EntidadesBase.MVC;
 using NexusAPI.Compartilhado.Services;
 
 namespace NexusAPI.Administracao.Services

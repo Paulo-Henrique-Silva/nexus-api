@@ -4,7 +4,7 @@ using NexusAPI.Administracao.Repositories;
 using NexusAPI.CicloVidaAtivo.DTOs.Atribuicao;
 using NexusAPI.CicloVidaAtivo.Models;
 using NexusAPI.CicloVidaAtivo.Repositories;
-using NexusAPI.Compartilhado.EntidadesBase;
+using NexusAPI.Compartilhado.EntidadesBase.MVC;
 using NexusAPI.Compartilhado.Services;
 
 namespace NexusAPI.CicloVidaAtivo.Services

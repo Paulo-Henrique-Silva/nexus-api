@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NexusAPI.Administracao.DTOs.Perfil;
 using NexusAPI.Administracao.Models;
 using NexusAPI.Administracao.Services;
-using NexusAPI.Compartilhado.EntidadesBase;
+using NexusAPI.Compartilhado.EntidadesBase.MVC;
 
 namespace NexusAPI.Administracao.Controllers
 {

@@ -1,7 +1,7 @@
 ﻿using NexusAPI.CicloVidaAtivo.Repositories;
 using NexusAPI.Compartilhado.Services;
 
-namespace NexusAPI.Compartilhado.EntidadesBase
+namespace NexusAPI.Compartilhado.EntidadesBase.CicloVida
 {
     public abstract class NexusCicloVidaService
     {
@@ -11,7 +11,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase
 
         protected readonly TokenService tokenService;
 
-        protected NexusCicloVidaService(AtribuicaoRepository atribuicaoRepository, 
+        protected NexusCicloVidaService(AtribuicaoRepository atribuicaoRepository,
             CicloVidaRepository cicloVidaRepository, TokenService tokenService)
         {
             this.atribuicaoRepository = atribuicaoRepository;

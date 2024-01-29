@@ -1,4 +1,4 @@
-﻿namespace NexusAPI.Compartilhado.EntidadesBase
+﻿namespace NexusAPI.Compartilhado.EntidadesBase.Objetos
 {
     /// <summary>
     /// Classe para retornar UID e nomes de objetos relacionados ao objeto principal da resposta.

@@ -3,7 +3,7 @@ using NexusAPI.Administracao.DTOs.Usuario;
 using NexusAPI.Administracao.Exceptions;
 using NexusAPI.Administracao.Models;
 using NexusAPI.Administracao.Repositories;
-using NexusAPI.Compartilhado.EntidadesBase;
+using NexusAPI.Compartilhado.EntidadesBase.MVC;
 using NexusAPI.Compartilhado.Exceptions;
 using NexusAPI.Compartilhado.Services;
 using System.Security.Claims;

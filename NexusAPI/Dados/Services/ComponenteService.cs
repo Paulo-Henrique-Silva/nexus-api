@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using NexusAPI.Administracao.DTOs.UsuarioPerfil;
-using NexusAPI.Compartilhado.EntidadesBase;
+using NexusAPI.Compartilhado.EntidadesBase.MVC;
 using NexusAPI.Compartilhado.Services;
 using NexusAPI.Dados.DTOs.Componente;
 using NexusAPI.Dados.DTOs.Localizacao;

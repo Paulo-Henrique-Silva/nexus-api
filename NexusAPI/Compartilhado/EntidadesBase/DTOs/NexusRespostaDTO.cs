@@ -1,4 +1,6 @@
-﻿namespace NexusAPI.Compartilhado.EntidadesBase
+﻿using NexusAPI.Compartilhado.EntidadesBase.Objetos;
+
+namespace NexusAPI.Compartilhado.EntidadesBase.DTOs
 {
     public abstract class NexusRespostaDTO
     {

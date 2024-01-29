@@ -3,7 +3,7 @@ using NexusAPI.Administracao.Exceptions;
 using NexusAPI.Compartilhado.Exceptions;
 using NexusAPI.Compartilhado.RespostasAPI;
 
-namespace NexusAPI.Compartilhado.EntidadesBase
+namespace NexusAPI.Compartilhado.EntidadesBase.MVC
 {
     /// <summary>
     /// Classe utilizada para criar controles da aplicação, com métodos básicos de CRUD.

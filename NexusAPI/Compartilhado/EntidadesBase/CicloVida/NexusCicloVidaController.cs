@@ -4,7 +4,7 @@ using NexusAPI.CicloVidaAtivo.DTOs.CicloVida;
 using NexusAPI.CicloVidaAtivo.Services;
 using NexusAPI.Compartilhado.RespostasAPI;
 
-namespace NexusAPI.Compartilhado.EntidadesBase
+namespace NexusAPI.Compartilhado.EntidadesBase.CicloVida
 {
     [Authorize]
     [Route("api/CicloVida/[controller]")]

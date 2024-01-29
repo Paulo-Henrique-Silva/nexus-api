@@ -1,4 +1,5 @@
-﻿using NexusAPI.Compartilhado.EntidadesBase;
+﻿using NexusAPI.Compartilhado.EntidadesBase.DTOs;
+using NexusAPI.Compartilhado.EntidadesBase.Objetos;
 
 namespace NexusAPI.Administracao.DTOs.Notificacao
 {

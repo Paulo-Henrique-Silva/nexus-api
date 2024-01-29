@@ -1,4 +1,4 @@
-﻿namespace NexusAPI.Compartilhado.EntidadesBase
+﻿namespace NexusAPI.Compartilhado.EntidadesBase.DTOs
 {
     public abstract class NexusEnvioDTO
     {

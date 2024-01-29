@@ -1,7 +1,7 @@
 ﻿using NexusAPI.Administracao.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace NexusAPI.Compartilhado.EntidadesBase
+namespace NexusAPI.Compartilhado.EntidadesBase.Objetos
 {
     public abstract class NexusRelacionamento
     {

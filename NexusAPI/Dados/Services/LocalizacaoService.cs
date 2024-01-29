@@ -2,7 +2,7 @@
 using NexusAPI.Administracao.DTOs.Perfil;
 using NexusAPI.Administracao.DTOs.Projeto;
 using NexusAPI.Administracao.Models;
-using NexusAPI.Compartilhado.EntidadesBase;
+using NexusAPI.Compartilhado.EntidadesBase.MVC;
 using NexusAPI.Compartilhado.Services;
 using NexusAPI.Dados.DTOs.Equipamento;
 using NexusAPI.Dados.DTOs.Localizacao;

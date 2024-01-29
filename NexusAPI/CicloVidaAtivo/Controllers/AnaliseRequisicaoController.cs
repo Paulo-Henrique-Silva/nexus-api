@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NexusAPI.CicloVidaAtivo.DTOs.CicloVida;
 using NexusAPI.CicloVidaAtivo.Services;
-using NexusAPI.Compartilhado.EntidadesBase;
+using NexusAPI.Compartilhado.EntidadesBase.CicloVida;
 using NexusAPI.Compartilhado.RespostasAPI;
 
 namespace NexusAPI.CicloVidaAtivo.Controllers

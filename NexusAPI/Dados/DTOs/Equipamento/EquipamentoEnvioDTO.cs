@@ -1,4 +1,4 @@
-﻿using NexusAPI.Compartilhado.EntidadesBase;
+﻿using NexusAPI.Compartilhado.EntidadesBase.DTOs;
 using NexusAPI.Dados.Enums;
 
 namespace NexusAPI.Dados.DTOs.Equipamento

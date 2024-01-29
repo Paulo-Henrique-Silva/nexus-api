@@ -2,7 +2,7 @@
 using NexusAPI.Administracao.Models;
 using NexusAPI.CicloVidaAtivo.Models;
 using NexusAPI.Compartilhado.Data;
-using NexusAPI.Compartilhado.EntidadesBase;
+using NexusAPI.Compartilhado.EntidadesBase.MVC;
 using NexusAPI.Compartilhado.Interfaces;
 using NexusAPI.Dados.Models;
 

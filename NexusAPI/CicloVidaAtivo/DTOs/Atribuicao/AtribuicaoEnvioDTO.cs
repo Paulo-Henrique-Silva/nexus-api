@@ -1,9 +1,9 @@
 ﻿using NexusAPI.Administracao.Models;
 using NexusAPI.CicloVidaAtivo.Enums;
 using NexusAPI.CicloVidaAtivo.Models;
-using NexusAPI.Compartilhado.EntidadesBase;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using NexusAPI.Compartilhado.EntidadesBase.DTOs;
 
 namespace NexusAPI.CicloVidaAtivo.DTOs.Atribuicao
 {

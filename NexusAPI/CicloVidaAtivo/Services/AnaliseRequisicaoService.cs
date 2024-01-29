@@ -1,5 +1,5 @@
 ﻿using NexusAPI.CicloVidaAtivo.Repositories;
-using NexusAPI.Compartilhado.EntidadesBase;
+using NexusAPI.Compartilhado.EntidadesBase.CicloVida;
 using NexusAPI.Compartilhado.Services;
 using NexusAPI.Dados.Models;
 using System.Runtime.Intrinsics.X86;

@@ -1,5 +1,6 @@
 ﻿using NexusAPI.CicloVidaAtivo.Enums;
-using NexusAPI.Compartilhado.EntidadesBase;
+using NexusAPI.Compartilhado.EntidadesBase.DTOs;
+using NexusAPI.Compartilhado.EntidadesBase.Objetos;
 
 namespace NexusAPI.CicloVidaAtivo.DTOs.Atribuicao
 {

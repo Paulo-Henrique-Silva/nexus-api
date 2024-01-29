@@ -1,4 +1,4 @@
-﻿using NexusAPI.Compartilhado.EntidadesBase;
+﻿using NexusAPI.Compartilhado.EntidadesBase.Objetos;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

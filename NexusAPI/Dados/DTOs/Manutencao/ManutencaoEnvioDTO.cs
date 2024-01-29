@@ -1,5 +1,5 @@
 ﻿using NexusAPI.Administracao.Models;
-using NexusAPI.Compartilhado.EntidadesBase;
+using NexusAPI.Compartilhado.EntidadesBase.DTOs;
 
 namespace NexusAPI.Dados.DTOs.Manutencao
 {
