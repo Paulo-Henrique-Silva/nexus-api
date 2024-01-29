@@ -27,11 +27,11 @@ namespace NexusAPI.Administracao.Controllers
         //UID[2] - Perfil
 
         [HttpGet]
-        public virtual async Task<IActionResult> Get([FromQuery] int pagina = 1)
+        public virtual async Task<IActionResult> Get()
         {
             try
             {
-                var objetos = await service.ObterTudoAsync(pagina);
+                var objetos = await service.ObterTudoAsync();
                 return Ok(objetos);
             }
             catch (Exception)

@@ -54,10 +54,9 @@ namespace NexusAPI.Administracao.Services
             return objsResposta;
         }
 
-        public virtual async Task<List<UsuarioPerfilRespostaDTO>> ObterTudoAsync(
-            int numeroPagina)
+        public virtual async Task<List<UsuarioPerfilRespostaDTO>> ObterTudoAsync()
         {
-            var objs = await repository.ObterTudoAsync(numeroPagina);
+            var objs = await repository.ObterTudoAsync();
             var objsResposta = new List<UsuarioPerfilRespostaDTO>();
 
             objs.ForEach(o => objsResposta.Add(ConverterParaDTORespostaAsync(o)));

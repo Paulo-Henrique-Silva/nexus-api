@@ -29,7 +29,7 @@ namespace NexusAPI.Administracao.Repositories
                 obj.DataFinalizacao == null);
         }
 
-        public async Task<List<UsuarioPerfil>> ObterTudoAsync(int numeroPagina)
+        public async Task<List<UsuarioPerfil>> ObterTudoAsync()
         {
             return await dataContext.Set<UsuarioPerfil>()
                 .Include(obj => obj.AtualizadoPor)
@@ -39,8 +39,6 @@ namespace NexusAPI.Administracao.Repositories
                 .Include(obj => obj.Perfil)
                 .Where(obj => obj.DataFinalizacao == null)
                 .OrderByDescending(obj => obj.DataCriacao)
-                .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
-                .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .ToListAsync();
         }
 
