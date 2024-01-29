@@ -2,11 +2,13 @@
 using NexusAPI.Compartilhado.Data;
 using NexusAPI.Compartilhado.EntidadesBase.MVC;
 using NexusAPI.Compartilhado.Interfaces;
+using NexusAPI.Dados.Interfaces;
 using NexusAPI.Dados.Models;
 
 namespace NexusAPI.Dados.Repositories
 {
-    public class LocalizacaoRepository : NexusRepository<Localizacao>
+    public class LocalizacaoRepository : NexusRepository<Localizacao>, 
+        IProjetoItemRepository<Localizacao>
     {
         public LocalizacaoRepository(DataContext dataContext) : base(dataContext)
         {
@@ -19,6 +21,7 @@ namespace NexusAPI.Dados.Repositories
             return await dataContext.Set<Localizacao>()
                 .Include(obj => obj.AtualizadoPor)
                 .Include(obj => obj.UsuarioCriador)
+                .Include(obj => obj.Projeto)
                 .Where(obj => obj.DataFinalizacao == null && obj.ProjetoUID.Equals(projetoUID))
                 .OrderByDescending(obj => obj.DataCriacao)
                 .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)

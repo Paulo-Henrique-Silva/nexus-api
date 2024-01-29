@@ -3,9 +3,11 @@ using NexusAPI.Administracao.DTOs.Perfil;
 using NexusAPI.Administracao.DTOs.Projeto;
 using NexusAPI.Administracao.Models;
 using NexusAPI.Compartilhado.EntidadesBase.MVC;
+using NexusAPI.Compartilhado.EntidadesBase.Objetos;
 using NexusAPI.Compartilhado.Services;
 using NexusAPI.Dados.DTOs.Equipamento;
 using NexusAPI.Dados.DTOs.Localizacao;
+using NexusAPI.Dados.Interfaces;
 using NexusAPI.Dados.Models;
 using NexusAPI.Dados.Repositories;
 
@@ -25,7 +27,8 @@ namespace NexusAPI.Dados.Services
             {
                 cfg.CreateMap<Localizacao, LocalizacaoRespostaDTO>()
                     .ForMember(c => c.AtualizadoPor, opt => opt.Ignore())
-                    .ForMember(c => c.UsuarioCriador, opt => opt.Ignore());
+                    .ForMember(c => c.UsuarioCriador, opt => opt.Ignore())
+                    .ForMember(c => c.Projeto, opt => opt.Ignore());
             });
             var mapper = new Mapper(config);
 
@@ -50,24 +53,6 @@ namespace NexusAPI.Dados.Services
             };
 
             return resposta;
-        }
-
-        public async Task<List<LocalizacaoRespostaDTO>> ObterTudoPorProjetoUIDAsync(int numeroPagina,
-            string projetoUID)
-        {
-            var localizacaoRepository = repository as LocalizacaoRepository;
-
-            if (localizacaoRepository == null)
-            {
-                throw new Exception("Instância incorreta em repository.");
-            }
-
-            var objs = await localizacaoRepository.ObterTudoPorProjetoUIDAsync(numeroPagina, projetoUID);
-            var objsResposta = new List<LocalizacaoRespostaDTO>();
-
-            objs.ForEach(o => objsResposta.Add(ConverterParaDTOResposta(o)));
-
-            return objsResposta;
         }
     }
 }

@@ -4,11 +4,13 @@ using NexusAPI.CicloVidaAtivo.Models;
 using NexusAPI.Compartilhado.Data;
 using NexusAPI.Compartilhado.EntidadesBase.MVC;
 using NexusAPI.Compartilhado.Interfaces;
+using NexusAPI.Dados.Interfaces;
 using NexusAPI.Dados.Models;
 
 namespace NexusAPI.Dados.Repositories
 {
-    public class ComponenteRepository : NexusRepository<Componente>
+    public class ComponenteRepository : NexusRepository<Componente>, 
+        IProjetoItemRepository<Componente>
     {
         public ComponenteRepository(DataContext dataContext) : base(dataContext)
         {

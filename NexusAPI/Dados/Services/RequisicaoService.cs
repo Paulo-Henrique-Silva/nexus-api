@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using NexusAPI.Compartilhado.EntidadesBase.MVC;
+using NexusAPI.Compartilhado.EntidadesBase.Objetos;
 using NexusAPI.Compartilhado.Services;
 using NexusAPI.Dados.DTOs.Manutencao;
 using NexusAPI.Dados.DTOs.Requisicao;

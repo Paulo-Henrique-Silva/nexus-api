@@ -2,6 +2,8 @@
 using NexusAPI.Administracao.Models;
 using NexusAPI.Compartilhado.Data;
 using NexusAPI.Compartilhado.Interfaces;
+using NexusAPI.Dados.Interfaces;
+using NexusAPI.Dados.Models;
 
 namespace NexusAPI.Compartilhado.EntidadesBase.MVC
 {
@@ -92,6 +94,18 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
                 dataContext.Set<T>().Update(objExistente);
                 await dataContext.SaveChangesAsync();
             }
+        }
+
+        public async Task<List<T>> VerificarObterTudoPorProjeto(int numeroPagina,
+            string projetoUID)
+        {
+            if (this is IProjetoItemRepository<T> repository)
+            {
+                //Chama implementação local, pois para cada repository é diferente.
+                return await repository.ObterTudoPorProjetoUIDAsync(numeroPagina, projetoUID);
+            }
+
+            throw new NotImplementedException("O método não existe nesta classe.");
         }
 
         public virtual void EditarApenasCamposDiferentes(T objExistente, T objAtualizado)

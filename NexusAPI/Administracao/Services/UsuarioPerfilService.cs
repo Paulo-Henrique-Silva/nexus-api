@@ -7,6 +7,7 @@ using NexusAPI.Administracao.Repositories;
 using NexusAPI.Compartilhado.EntidadesBase;
 using NexusAPI.Compartilhado.Exceptions;
 using NexusAPI.Compartilhado.Services;
+using NexusAPI.Compartilhado.EntidadesBase.Objetos;
 using System.Security.Claims;
 
 namespace NexusAPI.Administracao.Services

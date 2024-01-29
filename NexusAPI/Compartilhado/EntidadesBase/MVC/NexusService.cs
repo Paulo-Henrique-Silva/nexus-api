@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using NexusAPI.Administracao.Models;
-using NexusAPI.Administracao.Repositories;
-using NexusAPI.Administracao.Services;
+using NexusAPI.Compartilhado.EntidadesBase.DTOs;
 using NexusAPI.Compartilhado.Exceptions;
 using NexusAPI.Compartilhado.Services;
 using System.Security.Claims;
@@ -33,14 +30,45 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
             return obj == null ? throw new ObjetoNaoEncontrado(UID) : ConverterParaDTOResposta(obj);
         }
 
-        public virtual async Task<List<U>> ObterTudoAsync(int numeroPagina)
+        public virtual async Task<NexusListaRespostaDTO<U>> ObterTudoAsync(int numeroPagina)
         {
             var objs = await repository.ObterTudoUIDAsync(numeroPagina);
             var objsResposta = new List<U>();
 
             objs.ForEach(o => objsResposta.Add(ConverterParaDTOResposta(o)));
 
-            return objsResposta;
+            var resposta = new NexusListaRespostaDTO<U>()
+            {
+                TotalItens = await repository.ObterCountAsync(),
+                Itens = objsResposta
+            };
+
+            return resposta;
+        }
+
+        /// <summary>
+        /// Obtém todos os itens por projeto. Caso o objeto em si não seja um item de projeto, lancará
+        /// uma execeção.
+        /// </summary>
+        /// <param name="numeroPagina"></param>
+        /// <param name="projetoUID"></param>
+        /// <returns></returns>
+        public virtual async Task<NexusListaRespostaDTO<U>> ObterTudoPorProjetoUIDAsync(int numeroPagina, 
+            string projetoUID)
+        {
+            //Verifica se =
+            var objs = await repository.VerificarObterTudoPorProjeto(numeroPagina, projetoUID);
+            var objsResposta = new List<U>();
+
+            objs.ForEach(o => objsResposta.Add(ConverterParaDTOResposta(o)));
+
+            var resposta = new NexusListaRespostaDTO<U>()
+            {
+                TotalItens = await repository.ObterCountAsync(),
+                Itens = objsResposta
+            };
+
+            return resposta;
         }
 
         public virtual async Task<U> AdicionarAsync(T obj, IEnumerable<Claim> claims)
