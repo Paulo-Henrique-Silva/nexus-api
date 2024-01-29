@@ -28,7 +28,7 @@ namespace NexusAPI.Administracao.Repositories
                 .Include(obj => obj.UsuarioCriador)
                 .Include(obj => obj.Usuario)
                 .Where(obj => obj.DataFinalizacao == null)
-                .OrderBy(obj => obj.DataCriacao)
+                .OrderByDescending(obj => obj.DataCriacao)
                 .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .ToListAsync();
@@ -42,7 +42,7 @@ namespace NexusAPI.Administracao.Repositories
                 .Include(obj => obj.UsuarioCriador)
                 .Include(obj => obj.Usuario)
                 .Where(obj => obj.DataFinalizacao == null && obj.UsuarioUID.Equals(usuarioUID))
-                .OrderBy(obj => obj.DataCriacao)
+                .OrderByDescending(obj => obj.DataCriacao)
                 .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .ToListAsync();

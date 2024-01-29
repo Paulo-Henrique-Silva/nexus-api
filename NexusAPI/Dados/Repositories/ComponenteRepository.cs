@@ -31,7 +31,7 @@ namespace NexusAPI.Dados.Repositories
                 .Include(obj => obj.UsuarioCriador)
                 .Include(obj => obj.Localizacao)
                 .Where(obj => obj.DataFinalizacao == null && obj.ProjetoUID.Equals(projetoUID))
-                .OrderBy(obj => obj.DataCriacao)
+                .OrderByDescending(obj => obj.DataCriacao)
                 .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .ToListAsync();
