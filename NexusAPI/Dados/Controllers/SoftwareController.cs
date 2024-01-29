@@ -23,14 +23,7 @@ namespace NexusAPI.Dados.Controllers
         {
             try
             {
-                var novoService = service as SoftwareService;
-
-                if (novoService == null)
-                {
-                    throw new Exception("Instância incorreta em service");
-                }
-
-                var objetos = await novoService.ObterTudoPorProjetoUIDAsync(pagina, projetoUID);
+                var objetos = await service.ObterTudoPorProjetoUIDAsync(pagina, projetoUID);
                 return Ok(objetos);
             }
             catch (Exception)

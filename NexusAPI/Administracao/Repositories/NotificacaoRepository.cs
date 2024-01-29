@@ -21,7 +21,7 @@ namespace NexusAPI.Administracao.Repositories
                 .FirstOrDefaultAsync(obj => obj.UID.Equals(UID) && obj.DataFinalizacao == null);
         }
 
-        public override async Task<List<Notificacao>> ObterTudoUIDAsync(int numeroPagina)
+        public override async Task<List<Notificacao>> ObterTudoAsync(int numeroPagina)
         {
             return await dataContext.Set<Notificacao>()
                 .Include(obj => obj.AtualizadoPor)

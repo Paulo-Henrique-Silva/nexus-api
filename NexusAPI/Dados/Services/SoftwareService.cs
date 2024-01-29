@@ -56,23 +56,5 @@ namespace NexusAPI.Dados.Services
 
             return resposta;
         }
-
-        public async Task<List<SoftwareRespostaDTO>> ObterTudoPorProjetoUIDAsync(int numeroPagina,
-            string projetoUID)
-        {
-            var softwareRepository = repository as SoftwareRepository;
-
-            if (softwareRepository == null)
-            {
-                throw new Exception("Instância incorreta em repository.");
-            }
-
-            var objs = await softwareRepository.ObterTudoPorProjetoUIDAsync(numeroPagina, projetoUID);
-            var objsResposta = new List<SoftwareRespostaDTO>();
-
-            objs.ForEach(o => objsResposta.Add(ConverterParaDTOResposta(o)));
-
-            return objsResposta;
-        }
     }
 }

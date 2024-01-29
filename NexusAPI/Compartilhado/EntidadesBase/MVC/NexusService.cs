@@ -2,6 +2,7 @@
 using NexusAPI.Compartilhado.EntidadesBase.DTOs;
 using NexusAPI.Compartilhado.Exceptions;
 using NexusAPI.Compartilhado.Services;
+using NexusAPI.Dados.Interfaces;
 using System.Security.Claims;
 
 namespace NexusAPI.Compartilhado.EntidadesBase.MVC
@@ -32,7 +33,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
 
         public virtual async Task<NexusListaRespostaDTO<U>> ObterTudoAsync(int numeroPagina)
         {
-            var objs = await repository.ObterTudoUIDAsync(numeroPagina);
+            var objs = await repository.ObterTudoAsync(numeroPagina);
             var objsResposta = new List<U>();
 
             objs.ForEach(o => objsResposta.Add(ConverterParaDTOResposta(o)));
@@ -56,8 +57,13 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
         public virtual async Task<NexusListaRespostaDTO<U>> ObterTudoPorProjetoUIDAsync(int numeroPagina, 
             string projetoUID)
         {
-            //Verifica se =
-            var objs = await repository.VerificarObterTudoPorProjeto(numeroPagina, projetoUID);
+            //Verifica se o repository possui o método implementado
+            if (repository is not IProjetoItemRepository<O>)
+            {
+                throw new NotImplementedException("O método não está implementado na classe.");
+            }
+
+            var objs = await repository.VerificarObterTudoPorProjetoAsync(numeroPagina, projetoUID);
             var objsResposta = new List<U>();
 
             objs.ForEach(o => objsResposta.Add(ConverterParaDTOResposta(o)));

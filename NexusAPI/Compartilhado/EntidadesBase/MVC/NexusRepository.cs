@@ -34,7 +34,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
         /// </summary>
         /// <param name="numeroPagina"></param>
         /// <returns></returns>
-        public virtual async Task<List<T>> ObterTudoUIDAsync(int numeroPagina)
+        public virtual async Task<List<T>> ObterTudoAsync(int numeroPagina)
         {
             return await dataContext.Set<T>()
                 .Include(obj => obj.AtualizadoPor)
@@ -96,16 +96,24 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
             }
         }
 
-        public async Task<List<T>> VerificarObterTudoPorProjeto(int numeroPagina,
+        /// <summary>
+        /// Verifica se é possível executar o método, caso o repository seja da interface correta.
+        /// </summary>
+        /// <param name="numeroPagina"></param>
+        /// <param name="projetoUID"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<List<T>> VerificarObterTudoPorProjetoAsync(int numeroPagina,
             string projetoUID)
         {
-            if (this is IProjetoItemRepository<T> repository)
+            var repository = this as IProjetoItemRepository<T>;
+
+            if (repository == null)
             {
-                //Chama implementação local, pois para cada repository é diferente.
-                return await repository.ObterTudoPorProjetoUIDAsync(numeroPagina, projetoUID);
+                throw new NotImplementedException("O método não existe nesta classe.");
             }
 
-            throw new NotImplementedException("O método não existe nesta classe.");
+            return await repository.ObterTudoPorProjetoUIDAsync(numeroPagina, projetoUID);
         }
 
         public virtual void EditarApenasCamposDiferentes(T objExistente, T objAtualizado)
