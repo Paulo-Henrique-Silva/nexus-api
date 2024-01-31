@@ -15,6 +15,15 @@ namespace NexusAPI.Dados.Repositories
 
         }
 
+        public override async Task<Localizacao?> ObterPorUIDAsync(string UID)
+        {
+            return await dataContext.Set<Localizacao>()
+                .Include(obj => obj.AtualizadoPor)
+                .Include(obj => obj.UsuarioCriador)
+                .Include(obj => obj.Projeto)
+                .FirstOrDefaultAsync(obj => obj.UID.Equals(UID) && obj.DataFinalizacao == null);
+        }
+
         public override async Task<List<Localizacao>> ObterTudoAsync(int numeroPagina)
         {
             return await dataContext.Set<Localizacao>()
@@ -26,6 +35,18 @@ namespace NexusAPI.Dados.Repositories
                 .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .ToListAsync();
+        }
+
+        /// <summary>
+        /// Obtém a quantidade itens não finalizados, pelo projeto especificado.
+        /// </summary>
+        /// <param name="numeroPagina"></param>
+        /// <returns></returns>
+        public virtual async Task<int> ObterCountPorProjetoUIDAsync(string projetoUID)
+        {
+            return await dataContext.Set<Localizacao>()
+                .Where(obj => obj.DataFinalizacao == null && obj.ProjetoUID.Equals(projetoUID))
+                .CountAsync();
         }
 
         public async Task<List<Localizacao>> ObterTudoPorProjetoUIDAsync(int numeroPagina,

@@ -24,7 +24,8 @@ namespace NexusAPI.Dados.Services
                 cfg.CreateMap<Software, SoftwareRespostaDTO>()
                     .ForMember(c => c.AtualizadoPor, opt => opt.Ignore())
                     .ForMember(c => c.UsuarioCriador, opt => opt.Ignore())
-                    .ForMember(c => c.Componente, opt => opt.Ignore());
+                    .ForMember(c => c.Componente, opt => opt.Ignore())
+                    .ForMember(c => c.Projeto, opt => opt.Ignore());
             });
             var mapper = new Mapper(config);
 

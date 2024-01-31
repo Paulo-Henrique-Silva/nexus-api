@@ -7,9 +7,6 @@ using System.Security.Claims;
 
 namespace NexusAPI.Compartilhado.EntidadesBase.MVC
 {
-    //TODO: Implementar quantidades de itens pro projeto na interface de ProjetoItem.
-    //Ajustar obterTudo em classes que implementam a interface. 
-
     /// <summary>
     /// Interface para implementar serviços de regras de negócio.
     /// </summary>
@@ -61,19 +58,19 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
             string projetoUID)
         {
             //Verifica se o repository possui o método implementado
-            if (repository is not IProjetoItemRepository<O>)
+            if (repository is not IProjetoItemRepository<O> projetoItemRepository)
             {
                 throw new NotImplementedException("O método não está implementado na classe.");
             }
 
-            var objs = await repository.VerificarObterTudoPorProjetoAsync(numeroPagina, projetoUID);
+            var objs = await projetoItemRepository.ObterTudoPorProjetoUIDAsync(numeroPagina, projetoUID);
             var objsResposta = new List<U>();
 
             objs.ForEach(o => objsResposta.Add(ConverterParaDTOResposta(o)));
 
             var resposta = new NexusListaRespostaDTO<U>()
             {
-                TotalItens = await repository.ObterCountAsync(),
+                TotalItens = await projetoItemRepository.ObterCountPorProjetoUIDAsync(projetoUID),
                 Itens = objsResposta
             };
 
