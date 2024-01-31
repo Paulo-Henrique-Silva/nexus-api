@@ -22,11 +22,14 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
         }
 
         [HttpGet]
-        public virtual async Task<IActionResult> Get([FromQuery] int pagina = 1)
+        public virtual async Task<IActionResult> Get([FromQuery] string? nome = null, 
+            [FromQuery] int pagina = 1)
         {
             try
             {
-                var objetos = await service.ObterTudoAsync(pagina);
+                var objetos = nome == null ? await service.ObterTudoAsync(pagina) : 
+                    await service.ObterTudoPorNomeAsync(pagina, nome);
+
                 return Ok(objetos);
             }
             catch (Exception)

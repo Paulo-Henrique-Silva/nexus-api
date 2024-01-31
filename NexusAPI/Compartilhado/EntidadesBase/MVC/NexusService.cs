@@ -48,6 +48,29 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
         }
 
         /// <summary>
+        /// Obtém os registros por nome e quantidade de itens.
+        /// </summary>
+        /// <param name="numeroPagina"></param>
+        /// <param name="nome"></param>
+        /// <returns></returns>
+        public virtual async Task<NexusListaRespostaDTO<U>> ObterTudoPorNomeAsync(int numeroPagina, 
+            string nome)
+        {
+            var objs = await repository.ObterTudoPorNomeAsync(numeroPagina, nome);
+            var objsResposta = new List<U>();
+
+            objs.ForEach(o => objsResposta.Add(ConverterParaDTOResposta(o)));
+
+            var resposta = new NexusListaRespostaDTO<U>()
+            {
+                TotalItens = await repository.ObterCountPorNomeAsync(nome),
+                Itens = objsResposta
+            };
+
+            return resposta;
+        }
+
+        /// <summary>
         /// Obtém todos os itens por projeto. Caso o objeto em si não seja um item de projeto, lancará
         /// uma execeção.
         /// </summary>

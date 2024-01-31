@@ -29,11 +29,14 @@ namespace NexusAPI.Administracao.Controllers
 
         [HttpGet]
         [Authorize]
-        public override async Task<IActionResult> Get([FromQuery] int pagina = 1)
+        public override async Task<IActionResult> Get([FromQuery] string? nome = null, 
+            [FromQuery] int pagina = 1)
         {
             try
             {
-                var usuarios = await service.ObterTudoAsync(pagina);
+                var usuarios = nome == null ? await service.ObterTudoAsync(pagina) :
+                   await service.ObterTudoPorNomeAsync(pagina, nome);
+
                 return Ok(usuarios);
             }
             catch (Exception)

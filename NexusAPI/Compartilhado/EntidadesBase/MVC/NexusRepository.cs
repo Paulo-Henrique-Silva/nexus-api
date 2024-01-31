@@ -48,6 +48,26 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
         }
 
         /// <summary>
+        /// Obtém apenas os registros não finalizados, que contém o nome especificado, 
+        /// ordenados por dataCriacao mais recente e
+        /// apenas um determinado numero de itens por página.
+        /// </summary>
+        /// <param name="numeroPagina"></param>
+        /// <param name="nome"></param>
+        /// <returns></returns>
+        public virtual async Task<List<T>> ObterTudoPorNomeAsync(int numeroPagina, string nome)
+        {
+            return await dataContext.Set<T>()
+                .Include(obj => obj.AtualizadoPor)
+                .Include(obj => obj.UsuarioCriador)
+                .Where(obj => obj.DataFinalizacao == null && obj.Nome.Contains(nome))
+                .OrderByDescending(obj => obj.DataCriacao)
+                .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
+                .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
+                .ToListAsync();
+        }
+
+        /// <summary>
         /// Obtém a quantidade itens não finalizados.
         /// </summary>
         /// <param name="numeroPagina"></param>
@@ -55,6 +75,18 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
         public virtual async Task<int> ObterCountAsync()
         {
             return await dataContext.Set<T>().Where(obj => obj.DataFinalizacao == null).CountAsync();
+        }
+
+        /// <summary>
+        /// Obtém a quantidade itens não finalizados por nome
+        /// </summary>
+        /// <param name="numeroPagina"></param>
+        /// <returns></returns>
+        public virtual async Task<int> ObterCountPorNomeAsync(string nome)
+        {
+            return await dataContext.Set<T>()
+                .Where(obj => obj.DataFinalizacao == null && obj.Nome.Contains(nome))
+                .CountAsync();
         }
 
         public virtual async Task<T> AdicionarAsync(T obj)
