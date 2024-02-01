@@ -18,12 +18,14 @@ namespace NexusAPI.Dados.Controllers
         }
 
         [HttpGet("Projeto/{projetoUID}")]
-        public async Task<IActionResult> Get([FromRoute] string projetoUID, 
-            [FromQuery] int pagina = 1)
+        public async Task<IActionResult> GetPorProjeto([FromRoute] string projetoUID,
+            [FromQuery] string? nome = null, [FromQuery] int pagina = 1)
         {
             try
             {
-                var objetos = await service.ObterTudoPorProjetoUIDAsync(pagina, projetoUID);
+                var objetos = nome == null ? await service.ObterTudoPorProjetoUIDAsync(pagina, projetoUID) :
+                    await service.ObterTudoPorProjetoENomeAsync(pagina, projetoUID, nome);
+
                 return Ok(objetos);
             }
             catch (Exception)

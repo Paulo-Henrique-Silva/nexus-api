@@ -37,6 +37,20 @@ namespace NexusAPI.Dados.Repositories
                 .ToListAsync();
         }
 
+        public override async Task<List<Localizacao>> ObterTudoPorNomeAsync(int numeroPagina, 
+            string nome)
+        {
+            return await dataContext.Set<Localizacao>()
+                .Include(obj => obj.AtualizadoPor)
+                .Include(obj => obj.UsuarioCriador)
+                .Include(obj => obj.Projeto)
+                .Where(obj => obj.DataFinalizacao == null && obj.Nome.Contains(nome))
+                .OrderByDescending(obj => obj.DataCriacao)
+                .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
+                .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
+                .ToListAsync();
+        }
+
         /// <summary>
         /// Obtém a quantidade itens não finalizados, pelo projeto especificado.
         /// </summary>
@@ -49,6 +63,19 @@ namespace NexusAPI.Dados.Repositories
                 .CountAsync();
         }
 
+        /// <summary>
+        /// Obtém a quantidade itens não finalizados, pelo projeto e nome.
+        /// </summary>
+        /// <param name="numeroPagina"></param>
+        /// <returns></returns>
+        public virtual async Task<int> ObterCountPorProjetoENomeAsync(string projetoUID, string nome)
+        {
+            return await dataContext.Set<Localizacao>()
+                .Where(obj => obj.DataFinalizacao == null && obj.ProjetoUID.Equals(projetoUID) &&
+                obj.Nome.Contains(nome))
+                .CountAsync();
+        }
+
         public async Task<List<Localizacao>> ObterTudoPorProjetoUIDAsync(int numeroPagina,
             string projetoUID)
         {
@@ -57,6 +84,21 @@ namespace NexusAPI.Dados.Repositories
                 .Include(obj => obj.UsuarioCriador)
                 .Include(obj => obj.Projeto)
                 .Where(obj => obj.DataFinalizacao == null && obj.ProjetoUID.Equals(projetoUID))
+                .OrderByDescending(obj => obj.DataCriacao)
+                .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
+                .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
+                .ToListAsync();
+        }
+
+        public async Task<List<Localizacao>> ObterTudoPorProjetoENomeAsync(int numeroPagina,
+            string projetoUID, string nome)
+        {
+            return await dataContext.Set<Localizacao>()
+                .Include(obj => obj.AtualizadoPor)
+                .Include(obj => obj.UsuarioCriador)
+                .Include(obj => obj.Projeto)
+                .Where(obj => obj.DataFinalizacao == null && obj.ProjetoUID.Equals(projetoUID) &&
+                obj.Nome.Contains(nome))
                 .OrderByDescending(obj => obj.DataCriacao)
                 .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)

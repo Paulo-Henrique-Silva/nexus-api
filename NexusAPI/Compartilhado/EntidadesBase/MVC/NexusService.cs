@@ -100,6 +100,31 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
             return resposta;
         }
 
+        public virtual async Task<NexusListaRespostaDTO<U>> ObterTudoPorProjetoENomeAsync(
+            int numeroPagina, string projetoUID, string nome)
+        {
+            //Verifica se o repository possui o método implementado
+            if (repository is not IProjetoItemRepository<O> projetoItemRepository)
+            {
+                throw new NotImplementedException("O método não está implementado na classe.");
+            }
+
+            var objs = await projetoItemRepository.ObterTudoPorProjetoENomeAsync(numeroPagina, projetoUID, 
+                nome);
+            var objsResposta = new List<U>();
+
+            objs.ForEach(o => objsResposta.Add(ConverterParaDTOResposta(o)));
+
+            var resposta = new NexusListaRespostaDTO<U>()
+            {
+                TotalItens = await projetoItemRepository.ObterCountPorProjetoENomeAsync(projetoUID, 
+                nome),
+                Itens = objsResposta
+            };
+
+            return resposta;
+        }
+
         public virtual async Task<U> AdicionarAsync(T obj, IEnumerable<Claim> claims)
         {
             var objClasse = ConverterParaClasse(obj);
