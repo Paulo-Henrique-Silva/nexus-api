@@ -12,6 +12,7 @@ namespace NexusAPI.CicloVidaAtivo.Models
         [Column("USUARIOUID")]
         [ForeignKey("USUARIOFK")]
         [Required]
+        [MaxLength(200)]
         public string UsuarioUID { get; set; } = "";
 
         public Usuario? Usuario { get; set; }
@@ -22,6 +23,7 @@ namespace NexusAPI.CicloVidaAtivo.Models
 
         [Column("CICLOVIDAUID")]
         [Required]
+        [MaxLength(200)]
         public string CicloVidaUID { get; set; } = "";
 
         public CicloVida? CicloVida { get; set; }

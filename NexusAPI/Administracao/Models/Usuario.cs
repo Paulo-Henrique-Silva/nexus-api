@@ -11,10 +11,12 @@ namespace NexusAPI.Administracao.Models
     {
         [Column("NOMEACESSO")]
         [Required]
+        [MaxLength(200)]
         public string NomeAcesso { get; set; } = "";
 
         [Column("SENHA")]
         [Required]
+        [MaxLength(200)]
         public string Senha { get; set; } = "";
 
         public Usuario() : base() { }

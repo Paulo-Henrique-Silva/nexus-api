@@ -11,6 +11,7 @@ namespace NexusAPI.Dados.Models
         [Column("PROJETOUID")]
         [ForeignKey("Projeto")]
         [Required]
+        [MaxLength(200)]
         public string ProjetoUID { get; set; } = "";
 
         public Projeto? Projeto { get; set; }

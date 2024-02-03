@@ -11,6 +11,7 @@ namespace NexusAPI.Dados.Models
         [Column("COORDENADORUID")]
         [ForeignKey("Coordenador")]
         [Required]
+        [MaxLength(200)]
         public string CoordenadorUID { get; set; } = "";
 
         public Usuario? Coordenador { get; set; }
@@ -18,6 +19,7 @@ namespace NexusAPI.Dados.Models
         [Column("PROJETOUID")]
         [ForeignKey("Projeto")]
         [Required]
+        [MaxLength(200)]
         public string ProjetoUID { get; set; } = "";
 
         public Projeto? Projeto { get; set; }

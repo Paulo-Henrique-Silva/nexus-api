@@ -11,6 +11,7 @@ namespace NexusAPI.CicloVidaAtivo.Models
         //Não há propriedade de navegação para ObjetoUID, pois qualquer obj pode ser uma classe.
         [Column("OBJETOUID")]
         [Required]
+        [MaxLength(200)]
         public string ObjetoUID { get; set; } = "";
 
         [Column("FINALIZADO")]

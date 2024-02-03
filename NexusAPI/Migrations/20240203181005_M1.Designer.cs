@@ -12,7 +12,7 @@ using NexusAPI.Compartilhado.Data;
 namespace NexusAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240118221513_M1")]
+    [Migration("20240203181005_M1")]
     partial class M1
     {
         /// <inheritdoc />
@@ -28,11 +28,13 @@ namespace NexusAPI.Migrations
             modelBuilder.Entity("NexusAPI.Administracao.Models.Notificacao", b =>
                 {
                     b.Property<string>("UID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("UID");
 
                     b.Property<string>("AtualizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("ATUALIZADOPORUID");
 
                     b.Property<DateTime>("DataCriacao")
@@ -48,25 +50,30 @@ namespace NexusAPI.Migrations
                         .HasColumnName("DATAULTIMAATUALIZACAO");
 
                     b.Property<string>("Descricao")
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)")
                         .HasColumnName("DESCRICAO");
 
                     b.Property<string>("FinalizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("FINALIZADOPORUID");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("NOME");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("USUARIOCRIADORUID");
 
                     b.Property<string>("UsuarioUID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("USUARIOUID");
 
                     b.Property<bool>("Vista")
@@ -89,11 +96,13 @@ namespace NexusAPI.Migrations
             modelBuilder.Entity("NexusAPI.Administracao.Models.Perfil", b =>
                 {
                     b.Property<string>("UID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("UID");
 
                     b.Property<string>("AtualizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("ATUALIZADOPORUID");
 
                     b.Property<DateTime>("DataCriacao")
@@ -109,20 +118,24 @@ namespace NexusAPI.Migrations
                         .HasColumnName("DATAULTIMAATUALIZACAO");
 
                     b.Property<string>("Descricao")
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)")
                         .HasColumnName("DESCRICAO");
 
                     b.Property<string>("FinalizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("FINALIZADOPORUID");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("NOME");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("USUARIOCRIADORUID");
 
                     b.HasKey("UID");
@@ -139,11 +152,13 @@ namespace NexusAPI.Migrations
             modelBuilder.Entity("NexusAPI.Administracao.Models.Projeto", b =>
                 {
                     b.Property<string>("UID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("UID");
 
                     b.Property<string>("AtualizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("ATUALIZADOPORUID");
 
                     b.Property<DateTime>("DataCriacao")
@@ -159,20 +174,24 @@ namespace NexusAPI.Migrations
                         .HasColumnName("DATAULTIMAATUALIZACAO");
 
                     b.Property<string>("Descricao")
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)")
                         .HasColumnName("DESCRICAO");
 
                     b.Property<string>("FinalizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("FINALIZADOPORUID");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("NOME");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("USUARIOCRIADORUID");
 
                     b.HasKey("UID");
@@ -189,11 +208,13 @@ namespace NexusAPI.Migrations
             modelBuilder.Entity("NexusAPI.Administracao.Models.Usuario", b =>
                 {
                     b.Property<string>("UID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("UID");
 
                     b.Property<string>("AtualizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("ATUALIZADOPORUID");
 
                     b.Property<DateTime>("DataCriacao")
@@ -209,30 +230,36 @@ namespace NexusAPI.Migrations
                         .HasColumnName("DATAULTIMAATUALIZACAO");
 
                     b.Property<string>("Descricao")
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)")
                         .HasColumnName("DESCRICAO");
 
                     b.Property<string>("FinalizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("FINALIZADOPORUID");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("NOME");
 
                     b.Property<string>("NomeAcesso")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("NOMEACESSO");
 
                     b.Property<string>("Senha")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("SENHA");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("USUARIOCRIADORUID");
 
                     b.HasKey("UID");
@@ -249,15 +276,18 @@ namespace NexusAPI.Migrations
             modelBuilder.Entity("NexusAPI.Administracao.Models.UsuarioPerfil", b =>
                 {
                     b.Property<string>("ProjetoUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("PROJETOUID");
 
                     b.Property<string>("UsuarioUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("USUARIOUID");
 
                     b.Property<string>("PerfilUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("PERFILUID");
 
                     b.Property<bool>("Ativado")
@@ -265,7 +295,7 @@ namespace NexusAPI.Migrations
                         .HasColumnName("ATIVADO");
 
                     b.Property<string>("AtualizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("ATUALIZADOPORUID");
 
                     b.Property<DateTime>("DataCriacao")
@@ -281,11 +311,11 @@ namespace NexusAPI.Migrations
                         .HasColumnName("DATAULTIMAATUALIZACAO");
 
                     b.Property<string>("FinalizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("FINALIZADOPORUID");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("USUARIOCRIADORUID");
 
                     b.HasKey("ProjetoUID", "UsuarioUID", "PerfilUID");
@@ -306,16 +336,19 @@ namespace NexusAPI.Migrations
             modelBuilder.Entity("NexusAPI.CicloVidaAtivo.Models.Atribuicao", b =>
                 {
                     b.Property<string>("UID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("UID");
 
                     b.Property<string>("AtualizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("ATUALIZADOPORUID");
 
                     b.Property<string>("CicloVidaUID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("CICLOVIDAUID");
 
                     b.Property<DateTime>("DataCriacao")
@@ -335,16 +368,19 @@ namespace NexusAPI.Migrations
                         .HasColumnName("DATAVENCIMENTO");
 
                     b.Property<string>("Descricao")
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)")
                         .HasColumnName("DESCRICAO");
 
                     b.Property<string>("FinalizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("FINALIZADOPORUID");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("NOME");
 
                     b.Property<int>("Tipo")
@@ -352,12 +388,14 @@ namespace NexusAPI.Migrations
                         .HasColumnName("TIPO");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("USUARIOCRIADORUID");
 
                     b.Property<string>("UsuarioUID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("USUARIOUID");
 
                     b.HasKey("UID");
@@ -378,11 +416,13 @@ namespace NexusAPI.Migrations
             modelBuilder.Entity("NexusAPI.CicloVidaAtivo.Models.CicloVida", b =>
                 {
                     b.Property<string>("UID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("UID");
 
                     b.Property<string>("AtualizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("ATUALIZADOPORUID");
 
                     b.Property<DateTime>("DataCriacao")
@@ -398,7 +438,8 @@ namespace NexusAPI.Migrations
                         .HasColumnName("DATAULTIMAATUALIZACAO");
 
                     b.Property<string>("Descricao")
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)")
                         .HasColumnName("DESCRICAO");
 
                     b.Property<bool>("Finalizado")
@@ -406,21 +447,25 @@ namespace NexusAPI.Migrations
                         .HasColumnName("FINALIZADO");
 
                     b.Property<string>("FinalizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("FINALIZADOPORUID");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("NOME");
 
                     b.Property<string>("ObjetoUID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("OBJETOUID");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("USUARIOCRIADORUID");
 
                     b.HasKey("UID");
@@ -437,11 +482,13 @@ namespace NexusAPI.Migrations
             modelBuilder.Entity("NexusAPI.Dados.Models.Componente", b =>
                 {
                     b.Property<string>("UID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("UID");
 
                     b.Property<string>("AtualizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("ATUALIZADOPORUID");
 
                     b.Property<DateTime>("DataAquisicao")
@@ -461,41 +508,49 @@ namespace NexusAPI.Migrations
                         .HasColumnName("DATAULTIMAATUALIZACAO");
 
                     b.Property<string>("Descricao")
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)")
                         .HasColumnName("DESCRICAO");
 
                     b.Property<string>("FinalizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("FINALIZADOPORUID");
 
                     b.Property<string>("LocalizacaoUID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("LOCALIZACAOUID");
 
                     b.Property<string>("Marca")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("MARCA");
 
                     b.Property<string>("Modelo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("MODELO");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("NOME");
 
                     b.Property<string>("NumeroSerie")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("NUMEROSERIE");
 
                     b.Property<string>("ProjetoUID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("PROJETOUID");
 
                     b.Property<int>("Status")
@@ -507,7 +562,8 @@ namespace NexusAPI.Migrations
                         .HasColumnName("TIPO");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("USUARIOCRIADORUID");
 
                     b.HasKey("UID");
@@ -528,16 +584,19 @@ namespace NexusAPI.Migrations
             modelBuilder.Entity("NexusAPI.Dados.Models.Equipamento", b =>
                 {
                     b.Property<string>("UID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("UID");
 
                     b.Property<string>("AtualizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("ATUALIZADOPORUID");
 
                     b.Property<string>("ComponenteUID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("COMPONENTEUID");
 
                     b.Property<DateTime>("DataAquisicao")
@@ -557,41 +616,49 @@ namespace NexusAPI.Migrations
                         .HasColumnName("DATAULTIMAATUALIZACAO");
 
                     b.Property<string>("Descricao")
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)")
                         .HasColumnName("DESCRICAO");
 
                     b.Property<string>("FinalizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("FINALIZADOPORUID");
 
                     b.Property<string>("LocalizacaoUID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("LOCALIZACAOUID");
 
                     b.Property<string>("Marca")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("MARCA");
 
                     b.Property<string>("Modelo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("MODELO");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("NOME");
 
                     b.Property<string>("NumeroSerie")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("NUMEROSERIE");
 
                     b.Property<string>("ProjetoUID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("PROJETOUID");
 
                     b.Property<int>("Tipo")
@@ -599,7 +666,8 @@ namespace NexusAPI.Migrations
                         .HasColumnName("TIPO");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("USUARIOCRIADORUID");
 
                     b.HasKey("UID");
@@ -622,11 +690,13 @@ namespace NexusAPI.Migrations
             modelBuilder.Entity("NexusAPI.Dados.Models.Localizacao", b =>
                 {
                     b.Property<string>("UID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("UID");
 
                     b.Property<string>("AtualizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("ATUALIZADOPORUID");
 
                     b.Property<DateTime>("DataCriacao")
@@ -642,25 +712,30 @@ namespace NexusAPI.Migrations
                         .HasColumnName("DATAULTIMAATUALIZACAO");
 
                     b.Property<string>("Descricao")
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)")
                         .HasColumnName("DESCRICAO");
 
                     b.Property<string>("FinalizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("FINALIZADOPORUID");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("NOME");
 
                     b.Property<string>("ProjetoUID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("PROJETOUID");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("USUARIOCRIADORUID");
 
                     b.HasKey("UID");
@@ -679,16 +754,19 @@ namespace NexusAPI.Migrations
             modelBuilder.Entity("NexusAPI.Dados.Models.Manutencao", b =>
                 {
                     b.Property<string>("UID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("UID");
 
                     b.Property<string>("AtualizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("ATUALIZADOPORUID");
 
                     b.Property<string>("ComponenteUID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("COMPONENTEUID");
 
                     b.Property<DateTime>("DataCriacao")
@@ -712,34 +790,41 @@ namespace NexusAPI.Migrations
                         .HasColumnName("DATAULTIMAATUALIZACAO");
 
                     b.Property<string>("Descricao")
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)")
                         .HasColumnName("DESCRICAO");
 
                     b.Property<string>("FinalizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("FINALIZADOPORUID");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("NOME");
 
                     b.Property<string>("ProjetoUID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("PROJETOUID");
 
                     b.Property<string>("ResponsavelUID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("RESPONSAVELUID");
 
                     b.Property<string>("Solucao")
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("SOLUCAO");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("USUARIOCRIADORUID");
 
                     b.HasKey("UID");
@@ -762,16 +847,19 @@ namespace NexusAPI.Migrations
             modelBuilder.Entity("NexusAPI.Dados.Models.Requisicao", b =>
                 {
                     b.Property<string>("UID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("UID");
 
                     b.Property<string>("AtualizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("ATUALIZADOPORUID");
 
                     b.Property<string>("CoordenadorUID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("COORDENADORUID");
 
                     b.Property<DateTime>("DataCriacao")
@@ -787,25 +875,30 @@ namespace NexusAPI.Migrations
                         .HasColumnName("DATAULTIMAATUALIZACAO");
 
                     b.Property<string>("Descricao")
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)")
                         .HasColumnName("DESCRICAO");
 
                     b.Property<string>("FinalizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("FINALIZADOPORUID");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("NOME");
 
                     b.Property<string>("ProjetoUID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("PROJETOUID");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("USUARIOCRIADORUID");
 
                     b.HasKey("UID");
@@ -826,21 +919,25 @@ namespace NexusAPI.Migrations
             modelBuilder.Entity("NexusAPI.Dados.Models.Software", b =>
                 {
                     b.Property<string>("UID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("UID");
 
                     b.Property<string>("AtualizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("ATUALIZADOPORUID");
 
                     b.Property<string>("ChaveLicenca")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("CHAVELICENCA");
 
                     b.Property<string>("ComponenteUID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("COMPONENTEUID");
 
                     b.Property<DateTime>("DataCriacao")
@@ -860,25 +957,30 @@ namespace NexusAPI.Migrations
                         .HasColumnName("DATAVENCIMENTO");
 
                     b.Property<string>("Descricao")
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)")
                         .HasColumnName("DESCRICAO");
 
                     b.Property<string>("FinalizadoPorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("FINALIZADOPORUID");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("NOME");
 
                     b.Property<string>("ProjetoUID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("PROJETOUID");
 
                     b.Property<string>("UsuarioCriadorUID")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("USUARIOCRIADORUID");
 
                     b.HasKey("UID");

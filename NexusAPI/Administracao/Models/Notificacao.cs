@@ -11,6 +11,7 @@ namespace NexusAPI.Administracao.Models
         [ForeignKey("Usuario")]
         [Column("USUARIOUID")]
         [Required]
+        [MaxLength(200)]
         public string UsuarioUID { get; set; } = "";
 
         public Usuario? Usuario { get; set; }

@@ -11,11 +11,13 @@ namespace NexusAPI.Dados.Models
     {
         [Column("NUMEROSERIE")]
         [Required]
+        [MaxLength(200)]
         public string NumeroSerie { get; set; } = "";
 
         [Column("LOCALIZACAOUID")]
         [ForeignKey("Localizacao")]
         [Required]
+        [MaxLength(200)]
         public string LocalizacaoUID { get; set; } = "";
 
         public Localizacao? Localizacao { get; set; }
@@ -26,15 +28,18 @@ namespace NexusAPI.Dados.Models
 
         [Column("MARCA")]
         [Required]
+        [MaxLength(200)]
         public string Marca { get; set; } = "";
 
         [Column("MODELO")]
         [Required]
+        [MaxLength(200)]
         public string Modelo { get; set; } = "";
 
         [Column("PROJETOUID")]
         [ForeignKey("Projeto")]
         [Required]
+        [MaxLength(200)]
         public string ProjetoUID { get; set; } = "";
 
         public Projeto? Projeto { get; set; }

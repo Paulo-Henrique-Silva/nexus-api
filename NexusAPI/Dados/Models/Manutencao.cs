@@ -11,6 +11,7 @@ namespace NexusAPI.Dados.Models
         [Column("COMPONENTEUID")]
         [ForeignKey("Componente")]
         [Required]
+        [MaxLength(200)]
         public string ComponenteUID { get; set; } = "";
 
         public Componente? Componente { get; set; }
@@ -18,6 +19,7 @@ namespace NexusAPI.Dados.Models
         [Column("PROJETOUID")]
         [ForeignKey("Projeto")]
         [Required]
+        [MaxLength(200)]
         public string ProjetoUID { get; set; } = "";
 
         public Projeto? Projeto { get; set; }
@@ -31,11 +33,13 @@ namespace NexusAPI.Dados.Models
         [Column("RESPONSAVELUID")]
         [ForeignKey("Responsavel")]
         [Required]
+        [MaxLength(200)]
         public string ResponsavelUID { get; set; } = "";
 
         public Usuario? Responsavel { get; set; }
 
         [Column("SOLUCAO")]
+        [MaxLength(200)]
         public string? Solucao { get; set; }
 
         public Manutencao() : base() { }
