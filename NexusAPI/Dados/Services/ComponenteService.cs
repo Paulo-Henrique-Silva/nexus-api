@@ -22,7 +22,10 @@ namespace NexusAPI.Dados.Services
                 cfg.CreateMap<Componente, ComponenteRespostaDTO>()
                     .ForMember(c => c.AtualizadoPor, opt => opt.Ignore())
                     .ForMember(c => c.UsuarioCriador, opt => opt.Ignore())
-                    .ForMember(c => c.Localizacao, opt => opt.Ignore());
+                    .ForMember(c => c.Localizacao, opt => opt.Ignore())
+                    .ForMember(c => c.Projeto, opt => opt.Ignore());
+                    //.ForMember(c => c.Tipo, opt => opt.Ignore())
+                    //.ForMember(c => c.Localizacao, opt => opt.Ignore());
             });
             var mapper = new Mapper(config);
 

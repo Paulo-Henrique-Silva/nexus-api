@@ -5,6 +5,12 @@
         MemoriaRAM,
         Mouse,
         Teclado,
-        Processador
+        Processador,
+        DiscoRigido,
+        PlacaDeVideo,
+        FonteDeAlimentacao,
+        Gabinete,
+        Webcam,
+        Headset
     }
 }

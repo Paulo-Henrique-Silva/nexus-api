@@ -2,6 +2,7 @@
 {
     public enum StatusComponente
     {
+        Regular = 0,
         EmManutencao
     }
 }
