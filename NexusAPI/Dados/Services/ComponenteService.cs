@@ -25,7 +25,7 @@ namespace NexusAPI.Dados.Services
                     .ForMember(c => c.Localizacao, opt => opt.Ignore())
                     .ForMember(c => c.Projeto, opt => opt.Ignore());
                     //.ForMember(c => c.Tipo, opt => opt.Ignore())
-                    //.ForMember(c => c.Localizacao, opt => opt.Ignore());
+                    //.ForMember(c => c.Status, opt => opt.Ignore());
             });
             var mapper = new Mapper(config);
 
