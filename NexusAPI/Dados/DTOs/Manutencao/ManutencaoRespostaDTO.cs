@@ -6,15 +6,15 @@ namespace NexusAPI.Dados.DTOs.Manutencao
 {
     public class ManutencaoRespostaDTO : NexusRespostaDTO
     {
-        public NexusNomeObjeto Componente { get; set; } = new NexusNomeObjeto();
+        public NexusReferenciaObjeto Componente { get; set; } = new NexusReferenciaObjeto();
 
-        public NexusNomeObjeto Projeto { get; set; } = new NexusNomeObjeto();
+        public NexusReferenciaObjeto Projeto { get; set; } = new NexusReferenciaObjeto();
 
         public DateTime? DataInicio { get; set; }
 
         public DateTime? DataTermino { get; set; }
 
-        public NexusNomeObjeto Responsavel { get; set; } = new NexusNomeObjeto();
+        public NexusReferenciaObjeto Responsavel { get; set; } = new NexusReferenciaObjeto();
 
         public string? Solucao { get; set; }
     }

@@ -7,19 +7,19 @@ namespace NexusAPI.Administracao.DTOs.UsuarioPerfil
     /// </summary>
     public class UsuarioPerfilRespostaDTO
     {
-        public NexusNomeObjeto Usuario { get; set; } = new NexusNomeObjeto();
+        public NexusReferenciaObjeto Usuario { get; set; } = new NexusReferenciaObjeto();
 
-        public NexusNomeObjeto Projeto { get; set; } = new NexusNomeObjeto();
+        public NexusReferenciaObjeto Projeto { get; set; } = new NexusReferenciaObjeto();
 
-        public NexusNomeObjeto Perfil { get; set; } = new NexusNomeObjeto();
+        public NexusReferenciaObjeto Perfil { get; set; } = new NexusReferenciaObjeto();
 
         public bool Ativado { get; set; }
 
         public DateTime? DataUltimaAtualizacao { get; set; }
 
-        public NexusNomeObjeto? AtualizadoPor { get; set; }
+        public NexusReferenciaObjeto? AtualizadoPor { get; set; }
 
-        public NexusNomeObjeto? UsuarioCriador { get; set; }
+        public NexusReferenciaObjeto? UsuarioCriador { get; set; }
 
         public DateTime DataCriacao { get; set; }
     }

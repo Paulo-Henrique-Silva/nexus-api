@@ -6,7 +6,7 @@ namespace NexusAPI.CicloVidaAtivo.DTOs.Atribuicao
 {
     public class AtribuicaoRespostaDTO : NexusRespostaDTO
     {
-        public NexusNomeObjeto Usuario { get; set; } = new NexusNomeObjeto();
+        public NexusReferenciaObjeto Usuario { get; set; } = new NexusReferenciaObjeto();
 
         public TipoAtribuicao Tipo { get; set; }
 
@@ -14,6 +14,6 @@ namespace NexusAPI.CicloVidaAtivo.DTOs.Atribuicao
 
         public bool Concluida { get; set; }
 
-        public NexusNomeObjeto CicloVida { get; set; } = new NexusNomeObjeto();
+        public NexusReferenciaObjeto CicloVida { get; set; } = new NexusReferenciaObjeto();
     }
 }

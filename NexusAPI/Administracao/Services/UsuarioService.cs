@@ -28,13 +28,13 @@ namespace NexusAPI.Administracao.Services
 
             var resposta = mapper.Map<UsuarioRespostaDTO>(obj);
 
-            resposta.AtualizadoPor = new NexusNomeObjeto()
+            resposta.AtualizadoPor = new NexusReferenciaObjeto()
             {
                 UID = obj.AtualizadoPor?.UID,
                 Nome = obj.AtualizadoPor?.Nome
             };
 
-            resposta.UsuarioCriador = new NexusNomeObjeto()
+            resposta.UsuarioCriador = new NexusReferenciaObjeto()
             {
                 UID = obj.UsuarioCriador?.UID,
                 Nome = obj.UsuarioCriador?.Nome

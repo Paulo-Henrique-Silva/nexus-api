@@ -5,9 +5,9 @@ namespace NexusAPI.Dados.DTOs.Software
 {
     public class SoftwareRespostaDTO : NexusRespostaDTO
     {
-        public NexusNomeObjeto Componente { get; set; } = new NexusNomeObjeto();
+        public NexusReferenciaObjeto Componente { get; set; } = new NexusReferenciaObjeto();
 
-        public NexusNomeObjeto Projeto { get; set; } = new NexusNomeObjeto();
+        public NexusReferenciaObjeto Projeto { get; set; } = new NexusReferenciaObjeto();
 
         public string ChaveLicenca { get; set; } = "";
 

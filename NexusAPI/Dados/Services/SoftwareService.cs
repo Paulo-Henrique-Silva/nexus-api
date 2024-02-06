@@ -31,25 +31,25 @@ namespace NexusAPI.Dados.Services
 
             var resposta = mapper.Map<SoftwareRespostaDTO>(obj);
 
-            resposta.AtualizadoPor = new NexusNomeObjeto()
+            resposta.AtualizadoPor = new NexusReferenciaObjeto()
             {
                 UID = obj.AtualizadoPor?.UID,
                 Nome = obj.AtualizadoPor?.Nome
             };
 
-            resposta.UsuarioCriador = new NexusNomeObjeto()
+            resposta.UsuarioCriador = new NexusReferenciaObjeto()
             {
                 UID = obj.UsuarioCriador?.UID,
                 Nome = obj.UsuarioCriador?.Nome
             };
 
-            resposta.Componente = new NexusNomeObjeto()
+            resposta.Componente = new NexusReferenciaObjeto()
             {
                 UID = obj.Componente?.UID,
                 Nome = obj.Componente?.Nome,
             };
 
-            resposta.Projeto = new NexusNomeObjeto()
+            resposta.Projeto = new NexusReferenciaObjeto()
             {
                 UID = obj.Projeto?.UID,
                 Nome = obj.Projeto?.Nome,

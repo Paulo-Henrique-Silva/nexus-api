@@ -30,25 +30,25 @@ namespace NexusAPI.CicloVidaAtivo.Services
 
             var resposta = mapper.Map<AtribuicaoRespostaDTO>(obj);
 
-            resposta.AtualizadoPor = new NexusNomeObjeto()
+            resposta.AtualizadoPor = new NexusReferenciaObjeto()
             {
                 UID = obj.AtualizadoPor?.UID,
                 Nome = obj.AtualizadoPor?.Nome
             };
 
-            resposta.UsuarioCriador = new NexusNomeObjeto()
+            resposta.UsuarioCriador = new NexusReferenciaObjeto()
             {
                 UID = obj.UsuarioCriador?.UID,
                 Nome = obj.UsuarioCriador?.Nome
             };
 
-            resposta.Usuario = new NexusNomeObjeto()
+            resposta.Usuario = new NexusReferenciaObjeto()
             {
                 UID = obj.Usuario?.UID,
                 Nome = obj.Usuario?.Nome
             };
 
-            resposta.CicloVida = new NexusNomeObjeto()
+            resposta.CicloVida = new NexusReferenciaObjeto()
             {
                 UID = obj.CicloVida?.UID,
                 Nome = obj.CicloVida?.Nome

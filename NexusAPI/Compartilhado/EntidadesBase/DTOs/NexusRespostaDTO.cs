@@ -12,9 +12,9 @@ namespace NexusAPI.Compartilhado.EntidadesBase.DTOs
 
         public DateTime? DataUltimaAtualizacao { get; set; }
 
-        public NexusNomeObjeto? AtualizadoPor { get; set; }
+        public NexusReferenciaObjeto? AtualizadoPor { get; set; }
 
-        public NexusNomeObjeto? UsuarioCriador { get; set; }
+        public NexusReferenciaObjeto? UsuarioCriador { get; set; }
 
         public DateTime DataCriacao { get; set; }
     }

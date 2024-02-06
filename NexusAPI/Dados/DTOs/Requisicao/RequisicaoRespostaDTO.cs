@@ -5,8 +5,8 @@ namespace NexusAPI.Dados.DTOs.Requisicao
 {
     public class RequisicaoRespostaDTO : NexusRespostaDTO
     {
-        public NexusNomeObjeto Coordenador { get; set; } = new NexusNomeObjeto();
+        public NexusReferenciaObjeto Coordenador { get; set; } = new NexusReferenciaObjeto();
 
-        public NexusNomeObjeto Projeto { get; set; } = new NexusNomeObjeto();
+        public NexusReferenciaObjeto Projeto { get; set; } = new NexusReferenciaObjeto();
     }
 }

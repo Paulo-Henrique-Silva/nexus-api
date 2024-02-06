@@ -5,7 +5,7 @@ namespace NexusAPI.Administracao.DTOs.Notificacao
 {
     public class NotificacaoRespostaDTO : NexusRespostaDTO
     {
-        public NexusNomeObjeto Usuario { get; set; } = new NexusNomeObjeto();
+        public NexusReferenciaObjeto Usuario { get; set; } = new NexusReferenciaObjeto();
 
         public bool Vista { get; set; }
     }

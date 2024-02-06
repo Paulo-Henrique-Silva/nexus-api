@@ -8,11 +8,11 @@ namespace NexusAPI.Dados.DTOs.Equipamento
     {
         public string NumeroSerie { get; set; } = "";
 
-        public NexusNomeObjeto Localizacao { get; set; } = new NexusNomeObjeto();
+        public NexusReferenciaObjeto Localizacao { get; set; } = new NexusReferenciaObjeto();
 
-        public NexusNomeObjeto Componente { get; set; } = new NexusNomeObjeto();
+        public NexusReferenciaObjeto Componente { get; set; } = new NexusReferenciaObjeto();
 
-        public NexusNomeObjeto Projeto { get; set; } = new NexusNomeObjeto();
+        public NexusReferenciaObjeto Projeto { get; set; } = new NexusReferenciaObjeto();
 
         public string Marca { get; set; } = "";
 
