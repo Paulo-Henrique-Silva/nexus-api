@@ -26,7 +26,8 @@ namespace NexusAPI.Dados.Services
                     .ForMember(c => c.UsuarioCriador, opt => opt.Ignore())
                     .ForMember(c => c.Localizacao, opt => opt.Ignore())
                     .ForMember(c => c.Componente, opt => opt.Ignore())
-                    .ForMember(c => c.Projeto, opt => opt.Ignore());
+                    .ForMember(c => c.Projeto, opt => opt.Ignore())
+                    .ForMember(c => c.Tipo, opt => opt.Ignore());
             });
             var mapper = new Mapper(config);
 
@@ -60,6 +61,12 @@ namespace NexusAPI.Dados.Services
             {
                 UID = obj.Projeto?.UID,
                 Nome = obj.Projeto?.Nome,
+            };
+
+            resposta.Tipo = new NexusReferenciaObjeto()
+            {
+                UID = ((int)obj.Tipo).ToString(),
+                Nome = NexusManipulacaoEnum.ObterDescricao(obj.Tipo),
             };
 
             return resposta;

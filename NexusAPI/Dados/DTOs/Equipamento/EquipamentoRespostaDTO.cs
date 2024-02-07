@@ -18,7 +18,7 @@ namespace NexusAPI.Dados.DTOs.Equipamento
 
         public string Modelo { get; set; } = "";
 
-        public TipoEquipamento Tipo { get; set; }
+        public NexusReferenciaObjeto Tipo { get; set; } = new NexusReferenciaObjeto();
 
         public DateTime DataAquisicao { get; set; }
     }
