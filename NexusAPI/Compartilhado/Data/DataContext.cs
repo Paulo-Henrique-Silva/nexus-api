@@ -42,6 +42,18 @@ namespace NexusAPI.Compartilhado.Data
         {
             modelBuilder.Entity<UsuarioPerfil>()
                 .HasKey(e => new { e.ProjetoUID, e.UsuarioUID, e.PerfilUID });
+
+            modelBuilder
+                .Entity<Localizacao>()
+                .ToTable(tb => tb.HasTrigger("LocalizacoesDeletada"));
+
+            modelBuilder
+                .Entity<Componente>()
+                .ToTable(tb => tb.HasTrigger("ComponentesDeletado"));
+
+            modelBuilder
+                .Entity<Componente>()
+                .ToTable(tb => tb.HasTrigger("ProjetosDeletado"));
         }
     }
 }

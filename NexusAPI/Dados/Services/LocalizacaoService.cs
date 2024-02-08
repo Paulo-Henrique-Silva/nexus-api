@@ -10,6 +10,7 @@ using NexusAPI.Dados.DTOs.Localizacao;
 using NexusAPI.Dados.Interfaces;
 using NexusAPI.Dados.Models;
 using NexusAPI.Dados.Repositories;
+using System.Security.Claims;
 
 namespace NexusAPI.Dados.Services
 {

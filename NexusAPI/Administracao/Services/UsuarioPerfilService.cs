@@ -69,7 +69,7 @@ namespace NexusAPI.Administracao.Services
             UsuarioPerfilEnvioDTO obj, IEnumerable<Claim> claims)
         {
             var objClasse = ConverterParaClasse(obj);
-            objClasse.UsuarioCriadorUID = tokenService.ObterUID(claims);
+            objClasse.UsuarioCriadorUID = tokenService.ObterUsuarioUID(claims);
 
             await repository.AdicionarAsync(objClasse);
 
@@ -101,7 +101,7 @@ namespace NexusAPI.Administracao.Services
             }
 
             //Edita o objeto.
-            objClasse.AtualizadoPorUID = tokenService.ObterUID(claims);
+            objClasse.AtualizadoPorUID = tokenService.ObterUsuarioUID(claims);
             await repository.EditarAsync(objClasse);
 
             //Coloca como falso o perfil antigo.
@@ -147,7 +147,7 @@ namespace NexusAPI.Administracao.Services
                 throw new ObjetoNaoEncontrado($"{usuarioUID} + ${projetoUID} + ${perfilUID}");
             }
 
-            objClasse.FinalizadoPorUID = tokenService.ObterUID(claims);
+            objClasse.FinalizadoPorUID = tokenService.ObterUsuarioUID(claims);
 
             await repository.DeletarAsync(objClasse);
         }

@@ -1,10 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NexusAPI.Administracao.Models;
 using NexusAPI.Compartilhado.Data;
 using NexusAPI.Compartilhado.Interfaces;
-using NexusAPI.Dados.Interfaces;
-using NexusAPI.Dados.Models;
-using System.Reflection;
 
 namespace NexusAPI.Compartilhado.EntidadesBase.MVC
 {

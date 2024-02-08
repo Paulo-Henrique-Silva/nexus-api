@@ -43,7 +43,7 @@ namespace NexusAPI.Compartilhado.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public string ObterUID(IEnumerable<Claim> claims)
+        public string ObterUsuarioUID(IEnumerable<Claim> claims)
         {
             // Recuperar o ID do usuário do token JWT
             var uidClaim = claims.FirstOrDefault(c => c.Type == "UID");

@@ -575,7 +575,14 @@ namespace NexusAPI.Migrations
 
                     b.HasIndex("UsuarioCriadorUID");
 
-                    b.ToTable("COMPONENTES");
+                    b.ToTable("COMPONENTES", t =>
+                        {
+                            t.HasTrigger("ComponentesDeletado");
+
+                            t.HasTrigger("ProjetosDeletado");
+                        });
+
+                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
                 });
 
             modelBuilder.Entity("NexusAPI.Dados.Models.Equipamento", b =>
@@ -745,7 +752,12 @@ namespace NexusAPI.Migrations
 
                     b.HasIndex("UsuarioCriadorUID");
 
-                    b.ToTable("LOCALIZACOES");
+                    b.ToTable("LOCALIZACOES", t =>
+                        {
+                            t.HasTrigger("LocalizacoesDeletada");
+                        });
+
+                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
                 });
 
             modelBuilder.Entity("NexusAPI.Dados.Models.Manutencao", b =>

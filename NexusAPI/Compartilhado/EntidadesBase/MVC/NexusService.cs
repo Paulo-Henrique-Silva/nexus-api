@@ -129,7 +129,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
         {
             var objClasse = ConverterParaClasse(obj);
             objClasse.UID = Guid.NewGuid().ToString();
-            objClasse.UsuarioCriadorUID = tokenService.ObterUID(claims);
+            objClasse.UsuarioCriadorUID = tokenService.ObterUsuarioUID(claims);
 
             var UID = (await repository.AdicionarAsync(objClasse)).UID;
 
@@ -153,7 +153,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
                 throw new ObjetoNaoEncontrado(objClasse.UID);
             }
 
-            objClasse.AtualizadoPorUID = tokenService.ObterUID(claims);
+            objClasse.AtualizadoPorUID = tokenService.ObterUsuarioUID(claims);
 
             await repository.EditarAsync(objClasse);
 
@@ -176,7 +176,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
                 throw new ObjetoNaoEncontrado(UID);
             }
 
-            objClasse.FinalizadoPorUID = tokenService.ObterUID(claims);
+            objClasse.FinalizadoPorUID = tokenService.ObterUsuarioUID(claims);
 
             await repository.DeletarAsync(objClasse);
         }

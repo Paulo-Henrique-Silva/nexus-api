@@ -68,7 +68,7 @@ namespace NexusAPI.Administracao.Services
 
             usuario.UID = Guid.NewGuid().ToString();
             usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
-            usuario.UsuarioCriadorUID = tokenService.ObterUID(claims);
+            usuario.UsuarioCriadorUID = tokenService.ObterUsuarioUID(claims);
 
             await repository.AdicionarAsync(usuario);
 
@@ -101,7 +101,7 @@ namespace NexusAPI.Administracao.Services
             }
 
             //Converte pra model e atualiza no BD.
-            usuario.AtualizadoPorUID = tokenService.ObterUID(claims);
+            usuario.AtualizadoPorUID = tokenService.ObterUsuarioUID(claims);
             usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
 
             await repository.EditarAsync(usuario);

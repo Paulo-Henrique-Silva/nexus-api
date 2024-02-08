@@ -891,6 +891,104 @@ namespace NexusAPI.Migrations
                 name: "IX_USUARIOS_USUARIOCRIADORUID",
                 table: "USUARIOS",
                 column: "USUARIOCRIADORUID");
+
+            //Lista de triggers.
+
+            //Finaliza a localização e seus dependentes.
+            migrationBuilder.Sql(@"
+                CREATE TRIGGER LocalizacoesDeletada
+                ON LOCALIZACOES
+                AFTER UPDATE
+                AS
+                BEGIN
+                    IF UPDATE(DATAFINALIZACAO)
+                    BEGIN
+                        UPDATE COMPONENTES
+                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
+                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
+                        FROM COMPONENTES
+                        INNER JOIN inserted ON COMPONENTES.LOCALIZACAOUID = inserted.UID;
+
+                        UPDATE EQUIPAMENTOS
+                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
+                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
+                        FROM EQUIPAMENTOS
+                        INNER JOIN inserted ON EQUIPAMENTOS.LOCALIZACAOUID = inserted.UID;
+                    END
+                END
+            ");
+
+                        //Finaliza componentes e seus dependentes.
+            migrationBuilder.Sql(@"
+                CREATE TRIGGER ComponentesDeletado
+                ON COMPONENTES
+                AFTER UPDATE
+                AS
+                BEGIN
+                    IF UPDATE(DATAFINALIZACAO)
+                    BEGIN
+                        UPDATE EQUIPAMENTOS
+                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
+                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
+                        FROM EQUIPAMENTOS
+                        INNER JOIN inserted ON EQUIPAMENTOS.COMPONENTEUID = inserted.UID;
+
+                        UPDATE SOFTWARES
+                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
+                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
+                        FROM SOFTWARES
+                        INNER JOIN inserted ON SOFTWARES.COMPONENTEUID = inserted.UID;
+
+                        UPDATE MANUTENCOES
+                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
+                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
+                        FROM MANUTENCOES
+                        INNER JOIN inserted ON MANUTENCOES.COMPONENTEUID = inserted.UID;
+                    END
+                END
+            ");
+
+                        //Finaliza projeto e seus dependentes.
+            migrationBuilder.Sql(@"
+                CREATE TRIGGER ProjetosDeletado
+                ON PROJETOS
+                AFTER UPDATE
+                AS
+                BEGIN
+                    IF UPDATE(DATAFINALIZACAO)
+                    BEGIN
+                        UPDATE COMPONENTES
+                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
+                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
+                        FROM COMPONENTES
+                        INNER JOIN inserted ON COMPONENTES.PROJETOUID = inserted.UID;
+
+                        UPDATE EQUIPAMENTOS
+                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
+                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
+                        FROM EQUIPAMENTOS
+                        INNER JOIN inserted ON EQUIPAMENTOS.PROJETOUID = inserted.UID;
+
+                        UPDATE SOFTWARES
+                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
+                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
+                        FROM SOFTWARES
+                        INNER JOIN inserted ON SOFTWARES.PROJETOUID = inserted.UID;
+
+                        UPDATE MANUTENCOES
+                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
+                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
+                        FROM MANUTENCOES
+                        INNER JOIN inserted ON MANUTENCOES.PROJETOUID = inserted.UID;
+
+                        UPDATE REQUISICOES
+                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
+                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
+                        FROM REQUISICOES
+                        INNER JOIN inserted ON REQUISICOES.PROJETOUID = inserted.UID;
+                    END
+                END
+            ");
         }
 
         /// <inheritdoc />
