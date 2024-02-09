@@ -20,6 +20,7 @@ namespace NexusAPI.Dados.Repositories
                 .Include(obj => obj.UsuarioCriador)
                 .Include(obj => obj.Componente)
                 .Include(obj => obj.Projeto)
+                .Include(obj => obj.Responsavel)
                 .FirstOrDefaultAsync(obj => obj.UID.Equals(UID) && obj.DataFinalizacao == null);
         }
 
@@ -30,6 +31,7 @@ namespace NexusAPI.Dados.Repositories
                 .Include(obj => obj.UsuarioCriador)
                 .Include(obj => obj.Componente)
                 .Include(obj => obj.Projeto)
+                .Include(obj => obj.Responsavel)
                 .Where(obj => obj.DataFinalizacao == null)
                 .OrderByDescending(obj => obj.DataCriacao)
                 .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
@@ -45,6 +47,7 @@ namespace NexusAPI.Dados.Repositories
                 .Include(obj => obj.UsuarioCriador)
                 .Include(obj => obj.Componente)
                 .Include(obj => obj.Projeto)
+                .Include(obj => obj.Responsavel)
                 .Where(obj => obj.DataFinalizacao == null && obj.Nome.Contains(nome))
                 .OrderByDescending(obj => obj.DataCriacao)
                 .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
@@ -85,6 +88,7 @@ namespace NexusAPI.Dados.Repositories
                 .Include(obj => obj.UsuarioCriador)
                 .Include(obj => obj.Componente)
                 .Include(obj => obj.Projeto)
+                .Include(obj => obj.Responsavel)
                 .Where(obj => obj.DataFinalizacao == null && obj.ProjetoUID.Equals(projetoUID))
                 .OrderByDescending(obj => obj.DataCriacao)
                 .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
@@ -100,6 +104,7 @@ namespace NexusAPI.Dados.Repositories
                 .Include(obj => obj.UsuarioCriador)
                 .Include(obj => obj.Componente)
                 .Include(obj => obj.Projeto)
+                .Include(obj => obj.Responsavel)
                 .Where(obj => obj.DataFinalizacao == null && obj.ProjetoUID.Equals(projetoUID) &&
                 obj.Nome.Contains(nome))
                 .OrderByDescending(obj => obj.DataCriacao)

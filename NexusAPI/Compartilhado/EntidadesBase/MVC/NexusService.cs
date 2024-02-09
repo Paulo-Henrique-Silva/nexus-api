@@ -181,7 +181,6 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
             await repository.DeletarAsync(objClasse);
         }
 
-
         public virtual async Task<bool> ExistePorUIDAsync(string UID)
         {
             var obj = await repository.ObterPorUIDAsync(UID);

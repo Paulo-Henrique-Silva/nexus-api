@@ -51,6 +51,9 @@ namespace NexusAPI.Dados.Services
                 Nome = obj.Componente?.Nome,
             };
 
+            string s = obj.Responsavel?.UID;
+            string a = obj.Responsavel?.Nome;
+
             resposta.Responsavel = new NexusReferenciaObjeto()
             {
                 UID = obj.Responsavel?.UID,
