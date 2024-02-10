@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BCrypt.Net;
+using Microsoft.EntityFrameworkCore;
 using NexusAPI.Compartilhado.Data;
 using NexusAPI.Compartilhado.Interfaces;
 
@@ -136,6 +137,13 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
                 //Transforma strings vazias e datas mínimas em null.
                 if (valorAtualizado is string && valorAtualizado.Equals(string.Empty) ||
                     valorAtualizado is DateTime && valorAtualizado.Equals(DateTime.MinValue))
+                {
+                    valorAtualizado = null;
+                }
+
+                //Se for uma string hash que representa vazio.
+                if (property.Name.Equals("Senha") && valorAtualizado is string &&
+                    BCrypt.Net.BCrypt.Verify("", valorAtualizado.ToString()))
                 {
                     valorAtualizado = null;
                 }

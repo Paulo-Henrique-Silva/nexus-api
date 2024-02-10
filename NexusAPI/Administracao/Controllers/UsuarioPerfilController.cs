@@ -87,9 +87,26 @@ namespace NexusAPI.Administracao.Controllers
                 var resposta = await service.AdicionarAsync(envioDTO, User.Claims);
                 return Created("", resposta);
             }
-            catch (NomeAcessoJaCadastrado ex)
+            catch (Exception)
             {
-                return BadRequest(new RespostaErroAPI(400, ex.Message));
+                return StatusCode(500, RespostaErroAPI.RespostaErro500);
+            }
+        }
+
+        [HttpPost("Todos")]
+        public virtual async Task<IActionResult> PostAll([FromBody] List<UsuarioPerfilEnvioDTO> envios)
+        {
+            try
+            {
+                var resposta = new List<UsuarioPerfilRespostaDTO>();
+
+                foreach (var envio in envios)
+                {
+                    var usuarioPerfilAdicionado = await service.AdicionarAsync(envio, User.Claims);
+                    resposta.Add(usuarioPerfilAdicionado);
+                }
+
+                return Created("", resposta);
             }
             catch (Exception)
             {
@@ -119,15 +136,36 @@ namespace NexusAPI.Administracao.Controllers
             }
         }
 
-        [HttpDelete("{UIDs}")]
-        public virtual async Task<IActionResult> Delete([FromRoute] string[] UIDs)
+        [HttpDelete]
+        public virtual async Task<IActionResult> Delete([FromRoute] UsuarioPerfilUIDsDTO envio)
         {
             try
             {
-                var UIDsSeparados = UIDs[0].Split(",");
-
-                await service.DeletarAsync(UIDsSeparados[0], UIDsSeparados[1], UIDsSeparados[2], 
+                await service.DeletarAsync(envio.UsuarioUID, envio.ProjetoUID, envio.PerfilUID, 
                     User.Claims);
+                return Ok();
+            }
+            catch (ObjetoNaoEncontrado ex)
+            {
+                return NotFound(new RespostaErroAPI(404, ex.Message));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, RespostaErroAPI.RespostaErro500);
+            }
+        }
+
+        [HttpDelete("Todos")]
+        public virtual async Task<IActionResult> DeleteAll([FromBody] List<UsuarioPerfilUIDsDTO> envios)
+        {
+            try
+            {
+                foreach (var envio in envios)
+                {
+                    await service.DeletarAsync(envio.UsuarioUID, envio.ProjetoUID, envio.PerfilUID,
+                        User.Claims);
+                }
+
                 return Ok();
             }
             catch (ObjetoNaoEncontrado ex)

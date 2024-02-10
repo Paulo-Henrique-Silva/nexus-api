@@ -8,7 +8,7 @@ using System.Security.Claims;
 namespace NexusAPI.Compartilhado.EntidadesBase.MVC
 {
     /// <summary>
-    /// Interface para implementar serviços de regras de negócio.
+    /// Classe para implementar serviços de regras de negócio.
     /// </summary>
     /// <typeparam name="T">DTO de Envio</typeparam>
     /// <typeparam name="U">DTO de resposta</typeparam>

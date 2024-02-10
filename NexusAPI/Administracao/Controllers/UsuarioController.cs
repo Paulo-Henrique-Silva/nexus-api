@@ -97,8 +97,9 @@ namespace NexusAPI.Administracao.Controllers
             {
                 return NotFound(new RespostaErroAPI(404, ex.Message));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                string s = ex.Message;
                 return StatusCode(500, RespostaErroAPI.RespostaErro500);
             }
         }
