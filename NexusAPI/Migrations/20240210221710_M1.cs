@@ -336,6 +336,7 @@ namespace NexusAPI.Migrations
                 name: "USUARIOPERFIL",
                 columns: table => new
                 {
+                    UID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     USUARIOUID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     PROJETOUID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     PERFILUID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
@@ -349,7 +350,7 @@ namespace NexusAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_USUARIOPERFIL", x => new { x.PROJETOUID, x.USUARIOUID, x.PERFILUID });
+                    table.PrimaryKey("PK_USUARIOPERFIL", x => x.UID);
                     table.ForeignKey(
                         name: "FK_USUARIOPERFIL_PERFIS_PERFILUID",
                         column: x => x.PERFILUID,
@@ -868,6 +869,11 @@ namespace NexusAPI.Migrations
                 column: "PERFILUID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_USUARIOPERFIL_PROJETOUID",
+                table: "USUARIOPERFIL",
+                column: "PROJETOUID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_USUARIOPERFIL_USUARIOCRIADORUID",
                 table: "USUARIOPERFIL",
                 column: "USUARIOCRIADORUID");
@@ -948,7 +954,7 @@ namespace NexusAPI.Migrations
                 END
             ");
 
-                        //Finaliza projeto e seus dependentes.
+            //Finaliza projeto e seus dependentes.
             migrationBuilder.Sql(@"
                 CREATE TRIGGER ProjetosDeletado
                 ON PROJETOS
@@ -986,6 +992,23 @@ namespace NexusAPI.Migrations
                         FINALIZADOPORUID = inserted.FINALIZADOPORUID
                         FROM REQUISICOES
                         INNER JOIN inserted ON REQUISICOES.PROJETOUID = inserted.UID;
+                    END
+                END
+            ");
+
+            migrationBuilder.Sql(@"
+                CREATE TRIGGER UsuariosDeletado
+                ON USUARIOS
+                AFTER UPDATE
+                AS
+                BEGIN
+                    IF UPDATE(DATAFINALIZACAO)
+                    BEGIN
+                        UPDATE USUARIOPERFIL
+                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
+                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
+                        FROM USUARIOPERFIL
+                        INNER JOIN inserted ON COMPONENTES.USUARIOUID = inserted.UID;
                     END
                 END
             ");

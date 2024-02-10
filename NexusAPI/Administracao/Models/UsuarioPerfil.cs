@@ -7,6 +7,11 @@ namespace NexusAPI.Administracao.Models
     [Table("USUARIOPERFIL")]
     public class UsuarioPerfil : NexusRelacionamento
     {
+        [Key]
+        [Column("UID")]
+        [MaxLength(200)]
+        public string UID { get; set; } = "";
+
         [Column("USUARIOUID")]
         [ForeignKey("Usuario")]
         [Required]

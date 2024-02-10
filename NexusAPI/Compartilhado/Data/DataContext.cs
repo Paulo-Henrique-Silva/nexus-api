@@ -40,9 +40,6 @@ namespace NexusAPI.Compartilhado.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UsuarioPerfil>()
-                .HasKey(e => new { e.ProjetoUID, e.UsuarioUID, e.PerfilUID });
-
             modelBuilder
                 .Entity<Localizacao>()
                 .ToTable(tb => tb.HasTrigger("LocalizacoesDeletada"));
@@ -54,6 +51,10 @@ namespace NexusAPI.Compartilhado.Data
             modelBuilder
                 .Entity<Componente>()
                 .ToTable(tb => tb.HasTrigger("ProjetosDeletado"));
+
+            modelBuilder
+                .Entity<Componente>()
+                .ToTable(tb => tb.HasTrigger("UsuariosDeletado"));
         }
     }
 }

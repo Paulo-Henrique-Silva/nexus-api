@@ -95,3 +95,20 @@ migrationBuilder.Sql(@"
         END
     END
 ");
+
+migrationBuilder.Sql(@"
+    CREATE TRIGGER UsuariosDeletado
+    ON USUARIOS
+    AFTER UPDATE
+    AS
+    BEGIN
+        IF UPDATE(DATAFINALIZACAO)
+        BEGIN
+            UPDATE USUARIOPERFIL
+            SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
+            FINALIZADOPORUID = inserted.FINALIZADOPORUID
+            FROM COMPONENTES
+            INNER JOIN inserted ON COMPONENTES.USUARIOUID = inserted.UID;
+        END
+    END
+");

@@ -12,7 +12,7 @@ using NexusAPI.Compartilhado.Data;
 namespace NexusAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240208001510_M1")]
+    [Migration("20240210221710_M1")]
     partial class M1
     {
         /// <inheritdoc />
@@ -275,20 +275,10 @@ namespace NexusAPI.Migrations
 
             modelBuilder.Entity("NexusAPI.Administracao.Models.UsuarioPerfil", b =>
                 {
-                    b.Property<string>("ProjetoUID")
+                    b.Property<string>("UID")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)")
-                        .HasColumnName("PROJETOUID");
-
-                    b.Property<string>("UsuarioUID")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("USUARIOUID");
-
-                    b.Property<string>("PerfilUID")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("PERFILUID");
+                        .HasColumnName("UID");
 
                     b.Property<bool>("Ativado")
                         .HasColumnType("bit")
@@ -314,17 +304,37 @@ namespace NexusAPI.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("FINALIZADOPORUID");
 
+                    b.Property<string>("PerfilUID")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("PERFILUID");
+
+                    b.Property<string>("ProjetoUID")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("PROJETOUID");
+
                     b.Property<string>("UsuarioCriadorUID")
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("USUARIOCRIADORUID");
 
-                    b.HasKey("ProjetoUID", "UsuarioUID", "PerfilUID");
+                    b.Property<string>("UsuarioUID")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("USUARIOUID");
+
+                    b.HasKey("UID");
 
                     b.HasIndex("AtualizadoPorUID");
 
                     b.HasIndex("FinalizadoPorUID");
 
                     b.HasIndex("PerfilUID");
+
+                    b.HasIndex("ProjetoUID");
 
                     b.HasIndex("UsuarioCriadorUID");
 

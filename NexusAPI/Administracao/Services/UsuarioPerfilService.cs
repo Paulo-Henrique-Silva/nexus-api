@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.IdentityModel.Tokens;
-using NexusAPI.Administracao.DTOs.Projeto;
 using NexusAPI.Administracao.DTOs.UsuarioPerfil;
 using NexusAPI.Administracao.Models;
 using NexusAPI.Administracao.Repositories;
-using NexusAPI.Compartilhado.EntidadesBase;
 using NexusAPI.Compartilhado.Exceptions;
 using NexusAPI.Compartilhado.Services;
 using NexusAPI.Compartilhado.EntidadesBase.Objetos;
@@ -70,6 +68,7 @@ namespace NexusAPI.Administracao.Services
         {
             var objClasse = ConverterParaClasse(obj);
             objClasse.UsuarioCriadorUID = tokenService.ObterUsuarioUID(claims);
+            objClasse.UID = Guid.NewGuid().ToString();
 
             await repository.AdicionarAsync(objClasse);
 
