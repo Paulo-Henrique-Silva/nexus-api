@@ -590,6 +590,8 @@ namespace NexusAPI.Migrations
                             t.HasTrigger("ComponentesDeletado");
 
                             t.HasTrigger("ProjetosDeletado");
+
+                            t.HasTrigger("UsuariosDeletado");
                         });
 
                     b.HasAnnotation("SqlServer:UseSqlOutputClause", false);

@@ -107,8 +107,8 @@ migrationBuilder.Sql(@"
             UPDATE USUARIOPERFIL
             SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
             FINALIZADOPORUID = inserted.FINALIZADOPORUID
-            FROM COMPONENTES
-            INNER JOIN inserted ON COMPONENTES.USUARIOUID = inserted.UID;
+            FROM USUARIOPERFIL
+            INNER JOIN inserted ON USUARIOPERFIL.USUARIOUID = inserted.UID;
         END
     END
 ");

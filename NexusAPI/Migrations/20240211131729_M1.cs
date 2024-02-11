@@ -924,7 +924,7 @@ namespace NexusAPI.Migrations
                 END
             ");
 
-                        //Finaliza componentes e seus dependentes.
+            //Finaliza componentes e seus dependentes.
             migrationBuilder.Sql(@"
                 CREATE TRIGGER ComponentesDeletado
                 ON COMPONENTES
@@ -954,48 +954,6 @@ namespace NexusAPI.Migrations
                 END
             ");
 
-            //Finaliza projeto e seus dependentes.
-            migrationBuilder.Sql(@"
-                CREATE TRIGGER ProjetosDeletado
-                ON PROJETOS
-                AFTER UPDATE
-                AS
-                BEGIN
-                    IF UPDATE(DATAFINALIZACAO)
-                    BEGIN
-                        UPDATE COMPONENTES
-                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
-                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
-                        FROM COMPONENTES
-                        INNER JOIN inserted ON COMPONENTES.PROJETOUID = inserted.UID;
-
-                        UPDATE EQUIPAMENTOS
-                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
-                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
-                        FROM EQUIPAMENTOS
-                        INNER JOIN inserted ON EQUIPAMENTOS.PROJETOUID = inserted.UID;
-
-                        UPDATE SOFTWARES
-                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
-                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
-                        FROM SOFTWARES
-                        INNER JOIN inserted ON SOFTWARES.PROJETOUID = inserted.UID;
-
-                        UPDATE MANUTENCOES
-                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
-                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
-                        FROM MANUTENCOES
-                        INNER JOIN inserted ON MANUTENCOES.PROJETOUID = inserted.UID;
-
-                        UPDATE REQUISICOES
-                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
-                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
-                        FROM REQUISICOES
-                        INNER JOIN inserted ON REQUISICOES.PROJETOUID = inserted.UID;
-                    END
-                END
-            ");
-
             migrationBuilder.Sql(@"
                 CREATE TRIGGER UsuariosDeletado
                 ON USUARIOS
@@ -1008,7 +966,7 @@ namespace NexusAPI.Migrations
                         SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
                         FINALIZADOPORUID = inserted.FINALIZADOPORUID
                         FROM USUARIOPERFIL
-                        INNER JOIN inserted ON COMPONENTES.USUARIOUID = inserted.UID;
+                        INNER JOIN inserted ON USUARIOPERFIL.USUARIOUID = inserted.UID;
                     END
                 END
             ");

@@ -12,7 +12,7 @@ using NexusAPI.Compartilhado.Data;
 namespace NexusAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240210221710_M1")]
+    [Migration("20240211131729_M1")]
     partial class M1
     {
         /// <inheritdoc />
@@ -593,6 +593,8 @@ namespace NexusAPI.Migrations
                             t.HasTrigger("ComponentesDeletado");
 
                             t.HasTrigger("ProjetosDeletado");
+
+                            t.HasTrigger("UsuariosDeletado");
                         });
 
                     b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
