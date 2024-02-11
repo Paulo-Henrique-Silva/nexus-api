@@ -1,8 +1,10 @@
-﻿using NexusAPI.CicloVidaAtivo.Repositories;
+﻿using NexusAPI.CicloVidaAtivo.DTOs.CicloVida;
+using NexusAPI.CicloVidaAtivo.Repositories;
 using NexusAPI.Compartilhado.EntidadesBase.CicloVida;
 using NexusAPI.Compartilhado.Services;
 using NexusAPI.Dados.Models;
 using System.Runtime.Intrinsics.X86;
+using System.Security.Claims;
 
 namespace NexusAPI.CicloVidaAtivo.Services
 {
@@ -14,13 +16,13 @@ namespace NexusAPI.CicloVidaAtivo.Services
     /// </summary>
     public class AnaliseRequisicaoService : NexusCicloVidaService
     {
-        public AnaliseRequisicaoService(AtribuicaoRepository atribuicaoRepository, 
+        public AnaliseRequisicaoService(AtribuicaoService atribuicaoService, 
             CicloVidaRepository cicloVidaRepository, TokenService tokenService) 
-        : base(atribuicaoRepository, cicloVidaRepository, tokenService)
+        : base(atribuicaoService, cicloVidaRepository, tokenService)
         {
         }
 
-        public override async Task IniciarCiclovida()
+        public override async Task IniciarCiclovida(CicloVidaIniciarDTO envio, IEnumerable<Claim> claims)
         {
             await AnaliseCoordenador();
         }

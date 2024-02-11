@@ -22,11 +22,12 @@ namespace NexusAPI.Compartilhado.EntidadesBase.CicloVida
         {
             try
             {
-                await nexusCicloVidaService.IniciarCiclovida();
+                await nexusCicloVidaService.IniciarCiclovida(envioDTO, User.Claims);
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                string s = ex.Message;
                 return StatusCode(500, RespostaErroAPI.RespostaErro500);
             }
         }

@@ -24,7 +24,8 @@ namespace NexusAPI.CicloVidaAtivo.Services
                 cfg.CreateMap<Atribuicao, AtribuicaoRespostaDTO>()
                     .ForMember(c => c.AtualizadoPor, opt => opt.Ignore())
                     .ForMember(c => c.UsuarioCriador, opt => opt.Ignore())
-                    .ForMember(c => c.CicloVida, opt => opt.Ignore());
+                    .ForMember(c => c.CicloVida, opt => opt.Ignore())
+                    .ForMember(c => c.Usuario, opt => opt.Ignore());
             });
             var mapper = new Mapper(config);
 
