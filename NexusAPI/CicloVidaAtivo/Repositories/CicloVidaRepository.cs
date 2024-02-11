@@ -1,6 +1,8 @@
-﻿using NexusAPI.CicloVidaAtivo.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using NexusAPI.CicloVidaAtivo.Models;
 using NexusAPI.Compartilhado.Data;
 using NexusAPI.Compartilhado.EntidadesBase.MVC;
+using NexusAPI.Compartilhado.Interfaces;
 
 namespace NexusAPI.CicloVidaAtivo.Repositories
 {
@@ -9,5 +11,6 @@ namespace NexusAPI.CicloVidaAtivo.Repositories
         public CicloVidaRepository(DataContext dataContext) : base(dataContext)
         {
         }
+
     }
 }

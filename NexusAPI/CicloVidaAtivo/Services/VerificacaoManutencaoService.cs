@@ -61,7 +61,7 @@ namespace NexusAPI.CicloVidaAtivo.Services
                 "o campo de \"Solução\" para que a opção para marcar como concluída apareça.",
                 UsuarioUID = tokenService.ObterUsuarioUID(claims),
                 Tipo = TipoAtribuicao.Completar,
-                DataVencimento = DateTime.Now.AddDays(3),
+                DataVencimento = ObterDataTresDiasUteis(),
                 Concluida = false,
                 CicloVidaUID = cicloVidaUID,
             };
@@ -92,6 +92,25 @@ namespace NexusAPI.CicloVidaAtivo.Services
         public async Task UsuarioConcluiu()
         {
 
+        }
+
+        private static DateTime ObterDataTresDiasUteis()
+        {
+            int diasUteis = 0;
+            DateTime data = DateTime.Now;
+
+            while (diasUteis < 3)
+            {
+                data = data.AddDays(1);
+
+                if (data.DayOfWeek != DayOfWeek.Saturday && data.DayOfWeek != DayOfWeek.Sunday)
+                {
+                    diasUteis++;
+                }
+            }
+
+            //Muda o horário para 18:00, fim do horário comercial.
+            return new DateTime(data.Year, data.Month, data.Day, 18, 0, 0);
         }
     }
 }

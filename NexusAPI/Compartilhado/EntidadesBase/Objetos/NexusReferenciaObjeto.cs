@@ -5,8 +5,8 @@
     /// </summary>
     public class NexusReferenciaObjeto
     {
-        public string UID { get; set; } = "";
+        public string? UID { get; set; }
 
-        public string Nome { get; set; } = "";
+        public string? Nome { get; set; }
     }
 }

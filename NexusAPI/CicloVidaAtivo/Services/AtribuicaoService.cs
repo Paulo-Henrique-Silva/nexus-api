@@ -4,6 +4,7 @@ using NexusAPI.Administracao.Repositories;
 using NexusAPI.CicloVidaAtivo.DTOs.Atribuicao;
 using NexusAPI.CicloVidaAtivo.Models;
 using NexusAPI.CicloVidaAtivo.Repositories;
+using NexusAPI.Compartilhado.EntidadesBase.DTOs;
 using NexusAPI.Compartilhado.EntidadesBase.MVC;
 using NexusAPI.Compartilhado.EntidadesBase.Objetos;
 using NexusAPI.Compartilhado.Services;
@@ -58,7 +59,7 @@ namespace NexusAPI.CicloVidaAtivo.Services
             return resposta;
         }
 
-        public virtual async Task<List<AtribuicaoRespostaDTO>> ObterTudoPorUsuarioUIDAsync(
+        public virtual async Task<NexusListaRespostaDTO<AtribuicaoRespostaDTO>> ObterTudoPorUsuarioUIDAsync(
             int numeroPagina, string UsuarioUID)
         {
             var atribuicaoRepository = repository as AtribuicaoRepository;
@@ -68,12 +69,18 @@ namespace NexusAPI.CicloVidaAtivo.Services
                 throw new Exception("Conversão não sucedida.");
             }
 
-            var objs = await atribuicaoRepository.ObterTudoPorUsuarioUIDAsync(numeroPagina, UsuarioUID);
+            var objs = await atribuicaoRepository.ObterTudoAsync(numeroPagina);
             var objsResposta = new List<AtribuicaoRespostaDTO>();
 
             objs.ForEach(o => objsResposta.Add(ConverterParaDTOResposta(o)));
 
-            return objsResposta;
+            var resposta = new NexusListaRespostaDTO<AtribuicaoRespostaDTO>()
+            {
+                TotalItens = await repository.ObterCountAsync(),
+                Itens = objsResposta
+            };
+
+            return resposta;
         }
     }
 }
