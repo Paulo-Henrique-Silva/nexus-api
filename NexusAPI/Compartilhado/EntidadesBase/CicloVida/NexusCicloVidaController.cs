@@ -25,9 +25,8 @@ namespace NexusAPI.Compartilhado.EntidadesBase.CicloVida
                 await nexusCicloVidaService.IniciarCiclovida(envioDTO, User.Claims);
                 return Ok();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                string s = ex.Message;
                 return StatusCode(500, RespostaErroAPI.RespostaErro500);
             }
         }
