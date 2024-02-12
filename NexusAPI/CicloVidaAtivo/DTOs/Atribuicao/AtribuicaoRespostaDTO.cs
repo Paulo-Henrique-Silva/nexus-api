@@ -15,5 +15,7 @@ namespace NexusAPI.CicloVidaAtivo.DTOs.Atribuicao
         public bool Concluida { get; set; }
 
         public NexusReferenciaObjeto CicloVida { get; set; } = new NexusReferenciaObjeto();
+
+        public NexusReferenciaObjeto Objeto { get; set; } = new NexusReferenciaObjeto();
     }
 }
