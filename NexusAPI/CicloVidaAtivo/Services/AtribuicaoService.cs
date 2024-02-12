@@ -94,11 +94,11 @@ namespace NexusAPI.CicloVidaAtivo.Services
         /// Obtém atribuições pelo usuário UID.
         /// </summary>
         /// <param name="numeroPagina"></param>
-        /// <param name="UsuarioUID"></param>
+        /// <param name="usuarioUID"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
         public virtual async Task<NexusListaRespostaDTO<AtribuicaoRespostaDTO>> ObterTudoPorUsuarioUIDAsync(
-            int numeroPagina, string UsuarioUID)
+            int numeroPagina, string usuarioUID)
         {
             var atribuicaoRepository = repository as AtribuicaoRepository;
 
@@ -107,7 +107,7 @@ namespace NexusAPI.CicloVidaAtivo.Services
                 throw new Exception("Conversão não sucedida.");
             }
 
-            var objs = await atribuicaoRepository.ObterTudoAsync(numeroPagina);
+            var objs = await atribuicaoRepository.ObterTudoPorUsuarioUIDAsync(numeroPagina, usuarioUID);
             var objsResposta = new List<AtribuicaoRespostaDTO>();
 
             objs.ForEach(o => objsResposta.Add(ConverterParaDTOResposta(o)));

@@ -56,13 +56,15 @@ namespace NexusAPI.CicloVidaAtivo.Services
         public async Task CriacaoManutencao(string cicloVidaUID, string manutencaoUID,
             IEnumerable<Claim> claims)
         {
+            var manutencao = await manutencaoService.ObterPorUIDAsync(manutencaoUID);
+
             //Cria uma nova atribuição para o usuário.
             var atribuicao = new AtribuicaoEnvioDTO()
             {
                 Nome = "Completar Manutenção",
                 Descricao = "Verifique os detalhes da manutenção. Após concluí-la, por favor, atualize " +
                 "o campo de \"Solução\" para que a opção de marcar como concluída apareça.",
-                UsuarioUID = tokenService.ObterUsuarioUID(claims),
+                UsuarioUID = manutencao.Responsavel.UID,
                 Tipo = TipoAtribuicao.CompletarManutencao,
                 DataVencimento = ObterDataDiasUteis(3),
                 Concluida = false,
@@ -72,7 +74,6 @@ namespace NexusAPI.CicloVidaAtivo.Services
             await atribuicaoService.AdicionarAsync(atribuicao, claims);
 
             //Muda status do componente para "Em manutenção".
-            var manutencao = await manutencaoService.ObterPorUIDAsync(manutencaoUID);
             var componente = await componenteService.ObterPorUIDAsync(manutencao.Componente.UID);
 
             var componenteAttManutencao = new ComponenteEnvioDTO()
