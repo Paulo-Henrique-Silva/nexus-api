@@ -58,7 +58,7 @@ namespace NexusAPI.CicloVidaAtivo.Services
             {
                 Nome = "Completar Manutenção",
                 Descricao = "Verifique os detalhes da manutenção. Após concluí-la, por favor, atualize " +
-                "o campo de \"Solução\" para que a opção para marcar como concluída apareça.",
+                "o campo de \"Solução\" para que a opção de marcar como concluída apareça.",
                 UsuarioUID = tokenService.ObterUsuarioUID(claims),
                 Tipo = TipoAtribuicao.CompletarManutencao,
                 DataVencimento = ObterDataDiasUteis(3),

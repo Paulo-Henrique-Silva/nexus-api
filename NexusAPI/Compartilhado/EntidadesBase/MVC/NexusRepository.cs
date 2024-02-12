@@ -133,9 +133,11 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
             foreach (var property in properties)
             {
                 var valorAtualizado = property.GetValue(objAtualizado);
+                var valorExistente = property.GetValue(objExistente);
 
                 //Transforma strings vazias e datas mínimas em null.
-                if (valorAtualizado is string && valorAtualizado.Equals(string.Empty) ||
+                if (valorAtualizado is string && valorAtualizado.Equals(string.Empty) &&
+                    valorExistente is string && valorExistente.Equals(string.Empty) ||
                     valorAtualizado is DateTime && valorAtualizado.Equals(DateTime.MinValue))
                 {
                     valorAtualizado = null;
@@ -147,8 +149,6 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
                 {
                     valorAtualizado = null;
                 }
-
-                var valorExistente = property.GetValue(objExistente);
 
                 // Verificar e tratar nulos e cadeias de caracteres vazias
                 if (valorAtualizado != null && !valorAtualizado.Equals(valorExistente))
