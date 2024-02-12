@@ -10,11 +10,11 @@ namespace NexusAPI.Compartilhado.EntidadesBase.CicloVida
     [Route("api/CicloVida/[controller]")]
     public class NexusCicloVidaController : ControllerBase
     {
-        private readonly NexusCicloVidaService nexusCicloVidaService;
+        protected readonly NexusCicloVidaService service;
 
         public NexusCicloVidaController(NexusCicloVidaService nexusCicloVidaService)
         {
-            this.nexusCicloVidaService = nexusCicloVidaService;
+            this.service = nexusCicloVidaService;
         }
 
         [HttpPost("Iniciar")]
@@ -22,7 +22,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase.CicloVida
         {
             try
             {
-                await nexusCicloVidaService.IniciarCiclovida(envioDTO, User.Claims);
+                await service.IniciarCiclovida(envioDTO, User.Claims);
                 return Ok();
             }
             catch (Exception)

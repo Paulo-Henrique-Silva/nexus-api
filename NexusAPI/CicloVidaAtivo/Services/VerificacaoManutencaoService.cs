@@ -5,9 +5,12 @@ using NexusAPI.CicloVidaAtivo.Enums;
 using NexusAPI.CicloVidaAtivo.Models;
 using NexusAPI.CicloVidaAtivo.Repositories;
 using NexusAPI.Compartilhado.EntidadesBase.CicloVida;
+using NexusAPI.Compartilhado.Exceptions;
 using NexusAPI.Compartilhado.Services;
 using NexusAPI.Dados.DTOs.Componente;
+using NexusAPI.Dados.DTOs.Manutencao;
 using NexusAPI.Dados.Enums;
+using NexusAPI.Dados.Models;
 using NexusAPI.Dados.Services;
 using System.Security.Claims;
 
@@ -89,9 +92,61 @@ namespace NexusAPI.CicloVidaAtivo.Services
             await componenteService.EditarAsync(componente.UID, componenteAttManutencao, claims);
         }
 
-        public async Task UsuarioConcluiu()
+        public async Task UsuarioConcluiu(CicloVidaResponderDTO envio, IEnumerable<Claim> claims)
         {
+            //Obtém a atribuição em questão
+            var atribuicao = await atribuicaoService.ObterPorUIDAsync(envio.AtribuicaoUID);
 
+            if (atribuicao == null)
+            {
+                throw new ObjetoNaoEncontrado(envio.AtribuicaoUID);
+            }
+
+            //edita-a para deixar como concluida.
+            var atribuicaoEnvio = new AtribuicaoEnvioDTO()
+            {
+                Nome = atribuicao.Nome,
+                Descricao = atribuicao.Descricao,
+                UsuarioUID = atribuicao.Usuario.UID,
+                Tipo = (TipoAtribuicao)Enum.Parse(typeof(TipoComponente), atribuicao.Tipo.UID),
+                DataVencimento = atribuicao.DataVencimento,
+                Concluida = true, //seta como true.
+                CicloVidaUID = atribuicao.CicloVida.UID,
+            };
+
+            await atribuicaoService.EditarAsync(envio.AtribuicaoUID, atribuicaoEnvio, claims);
+
+            var manutencao = await manutencaoService.ObterPorUIDAsync(atribuicao.Objeto.UID);
+            var componente = await componenteService.ObterPorUIDAsync(manutencao.Componente.UID);
+
+            var manutencaoAtt = new ManutencaoEnvioDTO()
+            {
+                Nome = manutencao.Nome,
+                Descricao = manutencao.Descricao,
+                ComponenteUID = manutencao.Componente.UID,
+                ProjetoUID = manutencao.Projeto.UID,
+                DataInicio = manutencao.DataInicio,
+                DataTermino = DateTime.Now, //Muda data de termino.
+                ResponsavelUID = manutencao.Responsavel.UID,
+                Solucao = manutencao.Solucao
+            };
+
+            var componenteAttRegular = new ComponenteEnvioDTO()
+            {
+                Nome = componente.Nome,
+                Descricao = componente.Descricao ?? "",
+                NumeroSerie = componente.NumeroSerie,
+                LocalizacaoUID = componente.Localizacao.UID,
+                ProjetoUID = componente.Projeto.UID,
+                Status = StatusComponente.Regular, //Muda para Regular.
+                Marca = componente.Marca,
+                Modelo = componente.Modelo,
+                Tipo = (TipoComponente)Enum.Parse(typeof(TipoComponente), componente.Tipo.UID),
+                DataAquisicao = componente.DataAquisicao,
+            };
+
+            await componenteService.EditarAsync(componente.UID, componenteAttRegular, claims);
+            await manutencaoService.EditarAsync(manutencao.UID, manutencaoAtt, claims);
         }
 
         private static DateTime ObterDataDiasUteis(int quantidadeDiasUteis)

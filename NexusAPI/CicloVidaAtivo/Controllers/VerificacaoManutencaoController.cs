@@ -23,10 +23,14 @@ namespace NexusAPI.CicloVidaAtivo.Controllers
         {
             try
             {
+                var serviceVerificaoManutencao = service as VerificacaoManutencaoService;
+                await serviceVerificaoManutencao.UsuarioConcluiu(responderDTO, User.Claims);
+
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                string s = ex.Message;
                 return StatusCode(500, RespostaErroAPI.RespostaErro500);
             }
         }
