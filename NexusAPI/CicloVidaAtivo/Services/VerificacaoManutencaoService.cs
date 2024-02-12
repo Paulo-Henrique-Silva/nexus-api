@@ -42,7 +42,7 @@ namespace NexusAPI.CicloVidaAtivo.Services
                 Nome = "Verificação de Manutenção",
                 Descricao = "Verificação de manutenção pelo responsável.",
                 ObjetoUID = envio.ObjetoUID,
-                Finalizado = false,
+                Concluido = false,
                 UsuarioCriadorUID = tokenService.ObterUsuarioUID(claims),
             };
 
@@ -60,8 +60,8 @@ namespace NexusAPI.CicloVidaAtivo.Services
                 Descricao = "Verifique os detalhes da manutenção. Após concluí-la, por favor, atualize " +
                 "o campo de \"Solução\" para que a opção para marcar como concluída apareça.",
                 UsuarioUID = tokenService.ObterUsuarioUID(claims),
-                Tipo = TipoAtribuicao.Completar,
-                DataVencimento = ObterDataTresDiasUteis(),
+                Tipo = TipoAtribuicao.CompletarManutencao,
+                DataVencimento = ObterDataDiasUteis(3),
                 Concluida = false,
                 CicloVidaUID = cicloVidaUID,
             };
@@ -94,12 +94,12 @@ namespace NexusAPI.CicloVidaAtivo.Services
 
         }
 
-        private static DateTime ObterDataTresDiasUteis()
+        private static DateTime ObterDataDiasUteis(int quantidadeDiasUteis)
         {
             int diasUteis = 0;
             DateTime data = DateTime.Now;
 
-            while (diasUteis < 3)
+            while (diasUteis < quantidadeDiasUteis)
             {
                 data = data.AddDays(1);
 
@@ -109,8 +109,8 @@ namespace NexusAPI.CicloVidaAtivo.Services
                 }
             }
 
-            //Muda o horário para 18:00, fim do horário comercial.
-            return new DateTime(data.Year, data.Month, data.Day, 18, 0, 0);
+            //Muda o horário para 17:59, fim do horário comercial.
+            return new DateTime(data.Year, data.Month, data.Day, 17, 59, 0);
         }
     }
 }

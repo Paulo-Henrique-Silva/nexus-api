@@ -14,9 +14,9 @@ namespace NexusAPI.CicloVidaAtivo.Models
         [MaxLength(200)]
         public string ObjetoUID { get; set; } = "";
 
-        [Column("FINALIZADO")]
+        [Column("CONCLUIDO")]
         [Required]
-        public bool Finalizado { get; set; }
+        public bool Concluido { get; set; }
 
         public CicloVida() : base() { }
     }

@@ -358,6 +358,10 @@ namespace NexusAPI.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("CICLOVIDAUID");
 
+                    b.Property<bool>("Concluida")
+                        .HasColumnType("bit")
+                        .HasColumnName("CONCLUIDA");
+
                     b.Property<DateTime>("DataCriacao")
                         .HasColumnType("datetime2")
                         .HasColumnName("DATACRIACAO");
@@ -432,6 +436,10 @@ namespace NexusAPI.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("ATUALIZADOPORUID");
 
+                    b.Property<bool>("Concluido")
+                        .HasColumnType("bit")
+                        .HasColumnName("CONCLUIDO");
+
                     b.Property<DateTime>("DataCriacao")
                         .HasColumnType("datetime2")
                         .HasColumnName("DATACRIACAO");
@@ -448,10 +456,6 @@ namespace NexusAPI.Migrations
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)")
                         .HasColumnName("DESCRICAO");
-
-                    b.Property<bool>("Finalizado")
-                        .HasColumnType("bit")
-                        .HasColumnName("FINALIZADO");
 
                     b.Property<string>("FinalizadoPorUID")
                         .HasMaxLength(200)
@@ -588,8 +592,6 @@ namespace NexusAPI.Migrations
                     b.ToTable("COMPONENTES", t =>
                         {
                             t.HasTrigger("ComponentesDeletado");
-
-                            t.HasTrigger("ProjetosDeletado");
 
                             t.HasTrigger("UsuariosDeletado");
                         });

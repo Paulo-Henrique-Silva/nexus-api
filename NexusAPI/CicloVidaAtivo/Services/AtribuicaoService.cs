@@ -26,7 +26,8 @@ namespace NexusAPI.CicloVidaAtivo.Services
                     .ForMember(c => c.AtualizadoPor, opt => opt.Ignore())
                     .ForMember(c => c.UsuarioCriador, opt => opt.Ignore())
                     .ForMember(c => c.CicloVida, opt => opt.Ignore())
-                    .ForMember(c => c.Usuario, opt => opt.Ignore());
+                    .ForMember(c => c.Usuario, opt => opt.Ignore())
+                    .ForMember(c => c.Tipo, opt => opt.Ignore());
             });
             var mapper = new Mapper(config);
 
@@ -54,6 +55,12 @@ namespace NexusAPI.CicloVidaAtivo.Services
             {
                 UID = obj.CicloVida?.UID,
                 Nome = obj.CicloVida?.Nome
+            };
+
+            resposta.Tipo = new NexusReferenciaObjeto()
+            {
+                UID = ((int)obj.Tipo).ToString(),
+                Nome = NexusManipulacaoEnum.ObterDescricao(obj.Tipo)
             };
 
             return resposta;

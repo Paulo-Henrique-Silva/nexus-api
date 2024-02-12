@@ -53,7 +53,7 @@ namespace NexusAPI.Migrations
                 {
                     UID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     OBJETOUID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    FINALIZADO = table.Column<bool>(type: "bit", nullable: false),
+                    CONCLUIDO = table.Column<bool>(type: "bit", nullable: false),
                     NOME = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     DESCRICAO = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: true),
                     ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
@@ -202,6 +202,7 @@ namespace NexusAPI.Migrations
                     TIPO = table.Column<int>(type: "int", nullable: false),
                     CICLOVIDAUID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     DATAVENCIMENTO = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CONCLUIDA = table.Column<bool>(type: "bit", nullable: false),
                     NOME = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     DESCRICAO = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: true),
                     ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
