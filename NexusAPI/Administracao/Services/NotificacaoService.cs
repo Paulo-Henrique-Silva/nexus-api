@@ -3,6 +3,8 @@ using NexusAPI.Administracao.DTOs.Notificacao;
 using NexusAPI.Administracao.DTOs.Usuario;
 using NexusAPI.Administracao.Models;
 using NexusAPI.Administracao.Repositories;
+using NexusAPI.CicloVidaAtivo.DTOs.Atribuicao;
+using NexusAPI.Compartilhado.EntidadesBase.DTOs;
 using NexusAPI.Compartilhado.EntidadesBase.MVC;
 using NexusAPI.Compartilhado.EntidadesBase.Objetos;
 using NexusAPI.Compartilhado.Services;
@@ -50,7 +52,7 @@ namespace NexusAPI.Administracao.Services
             return resposta;
         }
 
-        public virtual async Task<List<NotificacaoRespostaDTO>> ObterTudoPorUsuarioUIDAsync(
+        public virtual async Task<NexusListaRespostaDTO<NotificacaoRespostaDTO>> ObterTudoPorUsuarioUIDAsync(
             int numeroPagina, string UsuarioUID)
         {
             var notificacaoRepository = repository as NotificacaoRepository;
@@ -65,7 +67,13 @@ namespace NexusAPI.Administracao.Services
 
             objs.ForEach(o => objsResposta.Add(ConverterParaDTOResposta(o)));
 
-            return objsResposta;
+            var resposta = new NexusListaRespostaDTO<NotificacaoRespostaDTO>()
+            {
+                TotalItens = await repository.ObterCountAsync(),
+                Itens = objsResposta
+            };
+
+            return resposta;
         }
     }
 }

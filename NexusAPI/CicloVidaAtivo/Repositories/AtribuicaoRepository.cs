@@ -37,8 +37,16 @@ namespace NexusAPI.CicloVidaAtivo.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<Atribuicao>> ObterTudoPorUsuarioUIDAsync(int numeroPagina,
-            string usuarioUID)
+
+        /// <summary>
+        /// Obtém as atribuições que tem como responsável o usuário de UID especificado.
+        /// Obs: A paginação foi retirada desse item para facilitar o desenvolvimento, contudo,
+        /// no futuro do trabalho é interessante isso ser aplicado.
+        /// </summary>
+        /// <param name="numeroPagina"></param>
+        /// <param name="usuarioUID"></param>
+        /// <returns></returns>
+        public async Task<List<Atribuicao>> ObterTudoPorUsuarioUIDAsync(string usuarioUID)
         {
             return await dataContext.Set<Atribuicao>()
                 .Include(obj => obj.AtualizadoPor)
@@ -47,8 +55,6 @@ namespace NexusAPI.CicloVidaAtivo.Repositories
                 .Include(obj => obj.CicloVida)
                 .Where(obj => obj.DataFinalizacao == null && obj.UsuarioUID.Equals(usuarioUID))
                 .OrderByDescending(obj => obj.DataCriacao)
-                .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
-                .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .ToListAsync();
         }
     }

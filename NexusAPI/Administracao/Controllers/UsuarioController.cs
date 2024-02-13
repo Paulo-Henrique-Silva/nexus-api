@@ -169,12 +169,11 @@ namespace NexusAPI.Administracao.Controllers
 
         [HttpGet("{UID}/Atribuicoes")]
         [Authorize]
-        public async Task<IActionResult> GetAtribuicoes([FromRoute] string UID,
-            [FromQuery] int pagina = 1)
+        public async Task<IActionResult> GetAtribuicoes([FromRoute] string UID)
         {
             try
             {
-                var usuario = await atribuicaoService.ObterTudoPorUsuarioUIDAsync(pagina, UID);
+                var usuario = await atribuicaoService.ObterTudoPorUsuarioUIDAsync(UID);
                 return Ok(usuario);
             }
             catch (ObjetoNaoEncontrado ex)
