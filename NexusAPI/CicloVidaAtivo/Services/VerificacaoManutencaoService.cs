@@ -166,7 +166,7 @@ namespace NexusAPI.CicloVidaAtivo.Services
             }
 
             //Muda o horário para 17:59, fim do horário comercial.
-            return new DateTime(data.Year, data.Month, data.Day, 17, 59, 0);
+            return new DateTime(data.Year, data.Month, data.Day, 17, 59, 59);
         }
     }
 }
