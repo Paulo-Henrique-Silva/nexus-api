@@ -899,9 +899,6 @@ namespace NexusAPI.Migrations
                 table: "USUARIOS",
                 column: "USUARIOCRIADORUID");
 
-            //Lista de triggers.
-
-            //Finaliza a localização e seus dependentes.
             migrationBuilder.Sql(@"
                 CREATE TRIGGER LocalizacoesDeletada
                 ON LOCALIZACOES
@@ -968,6 +965,89 @@ namespace NexusAPI.Migrations
                         FINALIZADOPORUID = inserted.FINALIZADOPORUID
                         FROM USUARIOPERFIL
                         INNER JOIN inserted ON USUARIOPERFIL.USUARIOUID = inserted.UID;
+                    END
+                END
+            ");
+
+            migrationBuilder.Sql(@"
+                CREATE TRIGGER ManutencoesDeletado
+                ON MANUTENCOES
+                AFTER UPDATE
+                AS
+                BEGIN
+                    IF UPDATE(DATAFINALIZACAO)
+                    BEGIN
+                        UPDATE ATRIBUICOES
+                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
+                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
+                        FROM ATRIBUICOES
+                        INNER JOIN CICLOSVIDA ON ATRIBUICOES.CICLOVIDAUID = CICLOSVIDA.UID
+                        INNER JOIN inserted ON CICLOSVIDA.OBJETOUID = inserted.UID;
+                    END
+                END
+            ");
+
+            migrationBuilder.Sql(@"
+                CREATE TRIGGER RequisicoesDeletado
+                ON REQUISICOES
+                AFTER UPDATE
+                AS
+                BEGIN
+                    IF UPDATE(DATAFINALIZACAO)
+                    BEGIN
+                        UPDATE ATRIBUICOES
+                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
+                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
+                        FROM ATRIBUICOES
+                        INNER JOIN CICLOSVIDA ON ATRIBUICOES.CICLOVIDAUID = CICLOSVIDA.UID
+                        INNER JOIN inserted ON CICLOSVIDA.OBJETOUID = inserted.UID;
+                    END
+                END
+            ");
+
+            migrationBuilder.Sql(@"
+                CREATE TRIGGER ProjetosDeletado
+                ON PROJETOS
+                AFTER UPDATE
+                AS
+                BEGIN
+                    IF UPDATE(DATAFINALIZACAO)
+                    BEGIN
+                        UPDATE COMPONENTES
+                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
+                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
+                        FROM COMPONENTES
+                        INNER JOIN inserted ON COMPONENTES.PROJETOUID = inserted.UID;
+
+                        UPDATE LOCALIZACOES
+                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
+                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
+                        FROM LOCALIZACOES
+                        INNER JOIN inserted ON LOCALIZACOES.PROJETOUID = inserted.UID;
+
+                        UPDATE EQUIPAMENTOS
+                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
+                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
+                        FROM EQUIPAMENTOS
+                        INNER JOIN inserted ON EQUIPAMENTOS.PROJETOUID = inserted.UID;
+
+                        UPDATE SOFTWARES
+                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
+                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
+                        FROM SOFTWARES
+                        INNER JOIN inserted ON SOFTWARES.PROJETOUID = inserted.UID;
+
+                        UPDATE MANUTENCOES
+                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
+                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
+                        FROM MANUTENCOES
+                        INNER JOIN inserted ON MANUTENCOES.PROJETOUID = inserted.UID;
+
+                        UPDATE REQUISICOES
+                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
+                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
+                        FROM REQUISICOES
+                        INNER JOIN inserted ON REQUISICOES.PROJETOUID = inserted.UID;
                     END
                 END
             ");

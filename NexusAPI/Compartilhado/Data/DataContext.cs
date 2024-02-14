@@ -49,8 +49,20 @@ namespace NexusAPI.Compartilhado.Data
                 .ToTable(tb => tb.HasTrigger("ComponentesDeletado"));
 
             modelBuilder
-                .Entity<Componente>()
+                .Entity<Usuario>()
                 .ToTable(tb => tb.HasTrigger("UsuariosDeletado"));
+
+            modelBuilder
+                .Entity<Manutencao>()
+                .ToTable(tb => tb.HasTrigger("ManutencoesDeletado"));
+
+            modelBuilder
+                .Entity<Requisicao>()
+                .ToTable(tb => tb.HasTrigger("RequisicoesDeletado"));
+
+            modelBuilder
+                .Entity<Projeto>()
+                .ToTable(tb => tb.HasTrigger("ProjetosDeletado"));
         }
     }
 }

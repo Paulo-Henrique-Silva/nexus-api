@@ -199,7 +199,12 @@ namespace NexusAPI.Migrations
 
                     b.HasIndex("UsuarioCriadorUID");
 
-                    b.ToTable("PROJETOS");
+                    b.ToTable("PROJETOS", t =>
+                        {
+                            t.HasTrigger("ProjetosDeletado");
+                        });
+
+                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
                 });
 
             modelBuilder.Entity("NexusAPI.Administracao.Models.Usuario", b =>
@@ -267,7 +272,12 @@ namespace NexusAPI.Migrations
 
                     b.HasIndex("UsuarioCriadorUID");
 
-                    b.ToTable("USUARIOS");
+                    b.ToTable("USUARIOS", t =>
+                        {
+                            t.HasTrigger("UsuariosDeletado");
+                        });
+
+                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
                 });
 
             modelBuilder.Entity("NexusAPI.Administracao.Models.UsuarioPerfil", b =>
@@ -592,8 +602,6 @@ namespace NexusAPI.Migrations
                     b.ToTable("COMPONENTES", t =>
                         {
                             t.HasTrigger("ComponentesDeletado");
-
-                            t.HasTrigger("UsuariosDeletado");
                         });
 
                     b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
@@ -864,7 +872,12 @@ namespace NexusAPI.Migrations
 
                     b.HasIndex("UsuarioCriadorUID");
 
-                    b.ToTable("MANUTENCOES");
+                    b.ToTable("MANUTENCOES", t =>
+                        {
+                            t.HasTrigger("ManutencoesDeletado");
+                        });
+
+                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
                 });
 
             modelBuilder.Entity("NexusAPI.Dados.Models.Requisicao", b =>
@@ -936,7 +949,12 @@ namespace NexusAPI.Migrations
 
                     b.HasIndex("UsuarioCriadorUID");
 
-                    b.ToTable("REQUISICOES");
+                    b.ToTable("REQUISICOES", t =>
+                        {
+                            t.HasTrigger("RequisicoesDeletado");
+                        });
+
+                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
                 });
 
             modelBuilder.Entity("NexusAPI.Dados.Models.Software", b =>
