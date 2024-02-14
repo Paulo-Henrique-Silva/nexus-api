@@ -17,6 +17,8 @@ namespace NexusAPI.CicloVidaAtivo.DTOs.Atribuicao
 
         public bool Concluida { get; set; }
 
-        public string CicloVidaUID { get; set; } = "";
+        public string ObjetoUID { get; set; } = "";
+
+        public string ProjetoUID { get; set; } = "";
     }
 }

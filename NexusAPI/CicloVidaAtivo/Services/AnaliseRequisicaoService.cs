@@ -16,9 +16,8 @@ namespace NexusAPI.CicloVidaAtivo.Services
     /// </summary>
     public class AnaliseRequisicaoService : NexusCicloVidaService
     {
-        public AnaliseRequisicaoService(AtribuicaoService atribuicaoService, 
-            CicloVidaRepository cicloVidaRepository, TokenService tokenService) 
-        : base(atribuicaoService, cicloVidaRepository, tokenService)
+        public AnaliseRequisicaoService(AtribuicaoService atribuicaoService, TokenService tokenService) 
+        : base(atribuicaoService, tokenService)
         {
         }
 

@@ -80,8 +80,7 @@
                         SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
                         FINALIZADOPORUID = inserted.FINALIZADOPORUID
                         FROM ATRIBUICOES
-                        INNER JOIN CICLOSVIDA ON ATRIBUICOES.CICLOVIDAUID = CICLOSVIDA.UID
-                        INNER JOIN inserted ON CICLOSVIDA.OBJETOUID = inserted.UID;
+                        INNER JOIN inserted ON ATRIBUICOES.OBJETOUID = inserted.UID;
                     END
                 END
             ");
@@ -97,8 +96,8 @@
                         UPDATE ATRIBUICOES
                         SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
                         FINALIZADOPORUID = inserted.FINALIZADOPORUID
-                        INNER JOIN CICLOSVIDA ON ATRIBUICOES.CICLOVIDAUID = CICLOSVIDA.UID
-                        INNER JOIN inserted ON CICLOSVIDA.OBJETOUID = inserted.UID;
+                        FROM ATRIBUICOES
+                        INNER JOIN inserted ON ATRIBUICOES.OBJETOUID = inserted.UID;
                     END
                 END
             ");

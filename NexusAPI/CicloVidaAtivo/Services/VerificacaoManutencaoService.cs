@@ -33,12 +33,11 @@ namespace NexusAPI.CicloVidaAtivo.Services
 
         public VerificacaoManutencaoService(
             AtribuicaoService atribuicaoService, 
-            CicloVidaRepository cicloVidaRepository, 
             ManutencaoService manutencaoService, 
             ComponenteService componenteService,
             NotificacaoService notificacaoService,
             TokenService tokenService
-        ) : base(atribuicaoService, cicloVidaRepository, tokenService)
+        ) : base(atribuicaoService, tokenService)
         {
             this.manutencaoService = manutencaoService;
             this.componenteService = componenteService;
@@ -47,23 +46,10 @@ namespace NexusAPI.CicloVidaAtivo.Services
 
         public override async Task IniciarCiclovida(CicloVidaIniciarDTO envio, IEnumerable<Claim> claims)
         {
-            //Cria um novo ciclo de vida de verificação e vai para o primeiro passo.
-            CicloVida cicloVida = new()
-            {
-                UID = Guid.NewGuid().ToString(),
-                Nome = "Verificação de Manutenção",
-                Descricao = "Verificação de manutenção pelo responsável.",
-                ObjetoUID = envio.ObjetoUID,
-                Concluido = false,
-                UsuarioCriadorUID = tokenService.ObterUsuarioUID(claims),
-            };
-
-            await cicloVidaRepository.AdicionarAsync(cicloVida);
-            await CriacaoManutencao(cicloVida.UID, envio.ObjetoUID, claims);
+            await CriacaoManutencao(envio.ObjetoUID, claims);
         }
 
-        public async Task CriacaoManutencao(string cicloVidaUID, string manutencaoUID,
-            IEnumerable<Claim> claims)
+        public async Task CriacaoManutencao(string manutencaoUID, IEnumerable<Claim> claims)
         {
             var manutencao = await manutencaoService.ObterPorUIDAsync(manutencaoUID);
 
@@ -77,7 +63,8 @@ namespace NexusAPI.CicloVidaAtivo.Services
                 Tipo = TipoAtribuicao.CompletarManutencao,
                 DataVencimento = ObterDataDiasUteis(3),
                 Concluida = false,
-                CicloVidaUID = cicloVidaUID,
+                ObjetoUID = manutencaoUID,
+                ProjetoUID = manutencao.Projeto.UID
             };
 
             await atribuicaoService.AdicionarAsync(atribuicao, claims);
@@ -121,7 +108,8 @@ namespace NexusAPI.CicloVidaAtivo.Services
                 Tipo = (TipoAtribuicao)Enum.Parse(typeof(TipoComponente), atribuicao.Tipo.UID),
                 DataVencimento = atribuicao.DataVencimento,
                 Concluida = true, //seta como true.
-                CicloVidaUID = atribuicao.CicloVida.UID,
+                ObjetoUID = atribuicao.Objeto.UID,
+                ProjetoUID = atribuicao.Projeto.UID
             };
 
             await atribuicaoService.EditarAsync(envio.AtribuicaoUID, atribuicaoEnvio, claims);
@@ -155,18 +143,24 @@ namespace NexusAPI.CicloVidaAtivo.Services
                 DataAquisicao = componente.DataAquisicao,
             };
 
-            var notificacao = new NotificacaoEnvioDTO()
+            //Só envia notificação se o responsável for diferente do usuário que criou a manutenção.
+            if (manutencao.UsuarioCriador.UID != manutencao.Responsavel.UID)
             {
-                Nome = $"Manutenção {manutencao.Nome} completada.",
-                Descricao = $"O responsável {manutencao.Responsavel.Nome} completou a manutenção {manutencao.Nome}" +
-                $" do componente {componente.Nome}.",
-                UsuarioUID = manutencao.UsuarioCriador.UID,
-                Vista = false
-            };
+                var notificacao = new NotificacaoEnvioDTO()
+                {
+                    Nome = $"Manutenção {manutencao.Nome} completada.",
+                    Descricao = $"O responsável {manutencao.Responsavel.Nome} completou a manutenção {manutencao.Nome}" +
+                    $" do componente {componente.Nome}.",
+                    UsuarioUID = manutencao.UsuarioCriador.UID,
+                    Vista = false
+                };
+
+                await notificacaoService.AdicionarAsync(notificacao, claims);
+            }
+
 
             await componenteService.EditarAsync(componente.UID, componenteAttRegular, claims);
             await manutencaoService.EditarAsync(manutencao.UID, manutencaoAtt, claims);
-            await notificacaoService.AdicionarAsync(notificacao, claims);
         }
 
         private static DateTime ObterDataDiasUteis(int quantidadeDiasUteis)

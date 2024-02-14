@@ -91,7 +91,6 @@ namespace NexusAPI
             builder.Services.AddScoped<UsuarioPerfilRepository, UsuarioPerfilRepository>();
 
             builder.Services.AddScoped<AtribuicaoRepository, AtribuicaoRepository>();
-            builder.Services.AddScoped<CicloVidaRepository, CicloVidaRepository>();
 
             builder.Services.AddScoped<ComponenteRepository, ComponenteRepository>();
             builder.Services.AddScoped<EquipamentoRepository, EquipamentoRepository>();

@@ -18,14 +18,10 @@ namespace NexusAPI.CicloVidaAtivo.Services
     {
         private readonly ManutencaoService manutencaoService;
 
-        private readonly CicloVidaRepository cicloVidaRepository;
-
-        public AtribuicaoService(AtribuicaoRepository repository, ManutencaoService manutencaoService,
-            CicloVidaRepository cicloVidaRepository, TokenService tokenService) 
+        public AtribuicaoService(AtribuicaoRepository repository, ManutencaoService manutencaoService,TokenService tokenService) 
         : base(repository, tokenService)
         {
             this.manutencaoService = manutencaoService;
-            this.cicloVidaRepository = cicloVidaRepository;
         }
 
         public override AtribuicaoRespostaDTO ConverterParaDTOResposta(Atribuicao obj)
@@ -45,10 +41,10 @@ namespace NexusAPI.CicloVidaAtivo.Services
                 cfg.CreateMap<Atribuicao, AtribuicaoRespostaDTO>()
                     .ForMember(c => c.AtualizadoPor, opt => opt.Ignore())
                     .ForMember(c => c.UsuarioCriador, opt => opt.Ignore())
-                    .ForMember(c => c.CicloVida, opt => opt.Ignore())
                     .ForMember(c => c.Usuario, opt => opt.Ignore())
                     .ForMember(c => c.Tipo, opt => opt.Ignore())
-                    .ForMember(c => c.Objeto, opt => opt.Ignore());
+                    .ForMember(c => c.Objeto, opt => opt.Ignore())
+                    .ForMember(c => c.Projeto, opt => opt.Ignore());
             });
             var mapper = new Mapper(config);
 
@@ -72,19 +68,20 @@ namespace NexusAPI.CicloVidaAtivo.Services
                 Nome = obj.Usuario?.Nome
             };
 
-            resposta.CicloVida = new NexusReferenciaObjeto()
-            {
-                UID = obj.CicloVida?.UID,
-                Nome = obj.CicloVida?.Nome
-            };
-
-            var objetoCiclo = await ObterNomeObjetoPorCicloUID(obj.CicloVidaUID, obj.Tipo);
+            //Obtém nome e UID da atribuição
+            var objetoCiclo = await ObterNomeObjetoPorCicloUID(obj.ObjetoUID, obj.Tipo);
             resposta.Objeto = objetoCiclo;
 
             resposta.Tipo = new NexusReferenciaObjeto()
             {
                 UID = ((int)obj.Tipo).ToString(),
                 Nome = NexusManipulacaoEnum.ObterDescricao(obj.Tipo)
+            };
+
+            resposta.Projeto = new NexusReferenciaObjeto()
+            {
+                UID = obj.Projeto?.UID,
+                Nome = obj.Projeto?.Nome
             };
 
             return resposta;
@@ -131,17 +128,11 @@ namespace NexusAPI.CicloVidaAtivo.Services
         {
             //Busca ciclo de vida.
             var objeto = new NexusReferenciaObjeto();
-            var ciclo = await cicloVidaRepository.ObterPorUIDAsync(UID);
-
-            if (ciclo == null)
-            {
-                throw new ObjetoNaoEncontrado(UID);
-            }
 
             //Obtém o objeto conforme tipo da atribuição.
             if (tipo == TipoAtribuicao.CompletarManutencao)
             {
-                var manutencao = await manutencaoService.ObterPorUIDAsync(ciclo.ObjetoUID);
+                var manutencao = await manutencaoService.ObterPorUIDAsync(UID);
 
                 objeto.UID = manutencao.UID;
                 objeto.Nome = manutencao.Nome;

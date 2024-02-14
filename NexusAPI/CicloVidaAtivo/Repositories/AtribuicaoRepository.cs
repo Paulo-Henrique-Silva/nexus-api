@@ -19,7 +19,7 @@ namespace NexusAPI.CicloVidaAtivo.Repositories
                 .Include(obj => obj.AtualizadoPor)
                 .Include(obj => obj.UsuarioCriador)
                 .Include(obj => obj.Usuario)
-                .Include(obj => obj.CicloVida)
+                .Include(obj => obj.Projeto)
                 .FirstOrDefaultAsync(obj => obj.UID.Equals(UID) && obj.DataFinalizacao == null);
         }
 
@@ -29,7 +29,7 @@ namespace NexusAPI.CicloVidaAtivo.Repositories
                 .Include(obj => obj.AtualizadoPor)
                 .Include(obj => obj.UsuarioCriador)
                 .Include(obj => obj.Usuario)
-                .Include(obj => obj.CicloVida)
+                .Include(obj => obj.Projeto)
                 .Where(obj => obj.DataFinalizacao == null)
                 .OrderByDescending(obj => obj.DataCriacao)
                 .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
@@ -52,7 +52,7 @@ namespace NexusAPI.CicloVidaAtivo.Repositories
                 .Include(obj => obj.AtualizadoPor)
                 .Include(obj => obj.UsuarioCriador)
                 .Include(obj => obj.Usuario)
-                .Include(obj => obj.CicloVida)
+                .Include(obj => obj.Projeto)
                 .Where(obj => obj.DataFinalizacao == null && obj.UsuarioUID.Equals(usuarioUID))
                 .OrderByDescending(obj => obj.DataCriacao)
                 .ToListAsync();

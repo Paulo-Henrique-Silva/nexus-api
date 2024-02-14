@@ -10,15 +10,11 @@ namespace NexusAPI.Compartilhado.EntidadesBase.CicloVida
     {
         protected readonly AtribuicaoService atribuicaoService;
 
-        protected readonly CicloVidaRepository cicloVidaRepository;
-
         protected readonly TokenService tokenService;
 
-        protected NexusCicloVidaService(AtribuicaoService atribuicaoService,
-            CicloVidaRepository cicloVidaRepository, TokenService tokenService)
+        protected NexusCicloVidaService(AtribuicaoService atribuicaoService,TokenService tokenService)
         {
             this.atribuicaoService = atribuicaoService;
-            this.cicloVidaRepository = cicloVidaRepository;
             this.tokenService = tokenService;
         }
 

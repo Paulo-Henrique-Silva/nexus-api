@@ -362,12 +362,6 @@ namespace NexusAPI.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("ATUALIZADOPORUID");
 
-                    b.Property<string>("CicloVidaUID")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("CICLOVIDAUID");
-
                     b.Property<bool>("Concluida")
                         .HasColumnType("bit")
                         .HasColumnName("CONCLUIDA");
@@ -404,6 +398,18 @@ namespace NexusAPI.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("NOME");
 
+                    b.Property<string>("ObjetoUID")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("OBJETOUID");
+
+                    b.Property<string>("ProjetoUID")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("PROJETOUID");
+
                     b.Property<int>("Tipo")
                         .HasColumnType("int")
                         .HasColumnName("TIPO");
@@ -423,81 +429,15 @@ namespace NexusAPI.Migrations
 
                     b.HasIndex("AtualizadoPorUID");
 
-                    b.HasIndex("CicloVidaUID");
-
                     b.HasIndex("FinalizadoPorUID");
+
+                    b.HasIndex("ProjetoUID");
 
                     b.HasIndex("UsuarioCriadorUID");
 
                     b.HasIndex("UsuarioUID");
 
                     b.ToTable("ATRIBUICOES");
-                });
-
-            modelBuilder.Entity("NexusAPI.CicloVidaAtivo.Models.CicloVida", b =>
-                {
-                    b.Property<string>("UID")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("UID");
-
-                    b.Property<string>("AtualizadoPorUID")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("ATUALIZADOPORUID");
-
-                    b.Property<bool>("Concluido")
-                        .HasColumnType("bit")
-                        .HasColumnName("CONCLUIDO");
-
-                    b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DATACRIACAO");
-
-                    b.Property<DateTime?>("DataFinalizacao")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DATAFINALIZACAO");
-
-                    b.Property<DateTime?>("DataUltimaAtualizacao")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DATAULTIMAATUALIZACAO");
-
-                    b.Property<string>("Descricao")
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)")
-                        .HasColumnName("DESCRICAO");
-
-                    b.Property<string>("FinalizadoPorUID")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("FINALIZADOPORUID");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("NOME");
-
-                    b.Property<string>("ObjetoUID")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("OBJETOUID");
-
-                    b.Property<string>("UsuarioCriadorUID")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("USUARIOCRIADORUID");
-
-                    b.HasKey("UID");
-
-                    b.HasIndex("AtualizadoPorUID");
-
-                    b.HasIndex("FinalizadoPorUID");
-
-                    b.HasIndex("UsuarioCriadorUID");
-
-                    b.ToTable("CICLOSVIDA");
                 });
 
             modelBuilder.Entity("NexusAPI.Dados.Models.Componente", b =>
@@ -1182,15 +1122,15 @@ namespace NexusAPI.Migrations
                         .WithMany()
                         .HasForeignKey("AtualizadoPorUID");
 
-                    b.HasOne("NexusAPI.CicloVidaAtivo.Models.CicloVida", "CicloVida")
-                        .WithMany()
-                        .HasForeignKey("CicloVidaUID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "FinalizadoPor")
                         .WithMany()
                         .HasForeignKey("FinalizadoPorUID");
+
+                    b.HasOne("NexusAPI.Administracao.Models.Projeto", "Projeto")
+                        .WithMany()
+                        .HasForeignKey("ProjetoUID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("NexusAPI.Administracao.Models.Usuario", "UsuarioCriador")
                         .WithMany()
@@ -1204,32 +1144,11 @@ namespace NexusAPI.Migrations
 
                     b.Navigation("AtualizadoPor");
 
-                    b.Navigation("CicloVida");
-
                     b.Navigation("FinalizadoPor");
+
+                    b.Navigation("Projeto");
 
                     b.Navigation("Usuario");
-
-                    b.Navigation("UsuarioCriador");
-                });
-
-            modelBuilder.Entity("NexusAPI.CicloVidaAtivo.Models.CicloVida", b =>
-                {
-                    b.HasOne("NexusAPI.Administracao.Models.Usuario", "AtualizadoPor")
-                        .WithMany()
-                        .HasForeignKey("AtualizadoPorUID");
-
-                    b.HasOne("NexusAPI.Administracao.Models.Usuario", "FinalizadoPor")
-                        .WithMany()
-                        .HasForeignKey("FinalizadoPorUID");
-
-                    b.HasOne("NexusAPI.Administracao.Models.Usuario", "UsuarioCriador")
-                        .WithMany()
-                        .HasForeignKey("UsuarioCriadorUID");
-
-                    b.Navigation("AtualizadoPor");
-
-                    b.Navigation("FinalizadoPor");
 
                     b.Navigation("UsuarioCriador");
                 });

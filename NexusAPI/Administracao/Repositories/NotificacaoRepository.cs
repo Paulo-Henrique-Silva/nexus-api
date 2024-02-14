@@ -34,8 +34,12 @@ namespace NexusAPI.Administracao.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<Notificacao>> ObterTudoPorUsuarioUIDAsync(int numeroPagina,
-            string usuarioUID)
+        /// <summary>
+        /// Retorna as notificações por usuário UID. Não tem paginação para facilitar a performace.
+        /// </summary>
+        /// <param name="usuarioUID"></param>
+        /// <returns></returns>
+        public async Task<List<Notificacao>> ObterTudoPorUsuarioUIDAsync(string usuarioUID)
         {
             return await dataContext.Set<Notificacao>()
                 .Include(obj => obj.AtualizadoPor)
@@ -43,8 +47,6 @@ namespace NexusAPI.Administracao.Repositories
                 .Include(obj => obj.Usuario)
                 .Where(obj => obj.DataFinalizacao == null && obj.UsuarioUID.Equals(usuarioUID))
                 .OrderByDescending(obj => obj.DataCriacao)
-                .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
-                .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .ToListAsync();
         }
     }

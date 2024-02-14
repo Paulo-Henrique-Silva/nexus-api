@@ -48,42 +48,6 @@ namespace NexusAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CICLOSVIDA",
-                columns: table => new
-                {
-                    UID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    OBJETOUID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    CONCLUIDO = table.Column<bool>(type: "bit", nullable: false),
-                    NOME = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    DESCRICAO = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: true),
-                    ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    DATAULTIMAATUALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    USUARIOCRIADORUID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    DATACRIACAO = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FINALIZADOPORUID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    DATAFINALIZACAO = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CICLOSVIDA", x => x.UID);
-                    table.ForeignKey(
-                        name: "FK_CICLOSVIDA_USUARIOS_ATUALIZADOPORUID",
-                        column: x => x.ATUALIZADOPORUID,
-                        principalTable: "USUARIOS",
-                        principalColumn: "UID");
-                    table.ForeignKey(
-                        name: "FK_CICLOSVIDA_USUARIOS_FINALIZADOPORUID",
-                        column: x => x.FINALIZADOPORUID,
-                        principalTable: "USUARIOS",
-                        principalColumn: "UID");
-                    table.ForeignKey(
-                        name: "FK_CICLOSVIDA_USUARIOS_USUARIOCRIADORUID",
-                        column: x => x.USUARIOCRIADORUID,
-                        principalTable: "USUARIOS",
-                        principalColumn: "UID");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "NOTIFICACOES",
                 columns: table => new
                 {
@@ -200,7 +164,8 @@ namespace NexusAPI.Migrations
                     UID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     USUARIOUID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     TIPO = table.Column<int>(type: "int", nullable: false),
-                    CICLOVIDAUID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    OBJETOUID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    PROJETOUID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     DATAVENCIMENTO = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CONCLUIDA = table.Column<bool>(type: "bit", nullable: false),
                     NOME = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
@@ -216,9 +181,9 @@ namespace NexusAPI.Migrations
                 {
                     table.PrimaryKey("PK_ATRIBUICOES", x => x.UID);
                     table.ForeignKey(
-                        name: "FK_ATRIBUICOES_CICLOSVIDA_CICLOVIDAUID",
-                        column: x => x.CICLOVIDAUID,
-                        principalTable: "CICLOSVIDA",
+                        name: "FK_ATRIBUICOES_PROJETOS_PROJETOUID",
+                        column: x => x.PROJETOUID,
+                        principalTable: "PROJETOS",
                         principalColumn: "UID",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
@@ -615,14 +580,14 @@ namespace NexusAPI.Migrations
                 column: "ATUALIZADOPORUID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ATRIBUICOES_CICLOVIDAUID",
-                table: "ATRIBUICOES",
-                column: "CICLOVIDAUID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ATRIBUICOES_FINALIZADOPORUID",
                 table: "ATRIBUICOES",
                 column: "FINALIZADOPORUID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ATRIBUICOES_PROJETOUID",
+                table: "ATRIBUICOES",
+                column: "PROJETOUID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ATRIBUICOES_USUARIOCRIADORUID",
@@ -633,21 +598,6 @@ namespace NexusAPI.Migrations
                 name: "IX_ATRIBUICOES_USUARIOUID",
                 table: "ATRIBUICOES",
                 column: "USUARIOUID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CICLOSVIDA_ATUALIZADOPORUID",
-                table: "CICLOSVIDA",
-                column: "ATUALIZADOPORUID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CICLOSVIDA_FINALIZADOPORUID",
-                table: "CICLOSVIDA",
-                column: "FINALIZADOPORUID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CICLOSVIDA_USUARIOCRIADORUID",
-                table: "CICLOSVIDA",
-                column: "USUARIOCRIADORUID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_COMPONENTES_ATUALIZADOPORUID",
@@ -981,8 +931,7 @@ namespace NexusAPI.Migrations
                         SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
                         FINALIZADOPORUID = inserted.FINALIZADOPORUID
                         FROM ATRIBUICOES
-                        INNER JOIN CICLOSVIDA ON ATRIBUICOES.CICLOVIDAUID = CICLOSVIDA.UID
-                        INNER JOIN inserted ON CICLOSVIDA.OBJETOUID = inserted.UID;
+                        INNER JOIN inserted ON ATRIBUICOES.OBJETOUID = inserted.UID;
                     END
                 END
             ");
@@ -999,8 +948,7 @@ namespace NexusAPI.Migrations
                         SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
                         FINALIZADOPORUID = inserted.FINALIZADOPORUID
                         FROM ATRIBUICOES
-                        INNER JOIN CICLOSVIDA ON ATRIBUICOES.CICLOVIDAUID = CICLOSVIDA.UID
-                        INNER JOIN inserted ON CICLOSVIDA.OBJETOUID = inserted.UID;
+                        INNER JOIN inserted ON ATRIBUICOES.OBJETOUID = inserted.UID;
                     END
                 END
             ");
@@ -1076,9 +1024,6 @@ namespace NexusAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "USUARIOPERFIL");
-
-            migrationBuilder.DropTable(
-                name: "CICLOSVIDA");
 
             migrationBuilder.DropTable(
                 name: "COMPONENTES");

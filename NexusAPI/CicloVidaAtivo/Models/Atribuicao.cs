@@ -21,12 +21,18 @@ namespace NexusAPI.CicloVidaAtivo.Models
         [Required]
         public TipoAtribuicao Tipo { get; set; }
 
-        [Column("CICLOVIDAUID")]
+        [Column("OBJETOUID")]
         [Required]
         [MaxLength(200)]
-        public string CicloVidaUID { get; set; } = "";
+        public string ObjetoUID { get; set; } = "";
 
-        public CicloVida? CicloVida { get; set; }
+        [Column("PROJETOUID")]
+        [ForeignKey("Projeto")]
+        [Required]
+        [MaxLength(200)]
+        public string ProjetoUID { get; set; } = "";
+
+        public Projeto? Projeto { get; set; }
 
         [Column("DATAVENCIMENTO")]
         [Required]

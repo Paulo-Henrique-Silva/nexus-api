@@ -149,12 +149,11 @@ namespace NexusAPI.Administracao.Controllers
 
         [HttpGet("{UID}/Notificacoes")]
         [Authorize]
-        public async Task<IActionResult> GetNotificacoes([FromRoute] string UID, 
-            [FromQuery] int pagina = 1)
+        public async Task<IActionResult> GetNotificacoes([FromRoute] string UID)
         {
             try
             {
-                var usuario = await notificacaoService.ObterTudoPorUsuarioUIDAsync(pagina, UID);
+                var usuario = await notificacaoService.ObterTudoPorUsuarioUIDAsync(UID);
                 return Ok(usuario);
             }
             catch (ObjetoNaoEncontrado ex)

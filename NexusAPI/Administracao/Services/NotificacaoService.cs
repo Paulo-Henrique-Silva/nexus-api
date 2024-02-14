@@ -52,8 +52,13 @@ namespace NexusAPI.Administracao.Services
             return resposta;
         }
 
-        public virtual async Task<NexusListaRespostaDTO<NotificacaoRespostaDTO>> ObterTudoPorUsuarioUIDAsync(
-            int numeroPagina, string UsuarioUID)
+        /// <summary>
+        /// Retorna a lista de notificações por usuárioUID. Não possui paginação para facilitar desenvolvimento.
+        /// </summary>
+        /// <param name="UsuarioUID"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public virtual async Task<NexusListaRespostaDTO<NotificacaoRespostaDTO>> ObterTudoPorUsuarioUIDAsync(string UsuarioUID)
         {
             var notificacaoRepository = repository as NotificacaoRepository;
 
@@ -62,7 +67,7 @@ namespace NexusAPI.Administracao.Services
                 throw new Exception("Conversão não sucedida.");
             }
 
-            var objs = await notificacaoRepository.ObterTudoPorUsuarioUIDAsync(numeroPagina, UsuarioUID);
+            var objs = await notificacaoRepository.ObterTudoPorUsuarioUIDAsync(UsuarioUID);
             var objsResposta = new List<NotificacaoRespostaDTO>();
 
             objs.ForEach(o => objsResposta.Add(ConverterParaDTOResposta(o)));
