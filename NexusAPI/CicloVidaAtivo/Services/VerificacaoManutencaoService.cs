@@ -1,18 +1,14 @@
 ﻿using NexusAPI.Administracao.DTOs.Notificacao;
-using NexusAPI.Administracao.Models;
 using NexusAPI.Administracao.Services;
 using NexusAPI.CicloVidaAtivo.DTOs.Atribuicao;
 using NexusAPI.CicloVidaAtivo.DTOs.CicloVida;
 using NexusAPI.CicloVidaAtivo.Enums;
-using NexusAPI.CicloVidaAtivo.Models;
-using NexusAPI.CicloVidaAtivo.Repositories;
 using NexusAPI.Compartilhado.EntidadesBase.CicloVida;
 using NexusAPI.Compartilhado.Exceptions;
 using NexusAPI.Compartilhado.Services;
 using NexusAPI.Dados.DTOs.Componente;
 using NexusAPI.Dados.DTOs.Manutencao;
 using NexusAPI.Dados.Enums;
-using NexusAPI.Dados.Models;
 using NexusAPI.Dados.Services;
 using System.Security.Claims;
 
@@ -29,7 +25,6 @@ namespace NexusAPI.CicloVidaAtivo.Services
 
         private readonly ComponenteService componenteService;
 
-        private readonly NotificacaoService notificacaoService;
 
         public VerificacaoManutencaoService(
             AtribuicaoService atribuicaoService, 
@@ -37,11 +32,10 @@ namespace NexusAPI.CicloVidaAtivo.Services
             ComponenteService componenteService,
             NotificacaoService notificacaoService,
             TokenService tokenService
-        ) : base(atribuicaoService, tokenService)
+        ) : base(atribuicaoService, notificacaoService, tokenService)
         {
             this.manutencaoService = manutencaoService;
             this.componenteService = componenteService;
-            this.notificacaoService = notificacaoService;
         }
 
         public override async Task IniciarCiclovida(CicloVidaIniciarDTO envio, IEnumerable<Claim> claims)
@@ -105,7 +99,7 @@ namespace NexusAPI.CicloVidaAtivo.Services
                 Nome = atribuicao.Nome,
                 Descricao = atribuicao.Descricao,
                 UsuarioUID = atribuicao.Usuario.UID,
-                Tipo = (TipoAtribuicao)Enum.Parse(typeof(TipoComponente), atribuicao.Tipo.UID),
+                Tipo = (TipoAtribuicao)Enum.Parse(typeof(TipoAtribuicao), atribuicao.Tipo.UID),
                 DataVencimento = atribuicao.DataVencimento,
                 Concluida = true, //seta como true.
                 ObjetoUID = atribuicao.Objeto.UID,
@@ -158,28 +152,10 @@ namespace NexusAPI.CicloVidaAtivo.Services
                 await notificacaoService.AdicionarAsync(notificacao, claims);
             }
 
-
             await componenteService.EditarAsync(componente.UID, componenteAttRegular, claims);
             await manutencaoService.EditarAsync(manutencao.UID, manutencaoAtt, claims);
         }
 
-        private static DateTime ObterDataDiasUteis(int quantidadeDiasUteis)
-        {
-            int diasUteis = 0;
-            DateTime data = DateTime.Now;
 
-            while (diasUteis < quantidadeDiasUteis)
-            {
-                data = data.AddDays(1);
-
-                if (data.DayOfWeek != DayOfWeek.Saturday && data.DayOfWeek != DayOfWeek.Sunday)
-                {
-                    diasUteis++;
-                }
-            }
-
-            //Muda o horário para 17:59, fim do horário comercial.
-            return new DateTime(data.Year, data.Month, data.Day, 17, 59, 59);
-        }
     }
 }

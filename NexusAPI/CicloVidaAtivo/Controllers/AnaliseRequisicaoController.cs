@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using NexusAPI.CicloVidaAtivo.DTOs.CicloVida;
 using NexusAPI.CicloVidaAtivo.Services;
 using NexusAPI.Compartilhado.EntidadesBase.CicloVida;
@@ -13,6 +12,7 @@ namespace NexusAPI.CicloVidaAtivo.Controllers
         public AnaliseRequisicaoController(AnaliseRequisicaoService nexusCicloVidaService) 
         : base(nexusCicloVidaService)
         {
+            
         }
 
         [HttpPost("AnaliseCoordenador")]
@@ -21,6 +21,17 @@ namespace NexusAPI.CicloVidaAtivo.Controllers
         {
             try
             {
+                var serviceAnaliseRequisicao = service as AnaliseRequisicaoService;
+
+                if (responderDTO.Sucesso)
+                {
+                    await serviceAnaliseRequisicao.CoordenadorAprovou(responderDTO, User.Claims);
+                }
+                else
+                {
+                    await serviceAnaliseRequisicao.CoordenadorReprovou(responderDTO, User.Claims);
+                }
+
                 return Ok();
             }
             catch (Exception)
@@ -35,6 +46,8 @@ namespace NexusAPI.CicloVidaAtivo.Controllers
         {
             try
             {
+                var serviceAnaliseRequisicao = service as AnaliseRequisicaoService;
+                await serviceAnaliseRequisicao.CoordenadorCompletou(responderDTO, User.Claims);
                 return Ok();
             }
             catch (Exception)

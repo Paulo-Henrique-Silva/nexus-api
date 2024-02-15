@@ -141,7 +141,7 @@ namespace NexusAPI.Administracao.Controllers
             {
                 return Unauthorized(new RespostaErroAPI(401, ex.Message));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(500, RespostaErroAPI.RespostaErro500);
             }

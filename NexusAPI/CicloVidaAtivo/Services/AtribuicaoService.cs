@@ -18,10 +18,17 @@ namespace NexusAPI.CicloVidaAtivo.Services
     {
         private readonly ManutencaoService manutencaoService;
 
-        public AtribuicaoService(AtribuicaoRepository repository, ManutencaoService manutencaoService,TokenService tokenService) 
+        private readonly RequisicaoService requisicaoService;
+
+        public AtribuicaoService(
+            AtribuicaoRepository repository, 
+            ManutencaoService manutencaoService, 
+            RequisicaoService requisicaoService,
+            TokenService tokenService) 
         : base(repository, tokenService)
         {
             this.manutencaoService = manutencaoService;
+            this.requisicaoService = requisicaoService;
         }
 
         public override AtribuicaoRespostaDTO ConverterParaDTOResposta(Atribuicao obj)
@@ -139,7 +146,10 @@ namespace NexusAPI.CicloVidaAtivo.Services
             }
             else
             {
-                //a ser implementado.
+                var requisicao = await requisicaoService.ObterPorUIDAsync(UID);
+
+                objeto.UID = requisicao.UID;
+                objeto.Nome = requisicao.Nome;
             }
 
             return objeto;
