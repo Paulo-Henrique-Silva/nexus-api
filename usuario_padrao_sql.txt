@@ -5,3 +5,13 @@ INSERT INTO PROJETOS (UID, NOME, DESCRICAO, DATACRIACAO) VALUES ('pj-basico', 'P
 INSERT INTO PERFIS (UID, NOME, DESCRICAO, DATACRIACAO) VALUES ('oraculo-perfil', 'Oráculo', 'Pode fazer tudo.', GETDATE());
 
 INSERT INTO USUARIOPERFIL (UID, USUARIOUID, PROJETOUID, PERFILUID, ATIVADO, DATACRIACAO) VALUES ('oraculo.pj-basico.oraculo-perfil', 'oraculo', 'pj-basico', 'oraculo-perfil', 0, GETDATE());
+
+
+INSERT INTO PERFIS (UID, NOME, DESCRICAO, DATACRIACAO) VALUES ('administrador', 'Administrador', 'Faz tudo relacionados a negócios.', GETDATE());
+
+INSERT INTO PERFIS (UID, NOME, DESCRICAO, DATACRIACAO) VALUES ('coordenador', 'Coordenador', 'Pode manipular objetos e tem maior participação em ciclo de vida, mas não tem acesso a administração e não pode excluir ativos.', GETDATE());
+
+
+INSERT INTO PERFIS (UID, NOME, DESCRICAO, DATACRIACAO) VALUES ('suporte', 'Suporte', 'Pode manipular objetos, mas não tem acesso a administração e não pode excluir ativos.', GETDATE());
+
+INSERT INTO PERFIS (UID, NOME, DESCRICAO, DATACRIACAO) VALUES ('leitor', 'Leitor', 'Apenas consulta informações.', GETDATE());

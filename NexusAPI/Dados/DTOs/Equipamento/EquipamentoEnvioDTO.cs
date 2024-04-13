@@ -7,8 +7,6 @@ namespace NexusAPI.Dados.DTOs.Equipamento
     {
         public string NumeroSerie { get; set; } = "";
 
-        public string LocalizacaoUID { get; set; } = "";
-
         public string ComponenteUID { get; set; } = "";
 
         public string ProjetoUID { get; set; } = "";

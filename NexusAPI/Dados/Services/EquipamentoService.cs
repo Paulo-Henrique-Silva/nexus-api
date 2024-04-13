@@ -24,7 +24,6 @@ namespace NexusAPI.Dados.Services
                 cfg.CreateMap<Equipamento, EquipamentoRespostaDTO>()
                     .ForMember(c => c.AtualizadoPor, opt => opt.Ignore())
                     .ForMember(c => c.UsuarioCriador, opt => opt.Ignore())
-                    .ForMember(c => c.Localizacao, opt => opt.Ignore())
                     .ForMember(c => c.Componente, opt => opt.Ignore())
                     .ForMember(c => c.Projeto, opt => opt.Ignore())
                     .ForMember(c => c.Tipo, opt => opt.Ignore());
@@ -43,12 +42,6 @@ namespace NexusAPI.Dados.Services
             {
                 UID = obj.UsuarioCriador?.UID,
                 Nome = obj.UsuarioCriador?.Nome
-            };
-
-            resposta.Localizacao = new NexusReferenciaObjeto()
-            {
-                UID = obj.Localizacao?.UID,
-                Nome = obj.Localizacao?.Nome,
             };
 
             resposta.Componente = new NexusReferenciaObjeto()

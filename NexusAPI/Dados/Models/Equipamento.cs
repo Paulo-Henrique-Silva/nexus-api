@@ -14,14 +14,6 @@ namespace NexusAPI.Dados.Models
         [MaxLength(200)]
         public string NumeroSerie { get; set; } = "";
 
-        [Column("LOCALIZACAOUID")]
-        [ForeignKey("Localizacao")]
-        [Required]
-        [MaxLength(200)]
-        public string LocalizacaoUID { get; set; } = "";
-
-        public Localizacao? Localizacao { get; set; }
-
         [Column("COMPONENTEUID")]
         [ForeignKey("Componente")]
         [Required]
