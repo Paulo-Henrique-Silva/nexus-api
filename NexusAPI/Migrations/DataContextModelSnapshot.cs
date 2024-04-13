@@ -478,6 +478,12 @@ namespace NexusAPI.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("FINALIZADOPORUID");
 
+                    b.Property<string>("LinkNotaFiscal")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("LINKNOTAFISCAL");
+
                     b.Property<string>("LocalizacaoUID")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -591,11 +597,11 @@ namespace NexusAPI.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("FINALIZADOPORUID");
 
-                    b.Property<string>("LocalizacaoUID")
+                    b.Property<string>("LinkNotaFiscal")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)")
-                        .HasColumnName("LOCALIZACAOUID");
+                        .HasColumnName("LINKNOTAFISCAL");
 
                     b.Property<string>("Marca")
                         .IsRequired()
@@ -643,8 +649,6 @@ namespace NexusAPI.Migrations
                     b.HasIndex("ComponenteUID");
 
                     b.HasIndex("FinalizadoPorUID");
-
-                    b.HasIndex("LocalizacaoUID");
 
                     b.HasIndex("ProjetoUID");
 
@@ -1206,12 +1210,6 @@ namespace NexusAPI.Migrations
                         .WithMany()
                         .HasForeignKey("FinalizadoPorUID");
 
-                    b.HasOne("NexusAPI.Dados.Models.Localizacao", "Localizacao")
-                        .WithMany()
-                        .HasForeignKey("LocalizacaoUID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("NexusAPI.Administracao.Models.Projeto", "Projeto")
                         .WithMany()
                         .HasForeignKey("ProjetoUID")
@@ -1227,8 +1225,6 @@ namespace NexusAPI.Migrations
                     b.Navigation("Componente");
 
                     b.Navigation("FinalizadoPor");
-
-                    b.Navigation("Localizacao");
 
                     b.Navigation("Projeto");
 

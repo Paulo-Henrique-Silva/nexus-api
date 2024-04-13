@@ -365,6 +365,7 @@ namespace NexusAPI.Migrations
                     PROJETOUID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     TIPO = table.Column<int>(type: "int", nullable: false),
                     DATAAQUISICAO = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LINKNOTAFISCAL = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     NOME = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     DESCRICAO = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: true),
                     ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
@@ -412,13 +413,13 @@ namespace NexusAPI.Migrations
                 {
                     UID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     NUMEROSERIE = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    LOCALIZACAOUID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     COMPONENTEUID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     PROJETOUID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     MARCA = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     MODELO = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     TIPO = table.Column<int>(type: "int", nullable: false),
                     DATAAQUISICAO = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LINKNOTAFISCAL = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     NOME = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     DESCRICAO = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: true),
                     ATUALIZADOPORUID = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
@@ -435,12 +436,6 @@ namespace NexusAPI.Migrations
                         name: "FK_EQUIPAMENTOS_COMPONENTES_COMPONENTEUID",
                         column: x => x.COMPONENTEUID,
                         principalTable: "COMPONENTES",
-                        principalColumn: "UID",
-                        onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
-                        name: "FK_EQUIPAMENTOS_LOCALIZACOES_LOCALIZACAOUID",
-                        column: x => x.LOCALIZACAOUID,
-                        principalTable: "LOCALIZACOES",
                         principalColumn: "UID",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
@@ -638,11 +633,6 @@ namespace NexusAPI.Migrations
                 name: "IX_EQUIPAMENTOS_FINALIZADOPORUID",
                 table: "EQUIPAMENTOS",
                 column: "FINALIZADOPORUID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EQUIPAMENTOS_LOCALIZACAOUID",
-                table: "EQUIPAMENTOS",
-                column: "LOCALIZACAOUID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EQUIPAMENTOS_PROJETOUID",
@@ -862,12 +852,6 @@ namespace NexusAPI.Migrations
                         FINALIZADOPORUID = inserted.FINALIZADOPORUID
                         FROM COMPONENTES
                         INNER JOIN inserted ON COMPONENTES.LOCALIZACAOUID = inserted.UID;
-
-                        UPDATE EQUIPAMENTOS
-                        SET DATAFINALIZACAO = inserted.DATAFINALIZACAO,
-                        FINALIZADOPORUID = inserted.FINALIZADOPORUID
-                        FROM EQUIPAMENTOS
-                        INNER JOIN inserted ON EQUIPAMENTOS.LOCALIZACAOUID = inserted.UID;
                     END
                 END
             ");

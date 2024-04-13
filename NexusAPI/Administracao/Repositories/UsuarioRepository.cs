@@ -31,6 +31,7 @@ namespace NexusAPI.Administracao.Repositories
                .Include(obj => obj.Perfil)
                .Where(obj => obj.DataFinalizacao == null && obj.PerfilUID.Equals("coordenador") && obj.ProjetoUID.Equals(projetoUID))
                .Join(dataContext.Set<Usuario>(), usuarioPerfil => usuarioPerfil.UsuarioUID, usuario => usuario.UID, (usuarioPerfil, usuario) => usuario)
+               .Where(obj => obj.Nome.Contains(nome))
                .ToListAsync();
         }
 
