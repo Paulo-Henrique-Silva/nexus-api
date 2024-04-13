@@ -19,24 +19,44 @@ namespace NexusAPI.Administracao.Controllers
 
         private readonly AtribuicaoService atribuicaoService;
 
+        private readonly UsuarioService usuarioService;
+
         public UsuarioController(UsuarioService service, NotificacaoService notificacaoService,
             AtribuicaoService atribuicaoService) 
         : base(service) 
         { 
             this.notificacaoService = notificacaoService;
             this.atribuicaoService = atribuicaoService;
+
+            usuarioService = service;
         }
 
         [HttpGet]
         [Authorize]
-        public override async Task<IActionResult> Get([FromQuery] string? nome = null, 
-            [FromQuery] int pagina = 1)
+        public override async Task<IActionResult> Get([FromQuery] string? nome = null, [FromQuery] int pagina = 1)
         {
             try
             {
-                var usuarios = nome == null ? await service.ObterTudoAsync(pagina) :
-                   await service.ObterTudoPorNomeAsync(pagina, nome);
+                //Se não tiver nome, procura todos os usuários, senão filtra os usuários por nome.
+                var usuarios = nome == null ? await usuarioService.ObterTudoAsync(pagina) :
+                   await usuarioService.ObterTudoPorNomeAsync(pagina, nome);
 
+                return Ok(usuarios);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, RespostaErroAPI.RespostaErro500);
+            }
+        }
+
+        [HttpGet("Coordenadores")]
+        [Authorize]
+        public async Task<IActionResult> GetCoordenadores([FromQuery] string nome, [FromQuery] string projetoUID, [FromQuery] int pagina = 1)
+        {
+            try
+            {
+                //Filtra os coordenador por nome
+                var usuarios = await usuarioService.ObterCoordenadoresPorNomeAsync(pagina, nome, projetoUID);
                 return Ok(usuarios);
             }
             catch (Exception)
@@ -51,7 +71,7 @@ namespace NexusAPI.Administracao.Controllers
         {
             try
             {
-                var usuario = await service.ObterPorUIDAsync(UID);
+                var usuario = await usuarioService.ObterPorUIDAsync(UID);
                 return Ok(usuario);
             }
             catch (ObjetoNaoEncontrado ex)
@@ -70,7 +90,7 @@ namespace NexusAPI.Administracao.Controllers
         {
             try
             {
-                var usuario = await service.AdicionarAsync(usuarioEnvioDTO, User.Claims);
+                var usuario = await usuarioService.AdicionarAsync(usuarioEnvioDTO, User.Claims);
                 return Created("", usuario);
             }
             catch (NomeAcessoJaCadastrado ex)
@@ -90,7 +110,7 @@ namespace NexusAPI.Administracao.Controllers
         {
             try
             {
-                var usuario = await service.EditarAsync(UID, usuarioEnvioDTO, User.Claims);
+                var usuario = await usuarioService.EditarAsync(UID, usuarioEnvioDTO, User.Claims);
                 return Ok(usuario);
             }
             catch (ObjetoNaoEncontrado ex)
@@ -109,7 +129,7 @@ namespace NexusAPI.Administracao.Controllers
         {
             try
             {
-                await service.DeletarAsync(UID, User.Claims);
+                await usuarioService.DeletarAsync(UID, User.Claims);
                 return Ok();
             }
             catch (ObjetoNaoEncontrado ex)
@@ -127,13 +147,6 @@ namespace NexusAPI.Administracao.Controllers
         {
             try
             {
-                var usuarioService = service as UsuarioService;
-
-                if (usuarioService == null)
-                {
-                    throw new Exception("Instância incorreta da classe.");
-                }
-
                 var token = await usuarioService.AutenticarUsuario(usuarioEnvioDTO);
                 return Ok(token);
             }
@@ -192,13 +205,6 @@ namespace NexusAPI.Administracao.Controllers
         {
             try
             {
-                var usuarioService = service as UsuarioService;
-
-                if (usuarioService == null)
-                {
-                    throw new Exception("Instância incorreta da classe.");
-                }
-
                 var senhaCorretaDTO = await usuarioService.VerificarSenha(UID, usuarioEnvioDTO);
                 return Ok(senhaCorretaDTO);
             }

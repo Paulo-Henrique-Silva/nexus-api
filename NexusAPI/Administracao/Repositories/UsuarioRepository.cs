@@ -13,6 +13,28 @@ namespace NexusAPI.Administracao.Repositories
 
         }
 
+        /// <summary>
+        /// Obtém apenas os registros não finalizados, que contém o nome especificado, 
+        /// ordenados por dataCriacao mais recente e
+        /// apenas um determinado numero de itens por página.
+        /// </summary>
+        /// <param name="numeroPagina"></param>
+        /// <param name="nome"></param>
+        /// <returns></returns>
+        public virtual async Task<List<Usuario>> ObterCoordenadoresPorNomeAsync(int numeroPagina, string nome, string projetoUID)
+        {
+            return await dataContext.Set<UsuarioPerfil>()
+               .Include(obj => obj.AtualizadoPor)
+               .Include(obj => obj.UsuarioCriador)
+               .Include(obj => obj.Usuario)
+               .Include(obj => obj.Projeto)
+               .Include(obj => obj.Perfil)
+               .Where(obj => obj.DataFinalizacao == null && obj.PerfilUID.Equals("coordenador") && obj.ProjetoUID.Equals(projetoUID))
+               .Join(dataContext.Set<Usuario>(), usuarioPerfil => usuarioPerfil.UsuarioUID, usuario => usuario.UID, (usuarioPerfil, usuario) => usuario)
+               .ToListAsync();
+        }
+
+
         public async Task<Usuario?> ObterPorNomeAcessoAsync(string nomeAcesso)
         {
             //EF não suporta comparações com case sensitive, logo, é feita a lógica abaixo.
@@ -20,8 +42,7 @@ namespace NexusAPI.Administracao.Repositories
                 .Where(obj => obj.NomeAcesso.Equals(nomeAcesso) && obj.DataFinalizacao == null)
                 .FirstOrDefaultAsync();
 
-            return usuario == null || !usuario.NomeAcesso.Equals(nomeAcesso, StringComparison.Ordinal) ?
-                null : usuario;
+            return usuario == null || !usuario.NomeAcesso.Equals(nomeAcesso, StringComparison.Ordinal) ? null : usuario;
         }
     }
 }

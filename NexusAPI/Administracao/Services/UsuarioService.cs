@@ -3,6 +3,7 @@ using NexusAPI.Administracao.DTOs.Usuario;
 using NexusAPI.Administracao.Exceptions;
 using NexusAPI.Administracao.Models;
 using NexusAPI.Administracao.Repositories;
+using NexusAPI.Compartilhado.EntidadesBase.DTOs;
 using NexusAPI.Compartilhado.EntidadesBase.MVC;
 using NexusAPI.Compartilhado.EntidadesBase.Objetos;
 using NexusAPI.Compartilhado.Exceptions;
@@ -13,8 +14,13 @@ namespace NexusAPI.Administracao.Services
 {
     public class UsuarioService : NexusService<UsuarioEnvioDTO, UsuarioRespostaDTO, Usuario>
     {
+        private readonly UsuarioRepository usuarioRepository;
+
         public UsuarioService(UsuarioRepository repository, TokenService tokenService) 
-        : base(repository, tokenService) { }
+        : base(repository, tokenService) 
+        {
+            usuarioRepository = repository;
+        }
 
         public override UsuarioRespostaDTO ConverterParaDTOResposta(Usuario obj)
         {
@@ -43,20 +49,32 @@ namespace NexusAPI.Administracao.Services
             return resposta;
         }
 
-        public async override Task<UsuarioRespostaDTO> AdicionarAsync(UsuarioEnvioDTO usuarioDTO, 
-            IEnumerable<Claim> claims)
+        /// <summary>
+        /// Obtém os registros por nome e quantidade de itens.
+        /// </summary>
+        /// <param name="numeroPagina"></param>
+        /// <param name="nome"></param>
+        /// <returns></returns>
+        public async Task<NexusListaRespostaDTO<UsuarioRespostaDTO>> ObterCoordenadoresPorNomeAsync(int numeroPagina, string nome, string projetoUID)
         {
-            var usuarioRepository = repository as UsuarioRepository;
+            var objs = await usuarioRepository.ObterCoordenadoresPorNomeAsync(numeroPagina, nome, projetoUID);
+            var objsResposta = new List<UsuarioRespostaDTO>();
 
-            //Converte repository para UsuarioRepository para utilizar método especifico.
-            if (usuarioRepository == null)
+            objs.ForEach(o => objsResposta.Add(ConverterParaDTOResposta(o)));
+
+            var resposta = new NexusListaRespostaDTO<UsuarioRespostaDTO>()
             {
-                throw new Exception("Instância incorreta em 'repository'.");
-            }
+                TotalItens = await usuarioRepository.ObterCountPorNomeAsync(nome),
+                Itens = objsResposta
+            };
 
+            return resposta;
+        }
+
+        public async override Task<UsuarioRespostaDTO> AdicionarAsync(UsuarioEnvioDTO usuarioDTO, IEnumerable<Claim> claims)
+        {
             //Verifica se o usuário já existe.
-            var usuarioBD = await usuarioRepository
-                .ObterPorNomeAcessoAsync(usuarioDTO.NomeAcesso);
+            var usuarioBD = await usuarioRepository.ObterPorNomeAcessoAsync(usuarioDTO.NomeAcesso);
 
             if (usuarioBD != null)
             {
@@ -70,11 +88,10 @@ namespace NexusAPI.Administracao.Services
             usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
             usuario.UsuarioCriadorUID = tokenService.ObterUsuarioUID(claims);
 
-            await repository.AdicionarAsync(usuario);
-
+            await usuarioRepository.AdicionarAsync(usuario);
 
             //Obtém o usuário após ser cadastrado para ter as informações completas.
-            var usuarioAposSerCadastrado = await repository.ObterPorUIDAsync(usuario.UID);
+            var usuarioAposSerCadastrado = await usuarioRepository.ObterPorUIDAsync(usuario.UID);
 
             if (usuarioAposSerCadastrado == null)
             {
@@ -88,8 +105,7 @@ namespace NexusAPI.Administracao.Services
             return dtoResposta;
         }
 
-        public override async Task<UsuarioRespostaDTO> EditarAsync(string UID, UsuarioEnvioDTO obj, 
-            IEnumerable<Claim> claims)
+        public override async Task<UsuarioRespostaDTO> EditarAsync(string UID, UsuarioEnvioDTO obj, IEnumerable<Claim> claims)
         {
             //Verifica se o usuário existe.
             var usuario = ConverterParaClasse(obj);
@@ -104,10 +120,10 @@ namespace NexusAPI.Administracao.Services
             usuario.AtualizadoPorUID = tokenService.ObterUsuarioUID(claims);
             usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
 
-            await repository.EditarAsync(usuario);
+            await usuarioRepository.EditarAsync(usuario);
 
             //Obtém o usuário para ter as informações completas.
-            var usuarioAposSerAtualizado = await repository.ObterPorUIDAsync(UID);
+            var usuarioAposSerAtualizado = await usuarioRepository.ObterPorUIDAsync(UID);
 
             if (usuarioAposSerAtualizado == null)
             {
@@ -126,16 +142,7 @@ namespace NexusAPI.Administracao.Services
         /// <exception cref="CredenciaisIncorretas"></exception>
         public async Task<UsuarioRespostaDTO> AutenticarUsuario(UsuarioEnvioDTO usuarioEnvio)
         {
-            var usuarioRepository = repository as UsuarioRepository;
-
-            //Converte repository para UsuarioRepository para utilizar metodo especifico.
-            if (usuarioRepository == null)
-            {
-                throw new Exception("Instância incorreta em 'repository'.");
-            }
-
-            var usuario = await usuarioRepository
-                .ObterPorNomeAcessoAsync(usuarioEnvio.NomeAcesso);
+            var usuario = await usuarioRepository.ObterPorNomeAcessoAsync(usuarioEnvio.NomeAcesso);
 
             //Se o usuario não existe ou a senha for incorreta.
             if (usuario == null || !BCrypt.Net.BCrypt.Verify(usuarioEnvio.Senha, usuario.Senha))
@@ -158,14 +165,6 @@ namespace NexusAPI.Administracao.Services
         /// <exception cref="CredenciaisIncorretas"></exception>
         public async Task<SenhaCorretaDTO> VerificarSenha(string UID, UsuarioEnvioDTO usuarioEnvio)
         {
-            var usuarioRepository = repository as UsuarioRepository;
-
-            //Converte repository para UsuarioRepository para utilizar metodo especifico.
-            if (usuarioRepository == null)
-            {
-                throw new Exception("Instância incorreta em 'repository'.");
-            }
-
             var usuario = await usuarioRepository.ObterPorUIDAsync(UID);
 
             //Se o usuario não existe ou a senha for incorreta.

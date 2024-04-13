@@ -23,10 +23,8 @@ namespace NexusAPI.Administracao.Repositories
                 .Include(obj => obj.Usuario)
                 .Include(obj => obj.Projeto)
                 .Include(obj => obj.Perfil)
-                .FirstOrDefaultAsync(obj => obj.UsuarioUID.Equals(usuarioUID) &&
-                obj.ProjetoUID.Equals(projetoUID) &&
-                obj.PerfilUID.Equals(perfilUID) &&
-                obj.DataFinalizacao == null);
+                .FirstOrDefaultAsync(obj => obj.UsuarioUID.Equals(usuarioUID) && obj.ProjetoUID.Equals(projetoUID) &&
+                    obj.PerfilUID.Equals(perfilUID) && obj.DataFinalizacao == null);
         }
 
         public async Task<List<UsuarioPerfil>> ObterTudoAsync()
