@@ -4,8 +4,10 @@ using NexusAPI.Compartilhado.EntidadesBase.DTOs;
 using NexusAPI.Compartilhado.EntidadesBase.MVC;
 using NexusAPI.Compartilhado.EntidadesBase.Objetos;
 using NexusAPI.Compartilhado.RespostasAPI;
+using NexusAPI.Dados.DTOs.Componente;
 using NexusAPI.Dados.DTOs.Equipamento;
 using NexusAPI.Dados.Enums;
+using NexusAPI.Dados.Exceptions;
 using NexusAPI.Dados.Models;
 using NexusAPI.Dados.Services;
 
@@ -28,6 +30,24 @@ namespace NexusAPI.Dados.Controllers
                     await service.ObterTudoPorProjetoENomeAsync(pagina, projetoUID, nome);
 
                 return Ok(objetos);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, RespostaErroAPI.RespostaErro500);
+            }
+        }
+
+        [HttpPost]
+        public override async Task<IActionResult> Post([FromBody] EquipamentoEnvioDTO equipamentoEnvioDTO)
+        {
+            try
+            {
+                var equipamento = await service.AdicionarAsync(equipamentoEnvioDTO, User.Claims);
+                return Created("", equipamento);
+            }
+            catch (NumeroSerieJaCadastrado ex)
+            {
+                return BadRequest(new RespostaErroAPI(400, ex.Message));
             }
             catch (Exception)
             {

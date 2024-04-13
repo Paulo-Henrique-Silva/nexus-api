@@ -48,6 +48,11 @@ namespace NexusAPI.Dados.Models
         [Required]
         public DateTime DataAquisicao { get; set; }
 
+        [Column("LINKNOTAFISCAL")]
+        [Required]
+        [MaxLength(200)]
+        public string LinkNotaFiscal { get; set; } = "";
+
         public Equipamento() : base() { }
     }
 }

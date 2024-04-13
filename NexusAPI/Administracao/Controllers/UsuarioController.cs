@@ -83,8 +83,7 @@ namespace NexusAPI.Administracao.Controllers
         }
 
         [HttpPost]
-        public override async Task<IActionResult> Post(
-            [FromBody] UsuarioEnvioDTO usuarioEnvioDTO)
+        public override async Task<IActionResult> Post([FromBody] UsuarioEnvioDTO usuarioEnvioDTO)
         {
             try
             {
@@ -103,8 +102,7 @@ namespace NexusAPI.Administracao.Controllers
 
         [HttpPut("{UID}")]
         [Authorize]
-        public override async Task<IActionResult> Put([FromRoute] string UID,
-            [FromBody] UsuarioEnvioDTO usuarioEnvioDTO)
+        public override async Task<IActionResult> Put([FromRoute] string UID, [FromBody] UsuarioEnvioDTO usuarioEnvioDTO)
         {
             try
             {

@@ -3,16 +3,21 @@ using NexusAPI.Compartilhado.EntidadesBase.MVC;
 using NexusAPI.Compartilhado.EntidadesBase.Objetos;
 using NexusAPI.Compartilhado.Services;
 using NexusAPI.Dados.DTOs.Componente;
+using NexusAPI.Dados.Exceptions;
 using NexusAPI.Dados.Models;
 using NexusAPI.Dados.Repositories;
+using System.Security.Claims;
 
 namespace NexusAPI.Dados.Services
 {
     public class ComponenteService : NexusService<ComponenteEnvioDTO, ComponenteRespostaDTO, Componente>
     {
+        private readonly ComponenteRepository componenteRepository;
+
         public ComponenteService(ComponenteRepository repository, TokenService tokenService) 
         : base(repository, tokenService)
         {
+            componenteRepository = repository;
         }
 
         public override ComponenteRespostaDTO ConverterParaDTOResposta(Componente obj)
@@ -70,5 +75,28 @@ namespace NexusAPI.Dados.Services
             return resposta;
         }
 
+        public override async Task<ComponenteRespostaDTO> AdicionarAsync(ComponenteEnvioDTO obj, IEnumerable<Claim> claims)
+        {
+            var objClasse = ConverterParaClasse(obj);
+
+            if (await componenteRepository.ObterPorNumeroSerieAsync(objClasse.NumeroSerie) != null)
+            {
+                throw new NumeroSerieJaCadastrado();
+            }
+
+            objClasse.UID = Guid.NewGuid().ToString();
+            objClasse.UsuarioCriadorUID = tokenService.ObterUsuarioUID(claims);
+
+            var UID = (await repository.AdicionarAsync(objClasse)).UID;
+
+            var objAposSerCriado = await repository.ObterPorUIDAsync(UID);
+
+            if (objAposSerCriado == null)
+            {
+                throw new Exception("Objeto atualizado não foi encontrado.");
+            }
+
+            return ConverterParaDTOResposta(objAposSerCriado);
+        }
     }
 }

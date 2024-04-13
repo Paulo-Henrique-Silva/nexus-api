@@ -7,8 +7,7 @@ using NexusAPI.Dados.Models;
 
 namespace NexusAPI.Dados.Repositories
 {
-    public class EquipamentoRepository : NexusRepository<Equipamento>, 
-        IProjetoItemRepository<Equipamento>
+    public class EquipamentoRepository : NexusRepository<Equipamento>, IProjetoItemRepository<Equipamento>, IPatrimonioRepository<Equipamento>
     {
         public EquipamentoRepository(DataContext dataContext) : base(dataContext)
         {
@@ -103,6 +102,16 @@ namespace NexusAPI.Dados.Repositories
                 .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .ToListAsync();
+        }
+
+        public async Task<Equipamento?> ObterPorNumeroSerieAsync(string numeroSerie)
+        {
+            //EF não suporta comparações com case sensitive, logo, é feita a lógica abaixo.
+            var equipamento = await dataContext.Set<Equipamento>()
+                .Where(obj => obj.NumeroSerie.Equals(numeroSerie) && obj.DataFinalizacao == null)
+                .FirstOrDefaultAsync();
+
+            return equipamento == null || !equipamento.NumeroSerie.Equals(numeroSerie, StringComparison.Ordinal) ? null : equipamento;
         }
     }
 }

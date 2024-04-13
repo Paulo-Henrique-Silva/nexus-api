@@ -1,11 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NexusAPI.Administracao.DTOs.Usuario;
+using NexusAPI.Administracao.Exceptions;
+using NexusAPI.Administracao.Services;
 using NexusAPI.Compartilhado.EntidadesBase.DTOs;
 using NexusAPI.Compartilhado.EntidadesBase.MVC;
 using NexusAPI.Compartilhado.EntidadesBase.Objetos;
 using NexusAPI.Compartilhado.RespostasAPI;
 using NexusAPI.Dados.DTOs.Componente;
 using NexusAPI.Dados.Enums;
+using NexusAPI.Dados.Exceptions;
 using NexusAPI.Dados.Models;
 using NexusAPI.Dados.Services;
 
@@ -13,8 +17,7 @@ namespace NexusAPI.Dados.Controllers
 {
     [Controller]
     [Authorize]
-    public class ComponenteController
-    : NexusController<ComponenteEnvioDTO, ComponenteRespostaDTO, Componente>
+    public class ComponenteController : NexusController<ComponenteEnvioDTO, ComponenteRespostaDTO, Componente>
     {
         public ComponenteController(ComponenteService service) : base(service)
         {
@@ -30,6 +33,24 @@ namespace NexusAPI.Dados.Controllers
                     await service.ObterTudoPorProjetoENomeAsync(pagina, projetoUID, nome);
 
                 return Ok(objetos);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, RespostaErroAPI.RespostaErro500);
+            }
+        }
+
+        [HttpPost]
+        public override async Task<IActionResult> Post([FromBody] ComponenteEnvioDTO componenteEnvioDTO)
+        {
+            try
+            {
+                var componente = await service.AdicionarAsync(componenteEnvioDTO, User.Claims);
+                return Created("", componente);
+            }
+            catch (NumeroSerieJaCadastrado ex)
+            {
+                return BadRequest(new RespostaErroAPI(400, ex.Message));
             }
             catch (Exception)
             {

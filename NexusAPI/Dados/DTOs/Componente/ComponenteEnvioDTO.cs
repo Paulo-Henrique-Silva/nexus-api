@@ -22,5 +22,7 @@ namespace NexusAPI.Dados.DTOs.Componente
         public TipoComponente Tipo { get; set; }
 
         public DateTime DataAquisicao { get; set; }
+
+        public string LinkNotaFiscal { get; set; } = "";
     }
 }

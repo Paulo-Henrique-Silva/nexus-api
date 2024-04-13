@@ -9,8 +9,7 @@ using NexusAPI.Dados.Models;
 
 namespace NexusAPI.Dados.Repositories
 {
-    public class ComponenteRepository : NexusRepository<Componente>, 
-        IProjetoItemRepository<Componente>
+    public class ComponenteRepository : NexusRepository<Componente>, IProjetoItemRepository<Componente>, IPatrimonioRepository<Componente>
     {
         public ComponenteRepository(DataContext dataContext) : base(dataContext)
         {
@@ -112,6 +111,16 @@ namespace NexusAPI.Dados.Repositories
                 .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .ToListAsync();
+        }
+
+        public async Task<Componente?> ObterPorNumeroSerieAsync(string numeroSerie)
+        {
+            //EF não suporta comparações com case sensitive, logo, é feita a lógica abaixo.
+            var componente = await dataContext.Set<Componente>()
+                .Where(obj => obj.NumeroSerie.Equals(numeroSerie) && obj.DataFinalizacao == null)
+                .FirstOrDefaultAsync();
+
+            return componente == null || !componente.NumeroSerie.Equals(numeroSerie, StringComparison.Ordinal) ? null : componente;
         }
     }
 }

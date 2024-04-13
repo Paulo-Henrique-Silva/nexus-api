@@ -4,17 +4,21 @@ using NexusAPI.Compartilhado.EntidadesBase.Objetos;
 using NexusAPI.Compartilhado.Services;
 using NexusAPI.Dados.DTOs.Componente;
 using NexusAPI.Dados.DTOs.Equipamento;
+using NexusAPI.Dados.Exceptions;
 using NexusAPI.Dados.Models;
 using NexusAPI.Dados.Repositories;
+using System.Security.Claims;
 
 namespace NexusAPI.Dados.Services
 {
-    public class EquipamentoService
-    : NexusService<EquipamentoEnvioDTO, EquipamentoRespostaDTO, Equipamento>
+    public class EquipamentoService : NexusService<EquipamentoEnvioDTO, EquipamentoRespostaDTO, Equipamento>
     {
+        private readonly EquipamentoRepository equipamentoRepository;
+
         public EquipamentoService(EquipamentoRepository repository, TokenService tokenService) 
         : base(repository, tokenService)
         {
+            equipamentoRepository = repository;
         }
 
         public override EquipamentoRespostaDTO ConverterParaDTOResposta(Equipamento obj)
@@ -63,6 +67,30 @@ namespace NexusAPI.Dados.Services
             };
 
             return resposta;
+        }
+
+        public override async Task<EquipamentoRespostaDTO> AdicionarAsync(EquipamentoEnvioDTO obj, IEnumerable<Claim> claims)
+        {
+            var objClasse = ConverterParaClasse(obj);
+
+            if (await equipamentoRepository.ObterPorNumeroSerieAsync(objClasse.NumeroSerie) != null)
+            {
+                throw new NumeroSerieJaCadastrado();
+            }
+
+            objClasse.UID = Guid.NewGuid().ToString();
+            objClasse.UsuarioCriadorUID = tokenService.ObterUsuarioUID(claims);
+
+            var UID = (await repository.AdicionarAsync(objClasse)).UID;
+
+            var objAposSerCriado = await repository.ObterPorUIDAsync(UID);
+
+            if (objAposSerCriado == null)
+            {
+                throw new Exception("Objeto atualizado não foi encontrado.");
+            }
+
+            return ConverterParaDTOResposta(objAposSerCriado);
         }
     }
 }

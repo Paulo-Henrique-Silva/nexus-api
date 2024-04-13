@@ -19,5 +19,7 @@ namespace NexusAPI.Dados.DTOs.Equipamento
         public NexusReferenciaObjeto Tipo { get; set; } = new NexusReferenciaObjeto();
 
         public DateTime DataAquisicao { get; set; }
+
+        public string LinkNotaFiscal { get; set; } = "";
     }
 }
