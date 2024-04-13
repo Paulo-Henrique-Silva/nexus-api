@@ -55,16 +55,16 @@ namespace NexusAPI.Administracao.Services
         /// <param name="numeroPagina"></param>
         /// <param name="nome"></param>
         /// <returns></returns>
-        public async Task<NexusListaRespostaDTO<UsuarioRespostaDTO>> ObterCoordenadoresPorNomeAsync(int numeroPagina, string nome, string projetoUID)
+        public async Task<NexusListaRespostaDTO<UsuarioRespostaDTO>> ObterCoordenadoresPorNomeAsync(string nome, string projetoUID)
         {
-            var objs = await usuarioRepository.ObterCoordenadoresPorNomeAsync(numeroPagina, nome, projetoUID);
+            var objs = await usuarioRepository.ObterCoordenadoresPorNomeAsync(nome, projetoUID);
             var objsResposta = new List<UsuarioRespostaDTO>();
 
             objs.ForEach(o => objsResposta.Add(ConverterParaDTOResposta(o)));
 
             var resposta = new NexusListaRespostaDTO<UsuarioRespostaDTO>()
             {
-                TotalItens = await usuarioRepository.ObterCountPorNomeAsync(nome),
+                TotalItens = objsResposta.Count,
                 Itens = objsResposta
             };
 

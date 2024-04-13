@@ -4,6 +4,7 @@ using NexusAPI.Compartilhado.EntidadesBase.MVC;
 using NexusAPI.Compartilhado.Interfaces;
 using NexusAPI.Dados.Interfaces;
 using NexusAPI.Dados.Models;
+using System.Linq;
 
 namespace NexusAPI.Dados.Repositories
 {
@@ -23,8 +24,10 @@ namespace NexusAPI.Dados.Repositories
                 .FirstOrDefaultAsync(obj => obj.UID.Equals(UID) && obj.DataFinalizacao == null);
         }
 
-        public override async Task<List<Requisicao>> ObterTudoAsync(int numeroPagina)
+        public override async Task<List<Requisicao>> ObterTudoAsync(int? numeroPagina)
         {
+            int pagina = numeroPagina.HasValue ? (int)numeroPagina : 1;
+
             return await dataContext.Set<Requisicao>()
                 .Include(obj => obj.AtualizadoPor)
                 .Include(obj => obj.UsuarioCriador)
@@ -32,14 +35,15 @@ namespace NexusAPI.Dados.Repositories
                 .Include(obj => obj.Projeto)
                 .Where(obj => obj.DataFinalizacao == null)
                 .OrderByDescending(obj => obj.DataCriacao)
-                .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
+                .Skip((pagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .ToListAsync();
         }
 
-        public override async Task<List<Requisicao>> ObterTudoPorNomeAsync(int numeroPagina, 
-            string nome)
+        public override async Task<List<Requisicao>> ObterTudoPorNomeAsync(string nome, int? numeroPagina)
         {
+            int pagina = numeroPagina.HasValue ? (int)numeroPagina : 1;
+
             return await dataContext.Set<Requisicao>()
                 .Include(obj => obj.AtualizadoPor)
                 .Include(obj => obj.UsuarioCriador)
@@ -47,7 +51,7 @@ namespace NexusAPI.Dados.Repositories
                 .Include(obj => obj.Projeto)
                 .Where(obj => obj.DataFinalizacao == null && obj.Nome.Equals(nome))
                 .OrderByDescending(obj => obj.DataCriacao)
-                .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
+                .Skip((pagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .ToListAsync();
         }
@@ -55,7 +59,6 @@ namespace NexusAPI.Dados.Repositories
         /// <summary>
         /// Obtém a quantidade itens não finalizados, pelo projeto especificado.
         /// </summary>
-        /// <param name="numeroPagina"></param>
         /// <returns></returns>
         public virtual async Task<int> ObterCountPorProjetoUIDAsync(string projetoUID)
         {

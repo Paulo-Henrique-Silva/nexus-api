@@ -31,7 +31,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
             return obj == null ? throw new ObjetoNaoEncontrado(UID) : ConverterParaDTOResposta(obj);
         }
 
-        public virtual async Task<NexusListaRespostaDTO<U>> ObterTudoAsync(int numeroPagina)
+        public virtual async Task<NexusListaRespostaDTO<U>> ObterTudoAsync(int? numeroPagina = null)
         {
             var objs = await repository.ObterTudoAsync(numeroPagina);
             var objsResposta = new List<U>();
@@ -53,10 +53,9 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
         /// <param name="numeroPagina"></param>
         /// <param name="nome"></param>
         /// <returns></returns>
-        public virtual async Task<NexusListaRespostaDTO<U>> ObterTudoPorNomeAsync(int numeroPagina, 
-            string nome)
+        public virtual async Task<NexusListaRespostaDTO<U>> ObterTudoPorNomeAsync(string nome, int? numeroPagina = null)
         {
-            var objs = await repository.ObterTudoPorNomeAsync(numeroPagina, nome);
+            var objs = await repository.ObterTudoPorNomeAsync(nome, numeroPagina);
             var objsResposta = new List<U>();
 
             objs.ForEach(o => objsResposta.Add(ConverterParaDTOResposta(o)));

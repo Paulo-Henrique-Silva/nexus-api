@@ -21,7 +21,7 @@ namespace NexusAPI.Administracao.Repositories
         /// <param name="numeroPagina"></param>
         /// <param name="nome"></param>
         /// <returns></returns>
-        public virtual async Task<List<Usuario>> ObterCoordenadoresPorNomeAsync(int numeroPagina, string nome, string projetoUID)
+        public virtual async Task<List<Usuario>> ObterCoordenadoresPorNomeAsync(string nome, string projetoUID)
         {
             return await dataContext.Set<UsuarioPerfil>()
                .Include(obj => obj.AtualizadoPor)

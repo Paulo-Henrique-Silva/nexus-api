@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using NexusAPI.Compartilhado.Data;
 using NexusAPI.Compartilhado.Interfaces;
+using System.Linq;
 
 namespace NexusAPI.Compartilhado.EntidadesBase.MVC
 {
@@ -32,14 +33,26 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
         /// </summary>
         /// <param name="numeroPagina"></param>
         /// <returns></returns>
-        public virtual async Task<List<T>> ObterTudoAsync(int numeroPagina)
+        public virtual async Task<List<T>> ObterTudoAsync(int? numeroPagina = null)
         {
+            if (numeroPagina == null)
+            {
+                return await dataContext.Set<T>()
+                .Include(obj => obj.AtualizadoPor)
+                .Include(obj => obj.UsuarioCriador)
+                .Where(obj => obj.DataFinalizacao == null)
+                .OrderByDescending(obj => obj.DataCriacao)
+                .ToListAsync();
+            }
+
+            int pagina = (int)numeroPagina;
+
             return await dataContext.Set<T>()
                 .Include(obj => obj.AtualizadoPor)
                 .Include(obj => obj.UsuarioCriador)
                 .Where(obj => obj.DataFinalizacao == null)
                 .OrderByDescending(obj => obj.DataCriacao)
-                .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
+                .Skip((pagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .ToListAsync();
         }
@@ -52,14 +65,26 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
         /// <param name="numeroPagina"></param>
         /// <param name="nome"></param>
         /// <returns></returns>
-        public virtual async Task<List<T>> ObterTudoPorNomeAsync(int numeroPagina, string nome)
+        public virtual async Task<List<T>> ObterTudoPorNomeAsync(string nome, int? numeroPagina = null)
         {
+            if (numeroPagina == null)
+            {
+                return await dataContext.Set<T>()
+                    .Include(obj => obj.AtualizadoPor)
+                    .Include(obj => obj.UsuarioCriador)
+                    .Where(obj => obj.DataFinalizacao == null && obj.Nome.Contains(nome))
+                    .OrderByDescending(obj => obj.DataCriacao)
+                    .ToListAsync();
+            }
+
+            int pagina = (int)numeroPagina;
+
             return await dataContext.Set<T>()
                 .Include(obj => obj.AtualizadoPor)
                 .Include(obj => obj.UsuarioCriador)
                 .Where(obj => obj.DataFinalizacao == null && obj.Nome.Contains(nome))
                 .OrderByDescending(obj => obj.DataCriacao)
-                .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
+                .Skip((pagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .ToListAsync();
         }
@@ -67,7 +92,6 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
         /// <summary>
         /// Obtém a quantidade itens não finalizados.
         /// </summary>
-        /// <param name="numeroPagina"></param>
         /// <returns></returns>
         public virtual async Task<int> ObterCountAsync()
         {
@@ -77,7 +101,6 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
         /// <summary>
         /// Obtém a quantidade itens não finalizados por nome
         /// </summary>
-        /// <param name="numeroPagina"></param>
         /// <returns></returns>
         public virtual async Task<int> ObterCountPorNomeAsync(string nome)
         {

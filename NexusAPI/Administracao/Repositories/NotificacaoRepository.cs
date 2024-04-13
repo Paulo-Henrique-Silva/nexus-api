@@ -21,15 +21,17 @@ namespace NexusAPI.Administracao.Repositories
                 .FirstOrDefaultAsync(obj => obj.UID.Equals(UID) && obj.DataFinalizacao == null);
         }
 
-        public override async Task<List<Notificacao>> ObterTudoAsync(int numeroPagina)
+        public override async Task<List<Notificacao>> ObterTudoAsync(int? numeroPagina)
         {
+            int pagina = numeroPagina.HasValue ? (int)numeroPagina : 1;
+
             return await dataContext.Set<Notificacao>()
                 .Include(obj => obj.AtualizadoPor)
                 .Include(obj => obj.UsuarioCriador)
                 .Include(obj => obj.Usuario)
                 .Where(obj => obj.DataFinalizacao == null)
                 .OrderByDescending(obj => obj.DataCriacao)
-                .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
+                .Skip((pagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .ToListAsync();
         }

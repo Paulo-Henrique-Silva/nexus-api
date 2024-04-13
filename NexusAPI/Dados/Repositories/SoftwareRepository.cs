@@ -4,6 +4,7 @@ using NexusAPI.Compartilhado.EntidadesBase.MVC;
 using NexusAPI.Compartilhado.Interfaces;
 using NexusAPI.Dados.Interfaces;
 using NexusAPI.Dados.Models;
+using System.Linq;
 
 namespace NexusAPI.Dados.Repositories
 {
@@ -23,8 +24,10 @@ namespace NexusAPI.Dados.Repositories
                 .FirstOrDefaultAsync(obj => obj.UID.Equals(UID) && obj.DataFinalizacao == null);
         }
 
-        public override async Task<List<Software>> ObterTudoAsync(int numeroPagina)
+        public override async Task<List<Software>> ObterTudoAsync(int? numeroPagina = null)
         {
+            int pagina = numeroPagina.HasValue ? (int)numeroPagina : 1;
+
             return await dataContext.Set<Software>()
                 .Include(obj => obj.AtualizadoPor)
                 .Include(obj => obj.UsuarioCriador)
@@ -32,13 +35,15 @@ namespace NexusAPI.Dados.Repositories
                 .Include(obj => obj.Projeto)
                 .Where(obj => obj.DataFinalizacao == null)
                 .OrderByDescending(obj => obj.DataCriacao)
-                .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
+                .Skip((pagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .ToListAsync();
         }
 
-        public override async Task<List<Software>> ObterTudoPorNomeAsync(int numeroPagina, string nome)
+        public override async Task<List<Software>> ObterTudoPorNomeAsync(string nome, int? numeroPagina = null)
         {
+            int pagina = numeroPagina.HasValue ? (int)numeroPagina : 1;
+
             return await dataContext.Set<Software>()
                 .Include(obj => obj.AtualizadoPor)
                 .Include(obj => obj.UsuarioCriador)
@@ -46,7 +51,7 @@ namespace NexusAPI.Dados.Repositories
                 .Include(obj => obj.Projeto)
                 .Where(obj => obj.DataFinalizacao == null && obj.Nome.Contains(nome))
                 .OrderByDescending(obj => obj.DataCriacao)
-                .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
+                .Skip((pagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .ToListAsync();
         }
@@ -54,7 +59,6 @@ namespace NexusAPI.Dados.Repositories
         /// <summary>
         /// Obtém a quantidade itens não finalizados, pelo projeto especificado.
         /// </summary>
-        /// <param name="numeroPagina"></param>
         /// <returns></returns>
         public virtual async Task<int> ObterCountPorProjetoUIDAsync(string projetoUID)
         {
@@ -66,10 +70,8 @@ namespace NexusAPI.Dados.Repositories
         /// <summary>
         /// Obtém a quantidade itens não finalizados, pelo projeto especificado.
         /// </summary>
-        /// <param name="numeroPagina"></param>
         /// <returns></returns>
-        public virtual async Task<int> ObterCountPorProjetoENomeAsync(string projetoUID, 
-            string nome)
+        public virtual async Task<int> ObterCountPorProjetoENomeAsync(string projetoUID, string nome)
         {
             return await dataContext.Set<Software>()
                 .Where(obj => obj.DataFinalizacao == null && obj.ProjetoUID.Equals(projetoUID) &&
@@ -77,8 +79,7 @@ namespace NexusAPI.Dados.Repositories
                 .CountAsync();
         }
 
-        public async Task<List<Software>> ObterTudoPorProjetoUIDAsync(int numeroPagina, 
-            string projetoUID)
+        public async Task<List<Software>> ObterTudoPorProjetoUIDAsync(int numeroPagina, string projetoUID)
         {
             return await dataContext.Set<Software>()
                 .Include(obj => obj.AtualizadoPor)
@@ -92,8 +93,7 @@ namespace NexusAPI.Dados.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<Software>> ObterTudoPorProjetoENomeAsync(int numeroPagina,
-            string projetoUID, string nome)
+        public async Task<List<Software>> ObterTudoPorProjetoENomeAsync(int numeroPagina, string projetoUID, string nome)
         {
             return await dataContext.Set<Software>()
                 .Include(obj => obj.AtualizadoPor)
@@ -101,7 +101,7 @@ namespace NexusAPI.Dados.Repositories
                 .Include(obj => obj.Componente)
                 .Include(obj => obj.Projeto)
                 .Where(obj => obj.DataFinalizacao == null && obj.ProjetoUID.Equals(projetoUID) &&
-                obj.Nome.Contains(nome))
+                    obj.Nome.Contains(nome))
                 .OrderByDescending(obj => obj.DataCriacao)
                 .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)

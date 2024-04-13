@@ -24,29 +24,32 @@ namespace NexusAPI.Dados.Repositories
                 .FirstOrDefaultAsync(obj => obj.UID.Equals(UID) && obj.DataFinalizacao == null);
         }
 
-        public override async Task<List<Localizacao>> ObterTudoAsync(int numeroPagina)
+        public override async Task<List<Localizacao>> ObterTudoAsync(int? numeroPagina)
         {
+            int pagina = numeroPagina.HasValue ? (int)numeroPagina : 1;
+
             return await dataContext.Set<Localizacao>()
                 .Include(obj => obj.AtualizadoPor)
                 .Include(obj => obj.UsuarioCriador)
                 .Include(obj => obj.Projeto)
                 .Where(obj => obj.DataFinalizacao == null)
                 .OrderByDescending(obj => obj.DataCriacao)
-                .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
+                .Skip((pagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .ToListAsync();
         }
 
-        public override async Task<List<Localizacao>> ObterTudoPorNomeAsync(int numeroPagina, 
-            string nome)
+        public override async Task<List<Localizacao>> ObterTudoPorNomeAsync(string nome, int? numeroPagina)
         {
+            int pagina = numeroPagina.HasValue ? (int)numeroPagina : 1;
+
             return await dataContext.Set<Localizacao>()
                 .Include(obj => obj.AtualizadoPor)
                 .Include(obj => obj.UsuarioCriador)
                 .Include(obj => obj.Projeto)
                 .Where(obj => obj.DataFinalizacao == null && obj.Nome.Contains(nome))
                 .OrderByDescending(obj => obj.DataCriacao)
-                .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
+                .Skip((pagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .ToListAsync();
         }

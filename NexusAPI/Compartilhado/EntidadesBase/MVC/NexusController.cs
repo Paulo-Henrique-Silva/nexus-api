@@ -22,13 +22,11 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
         }
 
         [HttpGet]
-        public virtual async Task<IActionResult> Get([FromQuery] string? nome = null, 
-            [FromQuery] int pagina = 1)
+        public virtual async Task<IActionResult> Get([FromQuery] string? nome = null, [FromQuery] int? pagina = null)
         {
             try
             {
-                var objetos = nome == null ? await service.ObterTudoAsync(pagina) : 
-                    await service.ObterTudoPorNomeAsync(pagina, nome);
+                var objetos = nome == null ? await service.ObterTudoAsync(pagina) : await service.ObterTudoPorNomeAsync(nome, pagina);
 
                 return Ok(objetos);
             }
@@ -75,8 +73,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
         }
 
         [HttpPut("{UID}")]
-        public virtual async Task<IActionResult> Put([FromRoute] string UID,
-            [FromBody] T envioDTO)
+        public virtual async Task<IActionResult> Put([FromRoute] string UID, [FromBody] T envioDTO)
         {
             try
             {

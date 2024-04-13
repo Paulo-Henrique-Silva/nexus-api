@@ -23,8 +23,10 @@ namespace NexusAPI.CicloVidaAtivo.Repositories
                 .FirstOrDefaultAsync(obj => obj.UID.Equals(UID) && obj.DataFinalizacao == null);
         }
 
-        public override async Task<List<Atribuicao>> ObterTudoAsync(int numeroPagina)
+        public override async Task<List<Atribuicao>> ObterTudoAsync(int? numeroPagina)
         {
+            int pagina = numeroPagina.HasValue ? (int)numeroPagina : 1;
+
             return await dataContext.Set<Atribuicao>()
                 .Include(obj => obj.AtualizadoPor)
                 .Include(obj => obj.UsuarioCriador)
@@ -32,7 +34,7 @@ namespace NexusAPI.CicloVidaAtivo.Repositories
                 .Include(obj => obj.Projeto)
                 .Where(obj => obj.DataFinalizacao == null)
                 .OrderByDescending(obj => obj.DataCriacao)
-                .Skip((numeroPagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
+                .Skip((pagina - 1) * Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .Take(Constantes.QUANTIDADE_ITEMS_PAGINA)
                 .ToListAsync();
         }
@@ -43,7 +45,6 @@ namespace NexusAPI.CicloVidaAtivo.Repositories
         /// Obs: A paginação foi retirada desse item para facilitar o desenvolvimento, contudo,
         /// no futuro do trabalho é interessante isso ser aplicado.
         /// </summary>
-        /// <param name="numeroPagina"></param>
         /// <param name="usuarioUID"></param>
         /// <returns></returns>
         public async Task<List<Atribuicao>> ObterTudoPorUsuarioUIDAsync(string usuarioUID)

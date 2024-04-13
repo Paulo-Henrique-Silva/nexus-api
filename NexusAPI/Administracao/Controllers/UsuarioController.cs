@@ -12,8 +12,7 @@ using NexusAPI.Compartilhado.RespostasAPI;
 namespace NexusAPI.Administracao.Controllers
 {
     [Controller]
-    public class UsuarioController
-    : NexusController<UsuarioEnvioDTO, UsuarioRespostaDTO, Usuario>
+    public class UsuarioController : NexusController<UsuarioEnvioDTO, UsuarioRespostaDTO, Usuario>
     {
         private readonly NotificacaoService notificacaoService;
 
@@ -33,13 +32,12 @@ namespace NexusAPI.Administracao.Controllers
 
         [HttpGet]
         [Authorize]
-        public override async Task<IActionResult> Get([FromQuery] string? nome = null, [FromQuery] int pagina = 1)
+        public override async Task<IActionResult> Get([FromQuery] string? nome = null, int? numeroPagina = 0)
         {
             try
             {
                 //Se não tiver nome, procura todos os usuários, senão filtra os usuários por nome.
-                var usuarios = nome == null ? await usuarioService.ObterTudoAsync(pagina) :
-                   await usuarioService.ObterTudoPorNomeAsync(pagina, nome);
+                var usuarios = nome == null ? await usuarioService.ObterTudoAsync() : await usuarioService.ObterTudoPorNomeAsync(nome);
 
                 return Ok(usuarios);
             }
@@ -51,12 +49,12 @@ namespace NexusAPI.Administracao.Controllers
 
         [HttpGet("Coordenadores")]
         [Authorize]
-        public async Task<IActionResult> GetCoordenadores([FromQuery] string nome, [FromQuery] string projetoUID, [FromQuery] int pagina = 1)
+        public async Task<IActionResult> GetCoordenadores([FromQuery] string nome, [FromQuery] string projetoUID)
         {
             try
             {
                 //Filtra os coordenador por nome
-                var usuarios = await usuarioService.ObterCoordenadoresPorNomeAsync(pagina, nome, projetoUID);
+                var usuarios = await usuarioService.ObterCoordenadoresPorNomeAsync(nome, projetoUID);
                 return Ok(usuarios);
             }
             catch (Exception)
