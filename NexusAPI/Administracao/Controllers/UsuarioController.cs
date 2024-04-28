@@ -65,7 +65,7 @@ namespace NexusAPI.Administracao.Controllers
 
         [HttpGet("{UID}")]
         [Authorize]
-        public override async Task<IActionResult> Get([FromRoute] string UID)
+        public override async Task<IActionResult> GetByUID([FromRoute] string UID)
         {
             try
             {

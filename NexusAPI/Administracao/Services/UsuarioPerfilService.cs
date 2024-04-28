@@ -36,7 +36,7 @@ namespace NexusAPI.Administracao.Services
                 : ConverterParaDTORespostaAsync(obj);
         }
 
-        public virtual async Task<List<UsuarioPerfilRespostaDTO>> ObterPorUIDUsuarioUIDAsync(string usuarioUID)
+        public virtual async Task<List<UsuarioPerfilRespostaDTO>> ObterTudoPorUsuarioUIDAsync(string usuarioUID)
         {
             var usuario = usuarioRepository.ObterPorUIDAsync(usuarioUID);
 

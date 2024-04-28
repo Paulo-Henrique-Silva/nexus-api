@@ -101,8 +101,7 @@ namespace NexusAPI.Administracao.Repositories
             }
         }
 
-        public virtual void EditarApenasCamposDiferentes(UsuarioPerfil objExistente, 
-            UsuarioPerfil objAtualizado)
+        public virtual void EditarApenasCamposDiferentes(UsuarioPerfil objExistente, UsuarioPerfil objAtualizado)
         {
             var properties = typeof(UsuarioPerfil).GetProperties();
 

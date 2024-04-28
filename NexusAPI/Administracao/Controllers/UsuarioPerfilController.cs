@@ -45,7 +45,7 @@ namespace NexusAPI.Administracao.Controllers
         {
             try
             {
-                var objetos = await service.ObterPorUIDUsuarioUIDAsync(UID);
+                var objetos = await service.ObterTudoPorUsuarioUIDAsync(UID);
                 return Ok(objetos);
             }
             catch (ObjetoNaoEncontrado ex)
@@ -59,7 +59,7 @@ namespace NexusAPI.Administracao.Controllers
         }
 
         [HttpGet("{UIDs}")]
-        public virtual async Task<IActionResult> Get([FromRoute] string[] UIDs)
+        public virtual async Task<IActionResult> GetByUID([FromRoute] string[] UIDs)
         {
             try
             {

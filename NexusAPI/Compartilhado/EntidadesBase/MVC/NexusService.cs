@@ -98,8 +98,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
             return resposta;
         }
 
-        public virtual async Task<NexusListaRespostaDTO<U>> ObterTudoPorProjetoENomeAsync(
-            int numeroPagina, string projetoUID, string nome)
+        public virtual async Task<NexusListaRespostaDTO<U>> ObterTudoPorProjetoENomeAsync(int numeroPagina, string projetoUID, string nome)
         {
             //Verifica se o repository possui o método implementado
             if (repository is not IProjetoItemRepository<O> projetoItemRepository)

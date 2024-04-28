@@ -10,16 +10,15 @@ namespace NexusAPI.Dados.Controllers
 {
     [Controller]
     [Authorize]
-    public class SoftwareController
-    : NexusController<SoftwareEnvioDTO, SoftwareRespostaDTO, Software>
+    public class SoftwareController : NexusController<SoftwareEnvioDTO, SoftwareRespostaDTO, Software>
     {
         public SoftwareController(SoftwareService service) : base(service)
         {
         }
 
         [HttpGet("Projeto/{projetoUID}")]
-        public async Task<IActionResult> GetPorProjeto([FromRoute] string projetoUID,
-            [FromQuery] string? nome = null, [FromQuery] int pagina = 1)
+        public async Task<IActionResult> GetPorProjeto([FromRoute] string projetoUID, [FromQuery] string? nome = null, 
+            [FromQuery] int pagina = 1)
         {
             try
             {

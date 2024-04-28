@@ -37,7 +37,7 @@ namespace NexusAPI.Compartilhado.EntidadesBase.MVC
         }
 
         [HttpGet("{UID}")]
-        public virtual async Task<IActionResult> Get([FromRoute] string UID)
+        public virtual async Task<IActionResult> GetByUID([FromRoute] string UID)
         {
             try
             {
