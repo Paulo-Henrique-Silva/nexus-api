@@ -63,8 +63,7 @@ namespace NexusAPI.Administracao.Services
             return objsResposta;
         }
 
-        public virtual async Task<UsuarioPerfilRespostaDTO> AdicionarAsync(
-            UsuarioPerfilEnvioDTO obj, IEnumerable<Claim> claims)
+        public virtual async Task<UsuarioPerfilRespostaDTO> AdicionarAsync(UsuarioPerfilEnvioDTO obj, IEnumerable<Claim> claims)
         {
             var objClasse = ConverterParaClasse(obj);
             objClasse.UsuarioCriadorUID = tokenService.ObterUsuarioUID(claims);
@@ -72,19 +71,17 @@ namespace NexusAPI.Administracao.Services
 
             await repository.AdicionarAsync(objClasse);
 
-            var objAposSerCriado = await repository.ObterPorUIDAsync(obj.UsuarioUID, obj.ProjetoUID, 
-                obj.PerfilUID);
+            var objAposSerCriado = await repository.ObterPorUIDAsync(obj.UsuarioUID, obj.ProjetoUID, obj.PerfilUID);
 
             if (objAposSerCriado == null)
             {
-                throw new Exception("Objeto atualizado não foi encontrado.");
+                throw new Exception("Objetos não foram encontrados.");
             }
 
             return ConverterParaDTORespostaAsync(objAposSerCriado);
         }
 
-        public virtual async Task<UsuarioPerfilRespostaDTO> EditarAsync(
-            string usuarioUID, string projetoUID, string perfilUID,
+        public virtual async Task<UsuarioPerfilRespostaDTO> EditarAsync(string usuarioUID, string projetoUID, string perfilUID, 
             UsuarioPerfilEnvioDTO obj, IEnumerable<Claim> claims)
         {
             //Verifica se o objeto existe.
@@ -106,27 +103,26 @@ namespace NexusAPI.Administracao.Services
             //Coloca como falso o perfil antigo.
             UsuarioPerfil perfilAtivadoAntigo = new();
 
-            var outrosPerfis = await repository.ObterTudoPorUsuarioUIDAsync(objClasse.UsuarioUID);
-            outrosPerfis.ForEach(o =>
+            var perfisUsuario = await repository.ObterTudoPorUsuarioUIDAsync(objClasse.UsuarioUID);
+            perfisUsuario.ForEach(o =>
             {
                 //Se for um perfil diferente no mesmo projeto e ativado ou,
                 //O mesmo perfil em um projeto diferente e ativado, coloca como falso.
-                if (!o.PerfilUID.Equals(objClasse.PerfilUID) && o.Ativado 
-                    || !o.ProjetoUID.Equals(objClasse.ProjetoUID) && o.Ativado)
+                if (!o.PerfilUID.Equals(objClasse.PerfilUID) && o.Ativado || !o.ProjetoUID.Equals(objClasse.ProjetoUID) && o.Ativado)
                 {
                     perfilAtivadoAntigo = o;
                     perfilAtivadoAntigo.Ativado = false;
                 }
             });
 
+            //Seta como falso perfil antigo
             if (!perfilAtivadoAntigo.UsuarioUID.IsNullOrEmpty())
             {
                 await repository.EditarAsync(perfilAtivadoAntigo);
             }
 
             //Obtém a versão mais recente do obj.
-            var objAposSerAtualizado = await repository.ObterPorUIDAsync(usuarioUID,
-                projetoUID, perfilUID);
+            var objAposSerAtualizado = await repository.ObterPorUIDAsync(usuarioUID, projetoUID, perfilUID);
 
             if (objAposSerAtualizado == null)
             {
@@ -136,8 +132,7 @@ namespace NexusAPI.Administracao.Services
             return ConverterParaDTORespostaAsync(objAposSerAtualizado);
         }
 
-        public virtual async Task DeletarAsync(string usuarioUID,
-            string projetoUID, string perfilUID, IEnumerable<Claim> claims)
+        public virtual async Task DeletarAsync(string usuarioUID, string projetoUID, string perfilUID, IEnumerable<Claim> claims)
         {
             var objClasse = await repository.ObterPorUIDAsync(usuarioUID, projetoUID, perfilUID);
 
@@ -152,8 +147,7 @@ namespace NexusAPI.Administracao.Services
         }
 
 
-        public virtual async Task<bool> ExistePorUIDAsync(string usuarioUID, 
-            string projetoUID, string perfilUID)
+        public virtual async Task<bool> ExistePorUIDAsync(string usuarioUID, string projetoUID, string perfilUID)
         {
             var obj = await repository.ObterPorUIDAsync(usuarioUID, projetoUID, perfilUID);
             return obj != null;
